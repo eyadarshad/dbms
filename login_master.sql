@@ -1,0 +1,1 @@
+SELECT * FROM eyad.login_master;

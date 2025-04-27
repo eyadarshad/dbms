@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>images/dashboard-square-02-Stroke-Rounded (1).png</file>
+        <file>images/dashboard-square-02-Stroke-Rounded.png</file>
+        <file>images/folder-view-Stroke-Rounded.png</file>
+        <file>images/invoice-02-Stroke-Rounded.png</file>
+        <file>images/invoice-Stroke-Rounded.png</file>
+        <file>images/search-01-Stroke-Rounded.png</file>
+        <file>images/user-circle-02-Stroke-Rounded.png</file>
+        <file>images/package-Stroke-Rounded.png</file>
+        <file>images/folder-view-Stroke-Rounded (1).png</file>
+        <file>images/package-Stroke-Rounded (1).png</file>
+        <file>images/invoice-03-Stroke-Rounded.png</file>
+        <file>images/user-circle-Stroke-Rounded.png</file>
+        <file>images/shopping-cart-02-Stroke-Rounded (1).png</file>
+        <file>images/invoice-02-Stroke-Rounded (1).png</file>
+        <file>images/shopping-cart-02-Stroke-Rounded.png</file>
+        <file>images/time-quarter-02-Stroke-Rounded.png</file>
+        <file>images/cancel-01-Stroke-Rounded (1).png</file>
+        <file>images/cancel-01-Stroke-Rounded.png</file>
+        <file>images/locked-Stroke-Rounded.png</file>
+        <file>images/backg.png</file>
+        <file>images/wmremove-transformed (1).png</file>
+        <file>images/logout-01-Stroke-Rounded.png</file>
+        <file>images/logout-01-Stroke-Rounded (1).png</file>
+        <file>images/logout-05-Stroke-Rounded (1).png</file>
+        <file>images/logout-05-Stroke-Rounded.png</file>
+        <file>images/view-Stroke-Rounded.png</file>
+        <file>images/eyebrow.png</file>
+        <file>images/eyebrow (1).png</file>
+        <file>images/locked-Stroke-Rounded (2).png</file>
+        <file>images/view-Stroke-Rounded (1).png</file>
+        <file>images/search-01-Stroke-Rounded (1).png</file>
+    </qresource>
+</RCC>
