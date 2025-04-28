@@ -35,7 +35,7 @@ max-height:720px;
 </string>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>9</number>
     </property>
     <widget class="QWidget" name="login">
      <widget class="QWidget" name="widget_96" native="true">
@@ -490,6 +490,7 @@ color: #c3c3c3;</string>
 border-bottom: 1px solid #3a3a3a;
 background:transparent;
 border-radius:4px;
+color : #ffffff;
 
 QLineEdit::placeholder {
     color: #fff000;  /* Adjust transparency for visibility */
@@ -556,6 +557,7 @@ border: none;</string>
 border-bottom: 1px solid #3a3a3a;
 background:transparent;
 border-radius:4px;
+color : #ffffff;
 
 QLineEdit::placeholder {
     color: #fff000;  /* Adjust transparency for visibility */
@@ -2938,7 +2940,7 @@ QHeaderView::section {
     border: 1px solid #121212;
     font-size: 10px;
     font-weight: bold;
-    content-align: center;
+
 }
 
 QTableWidget::item, QTableView::item {
@@ -4130,7 +4132,6 @@ border:none;
          <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
@@ -4238,7 +4239,7 @@ QHeaderView::section {
     border: 1px solid #121212;
     font-size: 10px;
     font-weight: bold;
-    content-align: center;
+
 }
 
 QTableWidget::item, QTableView::item {
@@ -5439,7 +5440,6 @@ border:none;
          <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
@@ -5953,7 +5953,6 @@ border:none;
          <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
@@ -6608,7 +6607,7 @@ QHeaderView::section {
     border: 1px solid #121212;
     font-size: 10px;
     font-weight: bold;
-    content-align: center;
+
 }
 
 QTableWidget::item, QTableView::item {
@@ -6721,7 +6720,7 @@ QTableCornerButton::section {
          <rect>
           <x>450</x>
           <y>20</y>
-          <width>131</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -6733,7 +6732,7 @@ border-radius: 4px;
 </string>
         </property>
         <property name="text">
-         <string>- Remove Worker</string>
+         <string>- Remove Vendor</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton_58">
@@ -6753,7 +6752,7 @@ border-radius: 4px;
 </string>
         </property>
         <property name="text">
-         <string>+ Add Worker</string>
+         <string>+ Add Vendor</string>
         </property>
        </widget>
       </widget>
@@ -6835,7 +6834,7 @@ QHeaderView::section {
     border: 1px solid #121212;
     font-size: 10px;
     font-weight: bold;
-    content-align: center;
+
 }
 
 QTableWidget::item, QTableView::item {
@@ -8018,7 +8017,6 @@ border:none;
          <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
@@ -8126,7 +8124,7 @@ QHeaderView::section {
     border: 1px solid #121212;
     font-size: 10px;
     font-weight: bold;
-    content-align: center;
+
 }
 
 QTableWidget::item, QTableView::item {
@@ -9257,7 +9255,6 @@ border:none;
          <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
@@ -10436,7 +10433,7 @@ QHeaderView::section {
     border: 1px solid #121212;
     font-size: 10px;
     font-weight: bold;
-    content-align: center;
+
 }
 
 QTableWidget::item, QTableView::item {
@@ -11127,7 +11124,6 @@ border:none;
          <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
@@ -11738,15 +11734,15 @@ border:none;</string>
          <x>50</x>
          <y>0</y>
          <width>111</width>
-         <height>61</height>
+         <height>71</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">font: 16pt &quot;Sans Serif Collection&quot;;
+        <string notr="true">font: 570 15pt &quot;Sans Serif Collection&quot;;
 border:none;</string>
        </property>
        <property name="text">
-        <string>Dashboard</string>
+        <string>Hello,</string>
        </property>
       </widget>
       <widget class="QWidget" name="widget_184" native="true">
@@ -11759,7 +11755,7 @@ border:none;</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background : #436cfd;</string>
+        <string notr="true">background : #0572d9;</string>
        </property>
        <widget class="QLabel" name="label_532">
         <property name="geometry">
@@ -11771,7 +11767,7 @@ border:none;</string>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 600 20pt &quot;Century Gothic&quot;;</string>
+         <string notr="true">font:600 20pt &quot;Sans Serif&quot;;</string>
         </property>
         <property name="text">
          <string>Sales</string>
@@ -11856,14 +11852,15 @@ color:black;
       <widget class="QWidget" name="widget_185" native="true">
        <property name="geometry">
         <rect>
-         <x>490</x>
+         <x>470</x>
          <y>80</y>
-         <width>201</width>
+         <width>221</width>
          <height>451</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background : rgb(85, 0, 255);</string>
+        <string notr="true">background : #46d5a9;
+font:600 20pt &quot;Sans Serif&quot;;</string>
        </property>
        <widget class="QLabel" name="label_537">
         <property name="geometry">
@@ -11875,275 +11872,116 @@ color:black;
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 600 20pt &quot;Century Gothic&quot;;</string>
+         <string notr="true">background:transparent;font:600 20pt &quot;Sans Serif&quot;;</string>
         </property>
         <property name="text">
-         <string>Products</string>
+         <string>Best Sellers</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QWidget" name="widget_186" native="true">
+       <widget class="QLabel" name="label_547">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>260</y>
-          <width>161</width>
-          <height>171</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background: #fff;
-border-radius:4px;</string>
-        </property>
-        <widget class="QLabel" name="label_538">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>30</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Lays</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_539">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>60</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Candies</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_540">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>90</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Asia Ghee</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_541">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>120</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Dairy Milk</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_542">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>10</y>
-           <width>161</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">font-weight: 800;
-font-size:12pt;
-color:rgb(85, 0, 255);
-</string>
-         </property>
-         <property name="text">
-          <string>New Items</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="widget_187" native="true">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
+          <x>30</x>
           <y>60</y>
-          <width>161</width>
-          <height>171</height>
+          <width>151</width>
+          <height>31</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background: #fff;
-border-radius:4px;</string>
-        </property>
-        <widget class="QLabel" name="label_543">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>30</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Lays</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_544">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>60</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Candies</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_545">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>90</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Asia Ghee</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_546">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>120</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Dairy Milk</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_547">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>10</y>
-           <width>161</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">font-weight: 800;
-font-size:12pt;
-color:rgb(85, 0, 255);
+         <string notr="true">background:transparent;font:600 12pt &quot;Sans Serif&quot;;
 </string>
-         </property>
-         <property name="text">
-          <string>Best Sellers</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
+        </property>
+        <property name="text">
+         <string>Cream</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
        </widget>
+       <widget class="QLabel" name="label_581">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>100</y>
+          <width>151</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:transparent;font:600 12pt &quot;Sans Serif&quot;;
+</string>
+        </property>
+        <property name="text">
+         <string>Cream</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_582">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>140</y>
+          <width>151</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font:600 12pt &quot;Sans Serif&quot;;
+background:transparent;
+</string>
+        </property>
+        <property name="text">
+         <string>Cream</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_541">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>221</width>
+          <height>431</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color :transparent;
+background-image: url(&quot;:/new/prefix1/images/image-removebg-preview.png&quot;);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <zorder>label_541</zorder>
+       <zorder>label_537</zorder>
+       <zorder>label_547</zorder>
+       <zorder>label_581</zorder>
+       <zorder>label_582</zorder>
       </widget>
       <widget class="QWidget" name="widget_188" native="true">
        <property name="geometry">
         <rect>
-         <x>270</x>
+         <x>260</x>
          <y>80</y>
          <width>181</width>
          <height>181</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background : #212121;</string>
+        <string notr="true">background : #01b6d9;</string>
        </property>
        <widget class="QLabel" name="label_548">
         <property name="geometry">
@@ -12155,8 +11993,8 @@ color:rgb(85, 0, 255);
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">font: 600 20pt &quot;Century Gothic&quot;;
-color:#0a0a0a;</string>
+         <string notr="true">font:600 20pt &quot;Sans Serif&quot;;
+</string>
         </property>
         <property name="text">
          <string>Debtors</string>
@@ -12175,8 +12013,8 @@ color:#0a0a0a;</string>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">font-weight: 600;
-font-size:12pt;
+         <string notr="true">font: 700 12pt &quot;Tahoma&quot;;
+
 color:#0a0a0a;</string>
         </property>
         <property name="text">
@@ -12260,7 +12098,7 @@ color:black;
             <rect>
              <x>0</x>
              <y>-10</y>
-             <width>429</width>
+             <width>411</width>
              <height>239</height>
             </rect>
            </property>
@@ -12763,6 +12601,23 @@ color:black;
         </item>
        </layout>
       </widget>
+      <widget class="QLabel" name="label_580">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>0</y>
+         <width>111</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font:600 16pt &quot;Sans Serif Collection&quot;;
+border:none;</string>
+       </property>
+       <property name="text">
+        <string>EYAD!</string>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="productmngmntsalesman">
@@ -13205,7 +13060,6 @@ border:none;
          <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
@@ -13311,7 +13165,7 @@ QHeaderView::section {
     border: 1px solid #121212;
     font-size: 10px;
     font-weight: bold;
-    content-align: center;
+
 }
 
 QTableWidget::item, QTableView::item {
@@ -13409,7 +13263,7 @@ QTableCornerButton::section {
          <rect>
           <x>450</x>
           <y>20</y>
-          <width>131</width>
+          <width>121</width>
           <height>41</height>
          </rect>
         </property>
@@ -14470,7 +14324,7 @@ QHeaderView::section {
     border: 1px solid #121212;
     font-size: 10px;
     font-weight: bold;
-    content-align: center;
+
 }
 
 QTableWidget::item, QTableView::item {
@@ -15030,7 +14884,6 @@ border:none;
          <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
@@ -19020,7 +18873,6 @@ border:none;
          <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
@@ -19675,7 +19527,6 @@ border:none;
            <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
@@ -19856,7 +19707,7 @@ QHeaderView::section {
     border: 1px solid #121212;
     font-size: 10px;
     font-weight: bold;
-    content-align: center;
+
 }
 
 QTableWidget::item, QTableView::item {
@@ -20573,7 +20424,7 @@ QHeaderView::section {
     border: 1px solid #121212;
     font-size: 10px;
     font-weight: bold;
-    content-align: center;
+
 }
 
 QTableWidget::item, QTableView::item {
@@ -21577,7 +21428,6 @@ border:none;
            <string notr="true">border-radius:10px;
 border:none;
 background-color:none;
-  background-image: url(&quot;:/new/prefix1/search-01-Stroke-Rounded.png&quot;);
     background-repeat: no-repeat;
     background-position: center;
     background-origin: content;</string>
