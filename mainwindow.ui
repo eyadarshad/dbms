@@ -35,7 +35,7 @@ max-height:720px;
 </string>
     </property>
     <property name="currentIndex">
-     <number>9</number>
+     <number>11</number>
     </property>
     <widget class="QWidget" name="login">
      <widget class="QWidget" name="widget_96" native="true">
@@ -580,6 +580,12 @@ QLineEdit::placeholder {
           <height>41</height>
          </rect>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>131</width>
+          <height>41</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">background:#436cfd;
 font: 500 10pt &quot;Microsoft Sans Serif&quot;;
@@ -631,32 +637,6 @@ background-image: url(&quot;:/new/prefix1/images/user-circle-Stroke-Rounded.png&
          <string/>
         </property>
        </widget>
-       <widget class="QLabel" name="label_48">
-        <property name="geometry">
-         <rect>
-          <x>270</x>
-          <y>300</y>
-          <width>31</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <zorder>label_48</zorder>
-       <zorder>label_70</zorder>
-       <zorder>label_274</zorder>
-       <zorder>username_login</zorder>
-       <zorder>label_73</zorder>
-       <zorder>label_76</zorder>
-       <zorder>password_login</zorder>
-       <zorder>loginbtn</zorder>
-       <zorder>label_275</zorder>
-       <zorder>eyeButton</zorder>
       </widget>
       <widget class="QLabel" name="label_74">
        <property name="geometry">
@@ -728,7 +708,7 @@ border:none;</string>
          <x>20</x>
          <y>80</y>
          <width>231</width>
-         <height>141</height>
+         <height>181</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -786,12 +766,12 @@ background:#181818;</string>
          <string>Remaining Stock:</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_8">
+       <widget class="QLabel" name="salesCountLabel_2">
         <property name="geometry">
          <rect>
           <x>170</x>
           <y>20</y>
-          <width>91</width>
+          <width>61</width>
           <height>16</height>
          </rect>
         </property>
@@ -803,12 +783,12 @@ color:#adadad;</string>
          <string>4000</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_9">
+       <widget class="QLabel" name="profitMarginLabel_3">
         <property name="geometry">
          <rect>
           <x>170</x>
           <y>60</y>
-          <width>91</width>
+          <width>61</width>
           <height>16</height>
          </rect>
         </property>
@@ -820,12 +800,12 @@ color:#adadad;</string>
          <string>23%</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_10">
+       <widget class="QLabel" name="labelTotalStock">
         <property name="geometry">
          <rect>
           <x>170</x>
           <y>100</y>
-          <width>91</width>
+          <width>61</width>
           <height>16</height>
          </rect>
         </property>
@@ -837,12 +817,46 @@ color:#adadad;</string>
          <string>3978</string>
         </property>
        </widget>
+       <widget class="QLabel" name="labelTotalDebt">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>140</y>
+          <width>61</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+color:#adadad;</string>
+        </property>
+        <property name="text">
+         <string>333</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_8">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>140</y>
+          <width>91</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#494949;
+</string>
+        </property>
+        <property name="text">
+         <string>Total Debt:</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QLabel" name="label_11">
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>240</y>
+         <y>320</y>
          <width>141</width>
          <height>61</height>
         </rect>
@@ -858,8 +872,8 @@ border:none;</string>
       <widget class="QTableWidget" name="tableWidget">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>290</y>
+         <x>30</x>
+         <y>400</y>
          <width>211</width>
          <height>231</height>
         </rect>
@@ -1203,22 +1217,14 @@ border-left:none;
 
 </string>
       </property>
-      <widget class="QLabel" name="label_47">
+      <widget class="QLineEdit" name="lineEdit_6">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>40</y>
-         <width>601</width>
-         <height>41</height>
+         <x>40</x>
+         <y>39</y>
+         <width>591</width>
+         <height>40</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">  border-radius: 10px; 
@@ -1227,19 +1233,22 @@ background: white;
  padding-left: 15px;
 color:#626262;
 border:none;
+padding-left: 40px;
+min-height: 40px;
+
 </string>
        </property>
-       <property name="text">
-        <string>        Search Something Here </string>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_13">
+      <widget class="QLabel" name="label_540">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>50</y>
-         <width>31</width>
-         <height>21</height>
+         <x>30</x>
+         <y>30</y>
+         <width>71</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -1324,7 +1333,7 @@ border:none;</string>
          <rect>
           <x>20</x>
           <y>60</y>
-          <width>121</width>
+          <width>131</width>
           <height>41</height>
          </rect>
         </property>
@@ -1353,7 +1362,7 @@ font-size:12pt;</string>
          <string>Profit :</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_498">
+       <widget class="QLabel" name="salesCountLabel">
         <property name="geometry">
          <rect>
           <x>100</x>
@@ -1372,7 +1381,7 @@ color:black;
          <string>2000</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_499">
+       <widget class="QLabel" name="profitMarginLabel">
         <property name="geometry">
          <rect>
           <x>100</x>
@@ -1423,253 +1432,175 @@ color:black;
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QWidget" name="widget_6" native="true">
+       <widget class="QLabel" name="label_493">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>260</y>
-          <width>161</width>
-          <height>171</height>
+          <x>30</x>
+          <y>60</y>
+          <width>131</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background: #fff;
-border-radius:4px;</string>
+         <string notr="true">font-weight: 600;
+font-size:12pt;</string>
         </property>
-        <widget class="QLabel" name="label_494">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>30</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Lays</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
+        <property name="text">
+         <string>Total Amount :</string>
+        </property>
+       </widget>
+       <widget class="QWidget" name="widget_14" native="true">
+        <property name="geometry">
+         <rect>
+          <x>490</x>
+          <y>80</y>
+          <width>201</width>
+          <height>451</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background : rgb(85, 0, 255);</string>
+        </property>
         <widget class="QLabel" name="label_495">
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>60</y>
-           <width>161</width>
-           <height>41</height>
+           <y>0</y>
+           <width>201</width>
+           <height>51</height>
           </rect>
          </property>
          <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
+          <string notr="true">font: 600 20pt &quot;Century Gothic&quot;;</string>
          </property>
          <property name="text">
-          <string>Candies</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_496">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>90</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Asia Ghee</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_497">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>120</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Dairy Milk</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_493">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>10</y>
-           <width>161</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">font-weight: 800;
-font-size:12pt;
-color:rgb(85, 0, 255);
-</string>
-         </property>
-         <property name="text">
-          <string>New Items</string>
+          <string>Products</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignmentFlag::AlignCenter</set>
          </property>
         </widget>
        </widget>
-       <widget class="QWidget" name="widget_7" native="true">
+       <widget class="QLabel" name="labelTotalAmount">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>60</y>
-          <width>161</width>
-          <height>171</height>
+          <x>140</x>
+          <y>70</y>
+          <width>61</width>
+          <height>21</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">background: #fff;
-border-radius:4px;</string>
-        </property>
-        <widget class="QLabel" name="label_502">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>30</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Lays</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_503">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>60</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Candies</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_504">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>90</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Asia Ghee</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_505">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>120</y>
-           <width>161</width>
-           <height>41</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Dairy Milk</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_506">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>10</y>
-           <width>161</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">font-weight: 800;
-font-size:12pt;
-color:rgb(85, 0, 255);
+         <string notr="true">border:none;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
 </string>
-         </property>
-         <property name="text">
-          <string>Best Sellers</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignCenter</set>
-         </property>
-        </widget>
+        </property>
+        <property name="text">
+         <string>565</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_496">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>110</y>
+          <width>131</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: 600;
+font-size:12pt;</string>
+        </property>
+        <property name="text">
+         <string>Total Products :</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="productCountLabel">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>120</y>
+          <width>61</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+        </property>
+        <property name="text">
+         <string>565</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_497">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>160</y>
+          <width>121</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: 600;
+font-size:12pt;</string>
+        </property>
+        <property name="text">
+         <string>Low Stock Count :</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="labelLowStockCount">
+        <property name="geometry">
+         <rect>
+          <x>140</x>
+          <y>170</y>
+          <width>61</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+        </property>
+        <property name="text">
+         <string>565</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_498">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>210</y>
+          <width>131</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-weight: 600;
+font-size:12pt;</string>
+        </property>
+        <property name="text">
+         <string>Best Sellers :</string>
+        </property>
+       </widget>
+       <widget class="QListWidget" name="listWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>251</y>
+          <width>201</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">BORDER:NONE;</string>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="widget_10" native="true">
@@ -1682,7 +1613,8 @@ color:rgb(85, 0, 255);
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background : #212121;</string>
+        <string notr="true">background : #212121;
+color:white;</string>
        </property>
        <widget class="QLabel" name="label_482">
         <property name="geometry">
@@ -1695,7 +1627,7 @@ color:rgb(85, 0, 255);
         </property>
         <property name="styleSheet">
          <string notr="true">font: 600 20pt &quot;Century Gothic&quot;;
-color:#0a0a0a;</string>
+color:white;</string>
         </property>
         <property name="text">
          <string>Debtors</string>
@@ -1716,7 +1648,7 @@ color:#0a0a0a;</string>
         <property name="styleSheet">
          <string notr="true">font-weight: 600;
 font-size:12pt;
-color:#0a0a0a;</string>
+color:white;</string>
         </property>
         <property name="text">
          <string>Total Debtors : </string>
@@ -1734,13 +1666,13 @@ color:#0a0a0a;</string>
         <property name="styleSheet">
          <string notr="true">font-weight: 600;
 font-size:12pt;
-color:#0a0a0a;</string>
+color:#fff;</string>
         </property>
         <property name="text">
          <string>Remaining Debtors :</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_500">
+       <widget class="QLabel" name="labelTotalDebtors">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -1752,14 +1684,14 @@ color:#0a0a0a;</string>
         <property name="styleSheet">
          <string notr="true">border:none;
 font: 800 11pt &quot;Segoe UI&quot;;
-color:black;
+color:white;
 </string>
         </property>
         <property name="text">
          <string>40</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_501">
+       <widget class="QLabel" name="labelRemainingDebtors">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -1771,7 +1703,7 @@ color:black;
         <property name="styleSheet">
          <string notr="true">border:none;
 font: 800 11pt &quot;Segoe UI&quot;;
-color:black;
+color:white;
 </string>
         </property>
         <property name="text">
@@ -2301,6 +2233,166 @@ color:black;
          </widget>
         </item>
        </layout>
+      </widget>
+      <widget class="QLabel" name="label_9">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>340</y>
+         <width>91</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_10">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>380</y>
+         <width>91</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_29">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>420</y>
+         <width>91</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_30">
+       <property name="geometry">
+        <rect>
+         <x>510</x>
+         <y>460</y>
+         <width>91</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_77">
+       <property name="geometry">
+        <rect>
+         <x>610</x>
+         <y>340</y>
+         <width>71</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_499">
+       <property name="geometry">
+        <rect>
+         <x>610</x>
+         <y>380</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_500">
+       <property name="geometry">
+        <rect>
+         <x>610</x>
+         <y>420</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_502">
+       <property name="geometry">
+        <rect>
+         <x>610</x>
+         <y>460</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
       </widget>
      </widget>
      <widget class="QFrame" name="frame">
@@ -2907,12 +2999,52 @@ border:none;</string>
        <property name="styleSheet">
         <string notr="true">background : #121212;</string>
        </property>
-       <widget class="QTableWidget" name="tableWidget_18">
+       <widget class="QPushButton" name="removeDebtorBtn">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>80</y>
-          <width>511</width>
+          <x>450</x>
+          <y>20</y>
+          <width>121</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:#436cfd;
+font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+color:white;
+border-radius: 4px;
+</string>
+        </property>
+        <property name="text">
+         <string>- Remove Debtor</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="addDebtorBtn">
+        <property name="geometry">
+         <rect>
+          <x>320</x>
+          <y>20</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:#436cfd;
+font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+color:white;
+border-radius: 4px;
+</string>
+        </property>
+        <property name="text">
+         <string>+ Add Debtor</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="debtorsTable">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>100</y>
+          <width>531</width>
           <height>311</height>
          </rect>
         </property>
@@ -2971,11 +3103,6 @@ QTableCornerButton::section {
         <row/>
         <column>
          <property name="text">
-          <string>ID</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
           <string>Name</string>
          </property>
         </column>
@@ -2986,7 +3113,22 @@ QTableCornerButton::section {
         </column>
         <column>
          <property name="text">
+          <string>Email</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Address</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
           <string>Debt Amount</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Date</string>
          </property>
         </column>
         <item row="0" column="0">
@@ -3001,25 +3143,11 @@ QTableCornerButton::section {
          <property name="text">
           <string/>
          </property>
-         <property name="textAlignment">
-          <set>AlignCenter</set>
-         </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
         <item row="0" column="2">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-         </property>
-        </item>
-        <item row="0" column="3">
          <property name="text">
           <string/>
          </property>
@@ -3032,46 +3160,20 @@ QTableCornerButton::section {
           <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
          </property>
         </item>
-       </widget>
-       <widget class="QPushButton" name="pushButton_75">
-        <property name="geometry">
-         <rect>
-          <x>450</x>
-          <y>20</y>
-          <width>121</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background:#436cfd;
-font: 500 10pt &quot;Microsoft Sans Serif&quot;;
-color:white;
-border-radius: 4px;
-</string>
-        </property>
-        <property name="text">
-         <string>- Remove Debtor</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_76">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>20</y>
-          <width>111</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background:#436cfd;
-font: 500 10pt &quot;Microsoft Sans Serif&quot;;
-color:white;
-border-radius: 4px;
-</string>
-        </property>
-        <property name="text">
-         <string>+ Add Debtor</string>
-        </property>
+        <item row="0" column="3">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="textAlignment">
+          <set>AlignCenter</set>
+         </property>
+         <property name="icon">
+          <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
        </widget>
       </widget>
      </widget>
@@ -3636,43 +3738,13 @@ border-left:none;
 
 </string>
       </property>
-      <widget class="QLabel" name="label_255">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>40</y>
-         <width>601</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">  border-radius: 10px; 
-font: 14pt &quot;Microsoft Sans Serif&quot;;
-background: white;
- padding-left: 15px;
-color:#626262;
-border:none;
-</string>
-       </property>
-       <property name="text">
-        <string>        Search Something Here </string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_256">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>50</y>
-         <width>31</width>
-         <height>21</height>
+         <x>40</x>
+         <y>30</y>
+         <width>71</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -3691,6 +3763,33 @@ background-color:none;
         <bool>true</bool>
        </property>
       </widget>
+      <widget class="QLineEdit" name="debtorSearchEdit">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>40</y>
+         <width>591</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">  border-radius: 10px; 
+font: 14pt &quot;Microsoft Sans Serif&quot;;
+background: white;
+ padding-left: 15px;
+color:#626262;
+border:none;
+padding-left: 40px;
+min-height: 40px;
+
+</string>
+       </property>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
+       </property>
+      </widget>
+      <zorder>debtorSearchEdit</zorder>
+      <zorder>label_256</zorder>
      </widget>
      <widget class="QWidget" name="widget_86" native="true">
       <property name="geometry">
@@ -4206,12 +4305,12 @@ border:none;</string>
         <string notr="true">background : #121212;
 border-radius:7px;</string>
        </property>
-       <widget class="QTableWidget" name="tableWidget_10">
+       <widget class="QTableWidget" name="productsTable">
         <property name="geometry">
          <rect>
-          <x>60</x>
+          <x>30</x>
           <y>80</y>
-          <width>511</width>
+          <width>591</width>
           <height>311</height>
          </rect>
         </property>
@@ -4270,12 +4369,12 @@ QTableCornerButton::section {
         <row/>
         <column>
          <property name="text">
-          <string>Sr. No.</string>
+          <string>Product ID</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Items</string>
+          <string>Product Name</string>
          </property>
         </column>
         <column>
@@ -4285,17 +4384,22 @@ QTableCornerButton::section {
         </column>
         <column>
          <property name="text">
+          <string>Category</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
           <string>Quantity</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Qr Number</string>
+          <string>Added at</string>
          </property>
         </column>
         <item row="0" column="0">
          <property name="text">
-          <string>2123</string>
+          <string/>
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
@@ -4310,9 +4414,6 @@ QTableCornerButton::section {
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
         <item row="0" column="2">
@@ -4337,7 +4438,7 @@ QTableCornerButton::section {
          </property>
         </item>
        </widget>
-       <widget class="QPushButton" name="removeprod">
+       <widget class="QPushButton" name="removeProductBtn">
         <property name="geometry">
          <rect>
           <x>450</x>
@@ -4357,7 +4458,7 @@ border-radius: 4px;
          <string>- Remove Product</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="addprod">
+       <widget class="QPushButton" name="addProductBtn">
         <property name="geometry">
          <rect>
           <x>310</x>
@@ -4944,22 +5045,14 @@ border-left:none;
 
 </string>
       </property>
-      <widget class="QLabel" name="label_135">
+      <widget class="QLineEdit" name="productSearchEdit">
        <property name="geometry">
         <rect>
          <x>50</x>
-         <y>40</y>
-         <width>601</width>
-         <height>41</height>
+         <y>39</y>
+         <width>591</width>
+         <height>40</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">  border-radius: 10px; 
@@ -4968,19 +5061,22 @@ background: white;
  padding-left: 15px;
 color:#626262;
 border:none;
+padding-left: 40px;
+min-height: 40px;
+
 </string>
        </property>
-       <property name="text">
-        <string>        Search Something Here </string>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_136">
+      <widget class="QLabel" name="label_494">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>50</y>
-         <width>31</width>
-         <height>21</height>
+         <x>40</x>
+         <y>30</y>
+         <width>71</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -5492,22 +5588,14 @@ border-left:none;
 
 </string>
       </property>
-      <widget class="QLabel" name="label_154">
+      <widget class="QLineEdit" name="vendorSearchEdit">
        <property name="geometry">
         <rect>
          <x>50</x>
-         <y>40</y>
-         <width>601</width>
-         <height>41</height>
+         <y>39</y>
+         <width>591</width>
+         <height>40</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">  border-radius: 10px; 
@@ -5516,19 +5604,22 @@ background: white;
  padding-left: 15px;
 color:#626262;
 border:none;
+padding-left: 40px;
+min-height: 40px;
+
 </string>
        </property>
-       <property name="text">
-        <string>        Search Something Here </string>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_155">
+      <widget class="QLabel" name="label_539">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>40</y>
-         <width>31</width>
-         <height>41</height>
+         <x>40</x>
+         <y>30</y>
+         <width>71</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -6574,12 +6665,12 @@ color: #ffffff;</string>
         <string notr="true">background : #121212;
 border-radius:7px;</string>
        </property>
-       <widget class="QTableWidget" name="tableWidget_13">
+       <widget class="QTableWidget" name="vendorsTable">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>80</y>
-          <width>511</width>
+          <x>0</x>
+          <y>70</y>
+          <width>602</width>
           <height>311</height>
          </rect>
         </property>
@@ -6638,7 +6729,7 @@ QTableCornerButton::section {
         <row/>
         <column>
          <property name="text">
-          <string>ID</string>
+          <string>V_ID</string>
          </property>
         </column>
         <column>
@@ -6648,7 +6739,7 @@ QTableCornerButton::section {
         </column>
         <column>
          <property name="text">
-          <string>Credit</string>
+          <string>Address</string>
          </property>
         </column>
         <column>
@@ -6658,17 +6749,12 @@ QTableCornerButton::section {
         </column>
         <column>
          <property name="text">
-          <string>Credit/Cash</string>
+          <string>Contact No.</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Address</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Contact</string>
+          <string>Date of supply</string>
          </property>
         </column>
         <item row="0" column="0">
@@ -6693,14 +6779,6 @@ QTableCornerButton::section {
           <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
-        <item row="0" column="2">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-         </property>
-        </item>
         <item row="0" column="3">
          <property name="text">
           <string/>
@@ -6715,7 +6793,7 @@ QTableCornerButton::section {
          </property>
         </item>
        </widget>
-       <widget class="QPushButton" name="pushButton_57">
+       <widget class="QPushButton" name="removeVendorBtn">
         <property name="geometry">
          <rect>
           <x>450</x>
@@ -6735,7 +6813,7 @@ border-radius: 4px;
          <string>- Remove Vendor</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_58">
+       <widget class="QPushButton" name="addVendorBtn">
         <property name="geometry">
          <rect>
           <x>310</x>
@@ -6801,13 +6879,13 @@ border:none;</string>
         <string notr="true">background : #121212;
 border-radius:7px;</string>
        </property>
-       <widget class="QTableWidget" name="tableWidget_15">
+       <widget class="QTableWidget" name="stockTable">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>30</y>
-          <width>571</width>
-          <height>361</height>
+          <x>40</x>
+          <y>80</y>
+          <width>561</width>
+          <height>321</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -6865,17 +6943,17 @@ QTableCornerButton::section {
         <row/>
         <column>
          <property name="text">
-          <string>Sr No.</string>
+          <string>Product ID</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Item</string>
+          <string>Product Name</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Price(per unit)</string>
+          <string>Price/Unit</string>
          </property>
         </column>
         <column>
@@ -6885,17 +6963,12 @@ QTableCornerButton::section {
         </column>
         <column>
          <property name="text">
-          <string>Quantity</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Qr Number</string>
+          <string>Remaining Quantity</string>
          </property>
         </column>
         <item row="0" column="0">
          <property name="text">
-          <string>2123</string>
+          <string/>
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
@@ -6944,14 +7017,26 @@ QTableCornerButton::section {
           <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
          </property>
         </item>
-        <item row="0" column="5">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-         </property>
-        </item>
+       </widget>
+       <widget class="QPushButton" name="viewLowStockBtn">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>10</y>
+          <width>121</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:#436cfd;
+font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+color:white;
+border-radius: 4px;
+</string>
+        </property>
+        <property name="text">
+         <string>View Low Stock</string>
+        </property>
        </widget>
       </widget>
      </widget>
@@ -6975,22 +7060,14 @@ border-left:none;
 
 </string>
       </property>
-      <widget class="QLabel" name="label_184">
+      <widget class="QLineEdit" name="stockSearchEdit">
        <property name="geometry">
         <rect>
          <x>50</x>
-         <y>40</y>
-         <width>601</width>
-         <height>41</height>
+         <y>39</y>
+         <width>591</width>
+         <height>40</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">  border-radius: 10px; 
@@ -6999,19 +7076,22 @@ background: white;
  padding-left: 15px;
 color:#626262;
 border:none;
+padding-left: 40px;
+min-height: 40px;
+
 </string>
        </property>
-       <property name="text">
-        <string>        Search Something Here </string>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_185">
+      <widget class="QLabel" name="label_538">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>50</y>
-         <width>31</width>
-         <height>21</height>
+         <x>40</x>
+         <y>30</y>
+         <width>71</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -8091,12 +8171,12 @@ border:none;</string>
         <string notr="true">background : #121212;
 border-radius:7px;</string>
        </property>
-       <widget class="QTableWidget" name="tableWidget_17">
+       <widget class="QTableWidget" name="salesTable">
         <property name="geometry">
          <rect>
           <x>30</x>
           <y>80</y>
-          <width>571</width>
+          <width>581</width>
           <height>311</height>
          </rect>
         </property>
@@ -8155,7 +8235,22 @@ QTableCornerButton::section {
         <row/>
         <column>
          <property name="text">
-          <string>Item</string>
+          <string>Sales_ID</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Salesman ID</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Product ID</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Product Name</string>
          </property>
         </column>
         <column>
@@ -8165,22 +8260,17 @@ QTableCornerButton::section {
         </column>
         <column>
          <property name="text">
-          <string>Quantity</string>
+          <string>Category</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Qr Number</string>
+          <string>Quantity Sold</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Items Sold</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Status</string>
+          <string>Date/Time </string>
          </property>
         </column>
         <item row="0" column="0">
@@ -8191,7 +8281,7 @@ QTableCornerButton::section {
           <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
          </property>
         </item>
-        <item row="0" column="1">
+        <item row="0" column="3">
          <property name="text">
           <string/>
          </property>
@@ -8205,7 +8295,7 @@ QTableCornerButton::section {
           <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
-        <item row="0" column="2">
+        <item row="0" column="4">
          <property name="text">
           <string/>
          </property>
@@ -8213,7 +8303,7 @@ QTableCornerButton::section {
           <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
          </property>
         </item>
-        <item row="0" column="3">
+        <item row="0" column="7">
          <property name="text">
           <string/>
          </property>
@@ -9305,36 +9395,6 @@ border-left:none;
 
 </string>
       </property>
-      <widget class="QLabel" name="label_214">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>40</y>
-         <width>601</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">  border-radius: 10px; 
-font: 14pt &quot;Microsoft Sans Serif&quot;;
-background: white;
- padding-left: 15px;
-color:#626262;
-border:none;
-</string>
-       </property>
-       <property name="text">
-        <string>        Search Something Here </string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_215">
        <property name="geometry">
         <rect>
@@ -9360,9 +9420,59 @@ background-color:none;
         <bool>true</bool>
        </property>
       </widget>
+      <widget class="QLineEdit" name="salesSearchEdit">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>39</y>
+         <width>591</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">  border-radius: 10px; 
+font: 14pt &quot;Microsoft Sans Serif&quot;;
+background: white;
+ padding-left: 15px;
+color:#626262;
+border:none;
+padding-left: 40px;
+min-height: 40px;
+
+</string>
+       </property>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_506">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>30</y>
+         <width>71</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius:10px;
+border:none;
+background-color:none;
+  background-image: url(&quot;:/new/prefix1/images/search-01-Stroke-Rounded.png&quot;);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="worker">
+    <widget class="QWidget" name="workerrecord">
      <widget class="QFrame" name="frame_10">
       <property name="geometry">
        <rect>
@@ -9882,22 +9992,6 @@ background-image:url(&quot;:/new/prefix1/images/logout-05-Stroke-Rounded.png&quo
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_pic">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>30</y>
-         <width>31</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:white;</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
       <zorder>label_479</zorder>
       <zorder>label_276</zorder>
       <zorder>page71</zorder>
@@ -9921,7 +10015,6 @@ background-image:url(&quot;:/new/prefix1/images/logout-05-Stroke-Rounded.png&quo
       <zorder>label_319</zorder>
       <zorder>widget_100</zorder>
       <zorder>btnlogout_11</zorder>
-      <zorder>label_pic</zorder>
      </widget>
      <widget class="QWidget" name="widget_101" native="true">
       <property name="geometry">
@@ -10303,43 +10396,13 @@ border-left:none;
 
 </string>
       </property>
-      <widget class="QLabel" name="label_322">
+      <widget class="QLabel" name="label_336">
        <property name="geometry">
         <rect>
-         <x>60</x>
+         <x>40</x>
          <y>20</y>
-         <width>601</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">  border-radius: 10px; 
-font: 14pt &quot;Microsoft Sans Serif&quot;;
-background: white;
- padding-left: 15px;
-color:#626262;
-border:none;
-</string>
-       </property>
-       <property name="text">
-        <string>        Search Something Here </string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_323">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>30</y>
-         <width>31</width>
-         <height>21</height>
+         <width>71</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -10358,14 +10421,41 @@ background-color:none;
         <bool>true</bool>
        </property>
       </widget>
+      <widget class="QLineEdit" name="workerSearchEdit">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>30</y>
+         <width>591</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">  border-radius: 10px; 
+font: 14pt &quot;Microsoft Sans Serif&quot;;
+background: white;
+ padding-left: 15px;
+color:#626262;
+border:none;
+padding-left: 40px;
+min-height: 40px;
+
+</string>
+       </property>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
+       </property>
+      </widget>
+      <zorder>workerSearchEdit</zorder>
+      <zorder>label_336</zorder>
      </widget>
      <widget class="QWidget" name="widget_107" native="true">
       <property name="geometry">
        <rect>
         <x>270</x>
-        <y>100</y>
+        <y>140</y>
         <width>711</width>
-        <height>601</height>
+        <height>561</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -10400,7 +10490,7 @@ border:none;</string>
        <property name="styleSheet">
         <string notr="true">background : #121212;</string>
        </property>
-       <widget class="QTableWidget" name="tableWidget_23">
+       <widget class="QTableWidget" name="workersTable">
         <property name="geometry">
          <rect>
           <x>60</x>
@@ -10474,12 +10564,22 @@ QTableCornerButton::section {
         </column>
         <column>
          <property name="text">
-          <string>Contact</string>
+          <string>Contact Number</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Email</string>
          </property>
         </column>
         <column>
          <property name="text">
           <string>Status</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Salary</string>
          </property>
         </column>
         <item row="0" column="0">
@@ -10512,21 +10612,8 @@ QTableCornerButton::section {
           <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
          </property>
         </item>
-        <item row="0" column="3">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="font">
-          <font>
-           <family>Times New Roman</family>
-          </font>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-         </property>
-        </item>
        </widget>
-       <widget class="QPushButton" name="pushButton_95">
+       <widget class="QPushButton" name="removeWorkerBtn">
         <property name="geometry">
          <rect>
           <x>450</x>
@@ -10546,7 +10633,7 @@ border-radius: 4px;
          <string>- Remove Worker</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="addworker111">
+       <widget class="QPushButton" name="addWorkerBtn">
         <property name="geometry">
          <rect>
           <x>320</x>
@@ -11265,22 +11352,14 @@ border-left:none;
 
 </string>
       </property>
-      <widget class="QLabel" name="label_335">
+      <widget class="QLineEdit" name="lineEdit_10">
        <property name="geometry">
         <rect>
-         <x>50</x>
-         <y>40</y>
-         <width>601</width>
-         <height>41</height>
+         <x>40</x>
+         <y>30</y>
+         <width>591</width>
+         <height>40</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">  border-radius: 10px; 
@@ -11289,19 +11368,22 @@ background: white;
  padding-left: 15px;
 color:#626262;
 border:none;
+padding-left: 40px;
+min-height: 40px;
+
 </string>
        </property>
-       <property name="text">
-        <string>        Search Something Here </string>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_336">
+      <widget class="QLabel" name="label_335">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>50</y>
-         <width>31</width>
-         <height>21</height>
+         <x>30</x>
+         <y>20</y>
+         <width>71</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -11495,7 +11577,7 @@ border-radius:14px;</string>
         <rect>
          <x>90</x>
          <y>580</y>
-         <width>71</width>
+         <width>91</width>
          <height>31</height>
         </rect>
        </property>
@@ -11505,7 +11587,7 @@ color:#e0e4e4;
 </string>
        </property>
        <property name="text">
-        <string>Admin</string>
+        <string>Worker</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_389">
@@ -11522,7 +11604,7 @@ color:#e0e4e4;
 </string>
        </property>
        <property name="text">
-        <string>Manager</string>
+        <string>Dashboard</string>
        </property>
       </widget>
       <widget class="QWidget" name="widget_153" native="true">
@@ -13132,12 +13214,52 @@ border:none;</string>
         <string notr="true">background : #121212;
 border-radius:7px;</string>
        </property>
-       <widget class="QTableWidget" name="tableWidget_27">
+       <widget class="QPushButton" name="pushButton_41">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>80</y>
-          <width>511</width>
+          <x>450</x>
+          <y>20</y>
+          <width>121</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:#436cfd;
+font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+color:white;
+border-radius: 4px;
+</string>
+        </property>
+        <property name="text">
+         <string>- Remove Product</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="addProductBtn_4">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>20</y>
+          <width>121</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:#436cfd;
+font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+color:white;
+border-radius: 4px;
+</string>
+        </property>
+        <property name="text">
+         <string>+ Add Product</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="productsTable_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>90</y>
+          <width>591</width>
           <height>311</height>
          </rect>
         </property>
@@ -13196,7 +13318,7 @@ QTableCornerButton::section {
         <row/>
         <column>
          <property name="text">
-          <string>ID</string>
+          <string>Product ID</string>
          </property>
         </column>
         <column>
@@ -13206,12 +13328,22 @@ QTableCornerButton::section {
         </column>
         <column>
          <property name="text">
+          <string>Price</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
           <string>Category</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Amount</string>
+          <string>Quantity</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Date</string>
          </property>
         </column>
         <item row="0" column="0">
@@ -13231,9 +13363,6 @@ QTableCornerButton::section {
          </property>
          <property name="icon">
           <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
         <item row="0" column="2">
@@ -13258,46 +13387,6 @@ QTableCornerButton::section {
          </property>
         </item>
        </widget>
-       <widget class="QPushButton" name="pushButton_41">
-        <property name="geometry">
-         <rect>
-          <x>450</x>
-          <y>20</y>
-          <width>121</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background:#436cfd;
-font: 500 10pt &quot;Microsoft Sans Serif&quot;;
-color:white;
-border-radius: 4px;
-</string>
-        </property>
-        <property name="text">
-         <string>- Remove Product</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_42">
-        <property name="geometry">
-         <rect>
-          <x>310</x>
-          <y>20</y>
-          <width>121</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background:#436cfd;
-font: 500 10pt &quot;Microsoft Sans Serif&quot;;
-color:white;
-border-radius: 4px;
-</string>
-        </property>
-        <property name="text">
-         <string>+ Add Product</string>
-        </property>
-       </widget>
       </widget>
      </widget>
      <widget class="QWidget" name="widget_162" native="true">
@@ -13320,22 +13409,14 @@ border-left:none;
 
 </string>
       </property>
-      <widget class="QLabel" name="label_431">
+      <widget class="QLineEdit" name="lineEdit_7">
        <property name="geometry">
         <rect>
          <x>50</x>
-         <y>40</y>
-         <width>601</width>
-         <height>41</height>
+         <y>29</y>
+         <width>591</width>
+         <height>40</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">  border-radius: 10px; 
@@ -13344,19 +13425,22 @@ background: white;
  padding-left: 15px;
 color:#626262;
 border:none;
+padding-left: 40px;
+min-height: 40px;
+
 </string>
        </property>
-       <property name="text">
-        <string>        Search Something Here </string>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_432">
+      <widget class="QLabel" name="label_431">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>50</y>
-         <width>31</width>
-         <height>21</height>
+         <x>40</x>
+         <y>20</y>
+         <width>71</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -14193,22 +14277,14 @@ border-left:none;
 
 </string>
       </property>
-      <widget class="QLabel" name="label_438">
+      <widget class="QLineEdit" name="lineEdit_9">
        <property name="geometry">
         <rect>
          <x>50</x>
-         <y>40</y>
-         <width>601</width>
-         <height>41</height>
+         <y>30</y>
+         <width>591</width>
+         <height>40</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="styleSheet">
         <string notr="true">  border-radius: 10px; 
@@ -14217,19 +14293,22 @@ background: white;
  padding-left: 15px;
 color:#626262;
 border:none;
+padding-left: 40px;
+min-height: 40px;
+
 </string>
        </property>
-       <property name="text">
-        <string>        Search Something Here </string>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_441">
+      <widget class="QLabel" name="label_438">
        <property name="geometry">
         <rect>
-         <x>60</x>
-         <y>50</y>
-         <width>31</width>
-         <height>21</height>
+         <x>40</x>
+         <y>20</y>
+         <width>71</width>
+         <height>61</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -14291,12 +14370,12 @@ border:none;</string>
         <string notr="true">background : #121212;
 border-radius:7px;</string>
        </property>
-       <widget class="QTableWidget" name="tableWidget_28">
+       <widget class="QTableWidget" name="tableWidget_18">
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>30</y>
-          <width>571</width>
+          <y>50</y>
+          <width>581</width>
           <height>361</height>
          </rect>
         </property>
@@ -14355,17 +14434,17 @@ QTableCornerButton::section {
         <row/>
         <column>
          <property name="text">
-          <string>Sr No.</string>
+          <string>P_ID</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Item</string>
+          <string>P_Name</string>
          </property>
         </column>
         <column>
          <property name="text">
-          <string>Price(per unit)</string>
+          <string>Price</string>
          </property>
         </column>
         <column>
@@ -14375,12 +14454,7 @@ QTableCornerButton::section {
         </column>
         <column>
          <property name="text">
-          <string>Quantity</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Qr Number</string>
+          <string>Total Quantity</string>
          </property>
         </column>
         <item row="0" column="0">
@@ -14427,14 +14501,6 @@ QTableCornerButton::section {
          </property>
         </item>
         <item row="0" column="4">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-         </property>
-        </item>
-        <item row="0" column="5">
          <property name="text">
           <string/>
          </property>
@@ -14915,7 +14981,7 @@ border:none;</string>
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="salesdashboard">
+    <widget class="QWidget" name="salespoint">
      <widget class="QFrame" name="frame_11">
       <property name="geometry">
        <rect>
@@ -15315,10 +15381,10 @@ background-image:url(&quot;:/new/prefix1/images/logout-05-Stroke-Rounded.png&quo
      <widget class="QWidget" name="widget_164" native="true">
       <property name="geometry">
        <rect>
-        <x>870</x>
-        <y>30</y>
+        <x>890</x>
+        <y>101</y>
         <width>371</width>
-        <height>722</height>
+        <height>651</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -15691,7 +15757,7 @@ color:#f0f0f0;</string>
       <widget class="QLabel" name="label_383">
        <property name="geometry">
         <rect>
-         <x>260</x>
+         <x>250</x>
          <y>10</y>
          <width>61</width>
          <height>31</height>
@@ -15709,7 +15775,7 @@ color:#fcfcfc;</string>
       <widget class="QLabel" name="label_384">
        <property name="geometry">
         <rect>
-         <x>260</x>
+         <x>250</x>
          <y>70</y>
          <width>61</width>
          <height>31</height>
@@ -15727,7 +15793,7 @@ color:#fcfcfc;</string>
       <widget class="QLabel" name="label_385">
        <property name="geometry">
         <rect>
-         <x>260</x>
+         <x>250</x>
          <y>130</y>
          <width>61</width>
          <height>31</height>
@@ -15745,10 +15811,10 @@ background:transparent;</string>
       <widget class="QLabel" name="label_386">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>290</y>
-         <width>321</width>
-         <height>51</height>
+         <x>190</x>
+         <y>250</y>
+         <width>81</width>
+         <height>41</height>
         </rect>
        </property>
        <property name="layoutDirection">
@@ -15762,7 +15828,7 @@ text-align:right;
 font: 600 10pt &quot;Microsoft Sans Serif&quot;;</string>
        </property>
        <property name="text">
-        <string>Total: 1320.00 Rs.   </string>
+        <string>Total :    </string>
        </property>
        <property name="textFormat">
         <enum>Qt::TextFormat::PlainText</enum>
@@ -15777,7 +15843,7 @@ font: 600 10pt &quot;Microsoft Sans Serif&quot;;</string>
          <x>340</x>
          <y>0</y>
          <width>16</width>
-         <height>281</height>
+         <height>251</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -15822,6 +15888,234 @@ background : #fcfcfc;
         </layout>
        </widget>
       </widget>
+      <widget class="QLabel" name="label_135">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>130</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
+background-image: url(&quot;:/new/prefix1/images/cancel-01-Stroke-Rounded.png&quot;);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content;
+border:none;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cross_5">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>130</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cross_6">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>70</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_136">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>70</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
+background-image: url(&quot;:/new/prefix1/images/cancel-01-Stroke-Rounded.png&quot;);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content;
+border:none;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="cross_7">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>10</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border:none;
+background:transparent;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_154">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>10</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:transparent;
+background-image: url(&quot;:/new/prefix1/images/cancel-01-Stroke-Rounded.png&quot;);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content;
+border:none;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="labelTotalPrice">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>250</y>
+         <width>111</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LayoutDirection::LeftToRight</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border : none;
+border-bottom: 2px solid #121212;
+border-top: 2px solid #121212;
+text-align:right;
+font: 600 10pt &quot;Microsoft Sans Serif&quot;;</string>
+       </property>
+       <property name="text">
+        <string>1330 Rs.</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::TextFormat::PlainText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="addQtyBtn">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>260</y>
+         <width>21</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:#436cfd;
+font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+color:white;
+border-radius: 4px;
+border:none;
+</string>
+       </property>
+       <property name="text">
+        <string>+</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="removeQtyBtn">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>260</y>
+         <width>21</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:#436cfd;
+font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+color:white;
+border-radius: 4px;
+border :none;
+</string>
+       </property>
+       <property name="text">
+        <string>-</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_439">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>250</y>
+         <width>81</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LayoutDirection::LeftToRight</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border : none;
+border-bottom: 2px solid #121212;
+border-top: 2px solid #121212;
+text-align:right;
+font: 600 10pt &quot;Microsoft Sans Serif&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Quantity:    </string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::TextFormat::PlainText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QWidget" name="selectionWidget" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>361</width>
+         <height>251</height>
+        </rect>
+       </property>
+      </widget>
+      <zorder>selectionWidget</zorder>
       <zorder>widget_177</zorder>
       <zorder>label_375</zorder>
       <zorder>label_378</zorder>
@@ -15835,13 +16129,23 @@ background : #fcfcfc;
       <zorder>label_386</zorder>
       <zorder>verticalScrollBar</zorder>
       <zorder>widget_152</zorder>
+      <zorder>label_135</zorder>
+      <zorder>cross_5</zorder>
+      <zorder>cross_6</zorder>
+      <zorder>label_136</zorder>
+      <zorder>cross_7</zorder>
+      <zorder>label_154</zorder>
+      <zorder>labelTotalPrice</zorder>
+      <zorder>addQtyBtn</zorder>
+      <zorder>removeQtyBtn</zorder>
+      <zorder>label_439</zorder>
      </widget>
      <widget class="QWidget" name="widget_181" native="true">
       <property name="geometry">
        <rect>
         <x>270</x>
         <y>30</y>
-        <width>601</width>
+        <width>621</width>
         <height>671</height>
        </rect>
       </property>
@@ -15862,6 +16166,126 @@ background : #fcfcfc;
 border-bottom-right-radius: 5px;
 border-bottom-left-radius: 5px;</string>
        </property>
+       <widget class="QLabel" name="label_441">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>10</y>
+          <width>521</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color : #fcfcfc;
+border : none;
+border-bottom: 2px solid #121212;
+padding-bottom:6px;
+
+font: 600 10pt &quot;Microsoft Sans Serif&quot;;</string>
+        </property>
+        <property name="text">
+         <string>    Product 2</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_501">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>40</y>
+          <width>161</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:none;
+border:none;
+color:#3a3a3a;</string>
+        </property>
+        <property name="text">
+         <string>  1.00 Units at 440.00 Rs. / Units</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_542">
+        <property name="geometry">
+         <rect>
+          <x>450</x>
+          <y>20</y>
+          <width>61</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+border : none;
+color:#fcfcfc;</string>
+        </property>
+        <property name="text">
+         <string>440.00 Rs.</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_543">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>100</y>
+          <width>161</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:none;
+border:none;
+color:#3a3a3a;</string>
+        </property>
+        <property name="text">
+         <string>  1.00 Units at 440.00 Rs. / Units</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_544">
+        <property name="geometry">
+         <rect>
+          <x>450</x>
+          <y>80</y>
+          <width>61</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+border : none;
+color:#fcfcfc;</string>
+        </property>
+        <property name="text">
+         <string>440.00 Rs.</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_545">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>70</y>
+          <width>521</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color : #fcfcfc;
+border : none;
+border-bottom: 2px solid #121212;
+padding-bottom:6px;
+
+font: 600 10pt &quot;Microsoft Sans Serif&quot;;</string>
+        </property>
+        <property name="text">
+         <string>    Product 2</string>
+        </property>
+       </widget>
+       <zorder>label_545</zorder>
+       <zorder>label_441</zorder>
+       <zorder>label_501</zorder>
+       <zorder>label_542</zorder>
+       <zorder>label_543</zorder>
+       <zorder>label_544</zorder>
       </widget>
       <widget class="QLabel" name="label_440">
        <property name="geometry">
@@ -15888,38 +16312,6 @@ background-color:none;
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="label_439">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>30</y>
-         <width>521</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Microsoft Sans Serif</family>
-         <pointsize>10</pointsize>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">
-font: 10pt &quot;Microsoft Sans Serif&quot;;
-background: white;
- padding-left: 15px;
-background-color:#fcfcfc;
-border:none;
-color:#767676;
-border-top-right-radius: 5px;
-border-top-left-radius: 5px;</string>
-       </property>
-       <property name="text">
-        <string>           Search Product </string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_455">
        <property name="geometry">
         <rect>
@@ -15943,11 +16335,124 @@ background-image: url(&quot;:/new/prefix1/images/cancel-01-Stroke-Rounded (1).pn
         <bool>true</bool>
        </property>
       </widget>
-      <zorder>label_439</zorder>
-      <zorder>widget_182</zorder>
-      <zorder>label_440</zorder>
-      <zorder>label_455</zorder>
+      <widget class="QLineEdit" name="productSalesSearchEdit">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>29</y>
+         <width>521</width>
+         <height>40</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
+font: 10pt &quot;Microsoft Sans Serif&quot;;
+background: white;
+ padding-left: 15px;
+background-color:#fcfcfc;
+border:none;
+color:#767676;
+border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+padding-left : 40px;
+
+</string>
+       </property>
+       <property name="placeholderText">
+        <string>  Searh Something here</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_432">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>20</y>
+         <width>71</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius:10px;
+border:none;
+background-color:none;
+  background-image: url(&quot;:/new/prefix1/images/search-01-Stroke-Rounded.png&quot;);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
      </widget>
+     <widget class="QWidget" name="salesTab" native="true">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>1241</width>
+        <height>671</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background:#0a0a0a;</string>
+      </property>
+      <widget class="QPushButton" name="clearSelectionBtn">
+       <property name="geometry">
+        <rect>
+         <x>870</x>
+         <y>10</y>
+         <width>111</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:#436cfd;
+font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+color:white;
+border-radius: 8px;
+border : none;
+border-bottom-right-radius: 0px;
+border-bottom-left-radius: 0px;
+border-top-left-radius: 0px;
+
+</string>
+       </property>
+       <property name="text">
+        <string>Clear Selection</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="sellProductsBtn">
+       <property name="geometry">
+        <rect>
+         <x>1110</x>
+         <y>10</y>
+         <width>111</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:#436cfd;
+font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+color:white;
+border-radius: 8px;
+border : none;
+border-bottom-right-radius: 0px;
+border-bottom-left-radius: 0px;
+border-top-right-radius: 0px;</string>
+       </property>
+       <property name="text">
+        <string>Sell Products</string>
+       </property>
+      </widget>
+     </widget>
+     <zorder>salesTab</zorder>
+     <zorder>frame_11</zorder>
+     <zorder>widget_164</zorder>
+     <zorder>widget_181</zorder>
     </widget>
     <widget class="QWidget" name="addworker">
      <widget class="QWidget" name="widget_105" native="true">
@@ -15978,26 +16483,6 @@ background:#0a0a0a;</string>
 max-height: 520px;
 background-color:#121212;</string>
        </property>
-       <widget class="QLineEdit" name="lineEdit_6">
-        <property name="geometry">
-         <rect>
-          <x>150</x>
-          <y>110</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border:none;
-border-bottom: 2px solid #3a3a3a;
-background: white;
-border-radius:4px;
-color:#0a0a0a;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_307">
         <property name="geometry">
          <rect>
@@ -16015,28 +16500,11 @@ border:none;</string>
          <string>Add Worker</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_69">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>110</y>
-          <width>71</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color:#3a3a3a;
-font: 10pt &quot;Segoe UI&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Name :</string>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_71">
         <property name="geometry">
          <rect>
-          <x>370</x>
-          <y>110</y>
+          <x>60</x>
+          <y>100</y>
           <width>71</width>
           <height>31</height>
          </rect>
@@ -16046,15 +16514,15 @@ font: 10pt &quot;Segoe UI&quot;;</string>
 font: 10pt &quot;Segoe UI&quot;;</string>
         </property>
         <property name="text">
-         <string>Email :</string>
+         <string>Name:</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_7">
+       <widget class="QLineEdit" name="workerNameEdit">
         <property name="geometry">
          <rect>
-          <x>450</x>
-          <y>110</y>
-          <width>181</width>
+          <x>150</x>
+          <y>100</y>
+          <width>281</width>
           <height>31</height>
          </rect>
         </property>
@@ -16072,25 +16540,8 @@ color:#0a0a0a;</string>
        <widget class="QLabel" name="label_72">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>40</x>
           <y>200</y>
-          <width>81</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color:#3a3a3a;
-font: 10pt &quot;Segoe UI&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Password :</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_78">
-        <property name="geometry">
-         <rect>
-          <x>50</x>
-          <y>280</y>
           <width>101</width>
           <height>31</height>
          </rect>
@@ -16103,12 +16554,29 @@ font: 10pt &quot;Segoe UI&quot;;</string>
          <string>Contact Number :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_10">
+       <widget class="QLabel" name="label_78">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>280</y>
+          <width>101</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Salary :</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="workerContactEdit">
         <property name="geometry">
          <rect>
           <x>150</x>
           <y>200</y>
-          <width>481</width>
+          <width>231</width>
           <height>31</height>
          </rect>
         </property>
@@ -16123,7 +16591,7 @@ color:#0a0a0a;</string>
          <string/>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_11">
+       <widget class="QLineEdit" name="workerSalaryEdit">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -16143,11 +16611,11 @@ color:#0a0a0a;</string>
          <string/>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_98">
+       <widget class="QPushButton" name="addWorkerBtn_2">
         <property name="geometry">
          <rect>
           <x>270</x>
-          <y>420</y>
+          <y>430</y>
           <width>131</width>
           <height>41</height>
          </rect>
@@ -16161,6 +16629,97 @@ border-radius: 4px;
         </property>
         <property name="text">
          <string>Submit</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_585">
+        <property name="geometry">
+         <rect>
+          <x>370</x>
+          <y>280</y>
+          <width>91</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Date Of Joining :</string>
+        </property>
+       </widget>
+       <widget class="QDateEdit" name="dateEdit_3">
+        <property name="geometry">
+         <rect>
+          <x>470</x>
+          <y>280</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_504">
+        <property name="geometry">
+         <rect>
+          <x>430</x>
+          <y>200</y>
+          <width>71</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Status :</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="statusCombo">
+        <property name="geometry">
+         <rect>
+          <x>490</x>
+          <y>200</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="workerEmailEdit">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>350</y>
+          <width>231</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+border-bottom: 2px solid #3a3a3a;
+background: white;
+border-radius:4px;
+color:#0a0a0a;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_155">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>350</y>
+          <width>101</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Email :</string>
         </property>
        </widget>
       </widget>
@@ -16556,7 +17115,7 @@ background:#0a0a0a;</string>
 max-height: 520px;
 background-color:#121212;</string>
        </property>
-       <widget class="QLineEdit" name="lineEdit_12">
+       <widget class="QLineEdit" name="debtorNameEdit">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -16608,7 +17167,7 @@ border:none;</string>
 font: 10pt &quot;Segoe UI&quot;;</string>
         </property>
         <property name="text">
-         <string>ID :</string>
+         <string>Name :</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_567">
@@ -16628,7 +17187,7 @@ font: 10pt &quot;Segoe UI&quot;;</string>
          <string>Contact Number :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_13">
+       <widget class="QLineEdit" name="debtorContactEdit">
         <property name="geometry">
          <rect>
           <x>450</x>
@@ -16662,7 +17221,7 @@ color:#0a0a0a;</string>
 font: 10pt &quot;Segoe UI&quot;;</string>
         </property>
         <property name="text">
-         <string>Name :</string>
+         <string>Address :</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_569">
@@ -16682,7 +17241,7 @@ font: 10pt &quot;Segoe UI&quot;;</string>
          <string>Debt Amount :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_14">
+       <widget class="QLineEdit" name="debtorAddressEdit">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -16702,12 +17261,12 @@ color:#0a0a0a;</string>
          <string/>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_15">
+       <widget class="QLineEdit" name="debtorAmountEdit">
         <property name="geometry">
          <rect>
           <x>150</x>
           <y>280</y>
-          <width>181</width>
+          <width>171</width>
           <height>31</height>
          </rect>
         </property>
@@ -16722,7 +17281,7 @@ color:#0a0a0a;</string>
          <string/>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_111">
+       <widget class="QPushButton" name="addDebtorBtn_2">
         <property name="geometry">
          <rect>
           <x>270</x>
@@ -16740,6 +17299,33 @@ border-radius: 4px;
         </property>
         <property name="text">
          <string>Submit</string>
+        </property>
+       </widget>
+       <widget class="QDateEdit" name="dateEdit">
+        <property name="geometry">
+         <rect>
+          <x>460</x>
+          <y>280</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_583">
+        <property name="geometry">
+         <rect>
+          <x>390</x>
+          <y>280</y>
+          <width>61</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Date :</string>
         </property>
        </widget>
       </widget>
@@ -17124,8 +17710,8 @@ background:#0a0a0a;</string>
       <widget class="QWidget" name="widget_28" native="true">
        <property name="geometry">
         <rect>
-         <x>180</x>
-         <y>90</y>
+         <x>190</x>
+         <y>80</y>
          <width>671</width>
          <height>520</height>
         </rect>
@@ -17135,7 +17721,7 @@ background:#0a0a0a;</string>
 max-height: 520px;
 background-color:#121212;</string>
        </property>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLineEdit" name="productIDEdit">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -17175,9 +17761,9 @@ border:none;</string>
        <widget class="QLabel" name="label_31">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>40</x>
           <y>115</y>
-          <width>91</width>
+          <width>101</width>
           <height>21</height>
          </rect>
         </property>
@@ -17186,15 +17772,15 @@ border:none;</string>
 font: 10pt &quot;Segoe UI&quot;;</string>
         </property>
         <property name="text">
-         <string>Serial Number :</string>
+         <string>Product ID :</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_38">
         <property name="geometry">
          <rect>
-          <x>370</x>
+          <x>360</x>
           <y>110</y>
-          <width>71</width>
+          <width>81</width>
           <height>31</height>
          </rect>
         </property>
@@ -17203,10 +17789,10 @@ font: 10pt &quot;Segoe UI&quot;;</string>
 font: 10pt &quot;Segoe UI&quot;;</string>
         </property>
         <property name="text">
-         <string>QR Number :</string>
+         <string>Product Name :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_2">
+       <widget class="QLineEdit" name="productNameEdit">
         <property name="geometry">
          <rect>
           <x>450</x>
@@ -17229,43 +17815,9 @@ color:#0a0a0a;</string>
        <widget class="QLabel" name="label_51">
         <property name="geometry">
          <rect>
-          <x>50</x>
-          <y>200</y>
-          <width>81</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color:#3a3a3a;
-font: 10pt &quot;Segoe UI&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Product Name :</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_66">
-        <property name="geometry">
-         <rect>
           <x>40</x>
-          <y>280</y>
+          <y>200</y>
           <width>101</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color:#3a3a3a;
-font: 10pt &quot;Segoe UI&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Product Quantity :</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_67">
-        <property name="geometry">
-         <rect>
-          <x>90</x>
-          <y>360</y>
-          <width>51</width>
           <height>31</height>
          </rect>
         </property>
@@ -17277,12 +17829,29 @@ font: 10pt &quot;Segoe UI&quot;;</string>
          <string>Price :</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_3">
+       <widget class="QLabel" name="label_66">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>290</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Product Quantity :</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="priceEdit">
         <property name="geometry">
          <rect>
           <x>150</x>
           <y>200</y>
-          <width>481</width>
+          <width>111</width>
           <height>31</height>
          </rect>
         </property>
@@ -17297,11 +17866,11 @@ color:#0a0a0a;</string>
          <string/>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_4">
+       <widget class="QLineEdit" name="quantityEdit">
         <property name="geometry">
          <rect>
           <x>150</x>
-          <y>280</y>
+          <y>290</y>
           <width>181</width>
           <height>31</height>
          </rect>
@@ -17317,31 +17886,11 @@ color:#0a0a0a;</string>
          <string/>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_5">
+       <widget class="QPushButton" name="addProductBtn_2">
         <property name="geometry">
          <rect>
-          <x>150</x>
-          <y>360</y>
-          <width>181</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border:none;
-border-bottom: 2px solid #3a3a3a;
-background: white;
-border-radius:4px;
-color:#0a0a0a;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_85">
-        <property name="geometry">
-         <rect>
-          <x>440</x>
-          <y>450</y>
+          <x>300</x>
+          <y>420</y>
           <width>131</width>
           <height>41</height>
          </rect>
@@ -17355,6 +17904,70 @@ border-radius: 4px;
         </property>
         <property name="text">
          <string>Submit</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="categoryCombo">
+        <property name="geometry">
+         <rect>
+          <x>370</x>
+          <y>200</y>
+          <width>261</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <item>
+         <property name="text">
+          <string>Grocery</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Sports</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QLabel" name="label_503">
+        <property name="geometry">
+         <rect>
+          <x>300</x>
+          <y>200</y>
+          <width>71</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Category :</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_584">
+        <property name="geometry">
+         <rect>
+          <x>390</x>
+          <y>290</y>
+          <width>61</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Date :</string>
+        </property>
+       </widget>
+       <widget class="QDateEdit" name="dateEdit_2">
+        <property name="geometry">
+         <rect>
+          <x>450</x>
+          <y>290</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
         </property>
        </widget>
       </widget>
@@ -17405,9 +18018,9 @@ hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Microsoft Sans Serif'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Segoe UI'; font-size:11pt;&quot;&gt;** PID cannot be edited **&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Segoe UI'; font-size:11pt; color:#6a6a6a;&quot;&gt;** PID cannot be edited **&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:11pt; color:#6a6a6a;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:11pt; color:#6a6a6a;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </widget>
@@ -17685,7 +18298,8 @@ border:none;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">border:none;
-background:transparent;</string>
+background:transparent;
+color:black;</string>
         </property>
         <property name="text">
          <string/>
@@ -17717,6 +18331,607 @@ border:none;</string>
        <zorder>widget_94</zorder>
        <zorder>label_288</zorder>
        <zorder>cross_2</zorder>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="addVendor">
+     <widget class="QWidget" name="widget_129" native="true">
+      <property name="geometry">
+       <rect>
+        <x>-20</x>
+        <y>30</y>
+        <width>1280</width>
+        <height>671</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">max-width:1280px;
+max-height:720px;
+background:#0a0a0a;</string>
+      </property>
+      <widget class="QWidget" name="widget_186" native="true">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>90</y>
+         <width>671</width>
+         <height>520</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">max-width: 900px;
+max-height: 520px;
+background-color:#121212;</string>
+       </property>
+       <widget class="QLineEdit" name="vendorNameEdit">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>110</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit {
+    background-color: #1E1E1E;  /* Darker background */
+    color: #888888;            /* Muted text color */
+    border: none;
+border-radius:4px;
+}</string>
+        </property>
+        <property name="text">
+         <string>22</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_505">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>10</y>
+          <width>181</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 16pt &quot;Sans Serif Collection&quot;;
+border:none;</string>
+        </property>
+        <property name="text">
+         <string>Add Vendor</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_586">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>110</y>
+          <width>71</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Name :</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_587">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>110</y>
+          <width>91</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Contact Number :</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="vendorContactEdit">
+        <property name="geometry">
+         <rect>
+          <x>450</x>
+          <y>110</y>
+          <width>181</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+border-bottom: 2px solid #3a3a3a;
+background: white;
+border-radius:4px;
+color:#0a0a0a;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_588">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>200</y>
+          <width>81</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Address :</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_589">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>280</y>
+          <width>101</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Payment :</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="vendorAddressEdit">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>200</y>
+          <width>481</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+border-bottom: 2px solid #3a3a3a;
+background: white;
+border-radius:4px;
+color:#0a0a0a;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="vendorPaymentEdit">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>280</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+border-bottom: 2px solid #3a3a3a;
+background: white;
+border-radius:4px;
+color:#0a0a0a;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="addVendorBtn_2">
+        <property name="geometry">
+         <rect>
+          <x>270</x>
+          <y>420</y>
+          <width>131</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:#436cfd;
+font: 500 10pt &quot;Microsoft Sans Serif&quot;;
+color:white;
+border-radius: 4px;
+</string>
+        </property>
+        <property name="text">
+         <string>Submit</string>
+        </property>
+       </widget>
+       <widget class="QDateEdit" name="dateEdit_4">
+        <property name="geometry">
+         <rect>
+          <x>460</x>
+          <y>280</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_590">
+        <property name="geometry">
+         <rect>
+          <x>360</x>
+          <y>280</y>
+          <width>91</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:#3a3a3a;
+font: 10pt &quot;Segoe UI&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Date of Supply:</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="widget_187" native="true">
+       <property name="geometry">
+        <rect>
+         <x>850</x>
+         <y>90</y>
+         <width>301</width>
+         <height>521</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background:#121212;
+border: 2px solid #0a0a0a;
+border-top:none;</string>
+       </property>
+       <widget class="QWidget" name="widget_192" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>140</y>
+          <width>271</width>
+          <height>141</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius: 10px;
+background:#181818;</string>
+        </property>
+        <widget class="QTextEdit" name="textEdit_5">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>271</width>
+           <height>141</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 12pt &quot;Microsoft Sans Serif&quot;;</string>
+         </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Microsoft Sans Serif'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Segoe UI'; font-size:11pt;&quot;&gt;** PID cannot be edited **&lt;/span&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:11pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="widget_193" native="true">
+        <property name="geometry">
+         <rect>
+          <x>980</x>
+          <y>0</y>
+          <width>301</width>
+          <height>720</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:#0a0a0a;
+border: 2px solid #121212;
+border-top:none;</string>
+        </property>
+        <widget class="QLabel" name="label_591">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>20</y>
+           <width>111</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 16pt &quot;Sans Serif Collection&quot;;
+border:none;</string>
+         </property>
+         <property name="text">
+          <string>Overview</string>
+         </property>
+        </widget>
+        <widget class="QWidget" name="widget_194" native="true">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>80</y>
+           <width>271</width>
+           <height>141</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border-radius: 10px;
+background:#181818;</string>
+         </property>
+         <widget class="QLabel" name="label_592">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>20</y>
+            <width>71</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:#494949;
+</string>
+          </property>
+          <property name="text">
+           <string>Total Sales:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_593">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>60</y>
+            <width>71</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:#494949;
+</string>
+          </property>
+          <property name="text">
+           <string>Total Profit:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_594">
+          <property name="geometry">
+           <rect>
+            <x>30</x>
+            <y>100</y>
+            <width>91</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color:#494949;
+</string>
+          </property>
+          <property name="text">
+           <string>Remaining Stock:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_595">
+          <property name="geometry">
+           <rect>
+            <x>170</x>
+            <y>20</y>
+            <width>91</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border:none;
+color:#adadad;</string>
+          </property>
+          <property name="text">
+           <string>4000</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_596">
+          <property name="geometry">
+           <rect>
+            <x>170</x>
+            <y>60</y>
+            <width>91</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border:none;
+color:#adadad;</string>
+          </property>
+          <property name="text">
+           <string>23%</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_597">
+          <property name="geometry">
+           <rect>
+            <x>170</x>
+            <y>100</y>
+            <width>91</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border:none;
+color:#adadad;</string>
+          </property>
+          <property name="text">
+           <string>3978</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QLabel" name="label_598">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>240</y>
+           <width>141</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 16pt &quot;Sans Serif Collection&quot;;
+border:none;</string>
+         </property>
+         <property name="text">
+          <string>Weekly Report</string>
+         </property>
+        </widget>
+        <widget class="QTableWidget" name="tableWidget_32">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>310</y>
+           <width>271</width>
+           <height>231</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QTableWidget, QTableView {
+    border: 1px solid #121212;
+    border-radius: 5px;
+    gridline-color: #ddd;
+    background-color: #adadad;
+    font-size: 10px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    selection-background-color: #0078D7;
+    selection-color: white;
+}
+
+QHeaderView::section {
+    background-color:#0a0a0a;
+    color: white;
+    padding: 4px;
+    border: 1px solid #121212;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+QTableWidget::item, QTableView::item {
+    padding: 2px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+QTableWidget::item:selected, QTableView::item:selected {
+    background-color: #0078D7;
+    color: white;
+}
+
+QTableCornerButton::section {
+    background-color: #adadad;
+    border: 1px solid #adadad;
+	border-top-left-radius: 8px;
+  
+}
+</string>
+         </property>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
+         <column>
+          <property name="text">
+           <string>Total Sales</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Total Profit</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Remaining Debtors</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Remaining Stock</string>
+          </property>
+         </column>
+         <item row="0" column="0">
+          <property name="text">
+           <string>2123</string>
+          </property>
+         </item>
+        </widget>
+       </widget>
+       <widget class="QLabel" name="label_599">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>70</y>
+          <width>181</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: 16pt &quot;Sans Serif Collection&quot;;
+border:none;</string>
+        </property>
+        <property name="text">
+         <string>INFORMATION</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="cross_4">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>10</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:none;
+background:transparent;
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_600">
+        <property name="geometry">
+         <rect>
+          <x>250</x>
+          <y>20</y>
+          <width>21</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color:transparent;
+background-image: url(&quot;:/new/prefix1/images/cancel-01-Stroke-Rounded.png&quot;);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-origin: content;
+border:none;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </widget>
      </widget>
     </widget>
@@ -19674,132 +20889,6 @@ border:none;</string>
          <property name="styleSheet">
           <string notr="true">background : #121212;</string>
          </property>
-         <widget class="QTableWidget" name="tableWidget_5">
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>80</y>
-            <width>511</width>
-            <height>311</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QTableWidget, QTableView {
-    border: 1px solid #121212;
-    border-radius: 5px;
-    gridline-color: #ddd;
-    background-color: #adadad;
-    font-size: 10px;
-    font-family: Arial, sans-serif;
-    color: #333;
-    selection-background-color: #0078D7;
-    selection-color: white;
-	MAX-WIDTH:600PX;
-}
-
-
-
-QHeaderView::section {
-	width : 80px;
-    background-color:#0a0a0a;
-    color: white;
-    padding: 4px;
-    border: 1px solid #121212;
-    font-size: 10px;
-    font-weight: bold;
-
-}
-
-QTableWidget::item, QTableView::item {
-    padding: 2px;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
-	 min-width: 250px;
-}
-
-QTableWidget::item:selected, QTableView::item:selected {
-    background-color: #0078D7;
-    color: white;
-
-}
-
-QTableCornerButton::section {
-    background-color: #adadad;
-    border: 1px solid #adadad;
-	border-top-left-radius: 8px;
-
-  
-}
-</string>
-          </property>
-          <row/>
-          <row/>
-          <row/>
-          <row/>
-          <column>
-           <property name="text">
-            <string>Name</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Address</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Contact Number</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Debt Amount</string>
-           </property>
-          </column>
-          <item row="0" column="0">
-           <property name="text">
-            <string>2123</string>
-           </property>
-           <property name="icon">
-            <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-           </property>
-          </item>
-          <item row="0" column="1">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="textAlignment">
-            <set>AlignCenter</set>
-           </property>
-           <property name="icon">
-            <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-           </property>
-           <property name="flags">
-            <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
-           </property>
-          </item>
-          <item row="0" column="2">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-           </property>
-          </item>
-          <item row="0" column="3">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="font">
-            <font>
-             <family>Times New Roman</family>
-            </font>
-           </property>
-           <property name="icon">
-            <iconset theme="QIcon::ThemeIcon::FormatJustifyCenter"/>
-           </property>
-          </item>
-         </widget>
          <widget class="QPushButton" name="pushButton_17">
           <property name="geometry">
            <rect>

@@ -6,13 +6,34 @@
 #include <QColor>
 #include <QRegularExpression>
 #include <QLabel>
+#include "debtmanager.h"
+#include <QMessageBox>
+#include <QDateTime>
+#include "salesdashboard.h"
+#include <QVBoxLayout>
+#include "vendormanager.h"
+#include "workermanager.h"
+#include "salesdashboard.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    ,  m_dbHandler(new DatabaseHandler(this))
+    , m_authManager(new AuthManager(m_dbHandler, this))
+    , m_debtManager(new DebtManager(m_dbHandler, this))
+    , m_productManager(new ProductManager(m_dbHandler, this))
+    , m_vendorManager(new VendorManager(m_dbHandler, this))
+    , m_workManager(new WorkerManager(m_dbHandler, this))
+    , m_salesManager(new SalesManager(m_dbHandler, this))
 {
     ui->setupUi(this);
     isDarkMode = true;
+    // m_vendorManager = new VendorManager(m_dbHandler, this);
+    // m_workManager = new WorkerManager(m_dbHandler, this);
+    // m_stockManager = new StockManager(m_dbHandler, this);
+    // Initialize SalesManager
+    m_salesManager = new SalesManager(m_dbHandler, this);
+
 
     // Setup core functionality
     setupIconManagement();
@@ -52,21 +73,47 @@ MainWindow::MainWindow(QWidget *parent)
     ui->eyeButton->setIcon(QIcon(":/new/prefix1/images/view-Stroke-Rounded.png"));
     ui->password_login->setEchoMode(QLineEdit::Password);
 
-    // Setup database connection
-    DBConnection = QSqlDatabase::addDatabase("QMYSQL");
-    DBConnection.setHostName("localhost");
-    DBConnection.setDatabaseName("eyad");
-    DBConnection.setUserName("root");
-    DBConnection.setPassword("");
-
-    if (!DBConnection.open()) {
-        showDarkMessageBox("Database Connection",
-                           "Failed to connect to database: " + DBConnection.lastError().text());
+    m_dbHandler = new DatabaseHandler(this);
+    if (!m_dbHandler->connectToDatabase()) {
+        QMessageBox::critical(this, "Database Error",
+                              "Failed to connect to database. Please check your connection.");
+        // You might want to disable certain features or exit
     }
+
+    // Initialize managers
+    m_authManager = new AuthManager(m_dbHandler, this);
+    m_debtManager = new DebtManager(m_dbHandler, this);
+    connect(m_debtManager, &DebtManager::debtorsUpdated, this, &MainWindow::onDebtorsUpdated);
+    connect(m_productManager, &ProductManager::productsUpdated, this, &MainWindow::onProductsUpdated);
+    connect(m_vendorManager, &VendorManager::vendorsUpdated, this, &MainWindow::onVendorsUpdated);
+    connect(m_workManager, &WorkerManager::workersUpdated, this, &MainWindow::onWorkersUpdated);
+    // connect(m_stockManager, &StockManager::stockUpdated, this, &MainWindow::onStockUpdated);
+    connect(m_salesManager, &SalesManager::salesUpdated, this, &MainWindow::onSalesUpdated);
+
+    // Add these after setupProductManager() and setupDebtManager() calls
+
+    setupDebtManager();
+    setupProductManager();
+    setupVendorManager();
+    setupWorkerManager();
+    // setupStockManager();
+    setupSalesManager();
+
+
+    // Initialize sales-related variables
+    m_totalAmount = 0.0;
+    m_selectedItems.clear();
+
+    // Setup sales management
+
+
+
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+    // Clean up sales manager
+    delete m_salesManager;
 }
 
 void MainWindow::setupChart() {
@@ -164,8 +211,10 @@ void MainWindow::setupNavigation() {
         {ui->btnlogout_6, 0}, {ui->btnlogout_7, 0}, {ui->btnlogout_8, 0},
         {ui->btnlogout_9, 0}, {ui->btnlogout_10, 0}, {ui->btnlogout_11, 0},
         {ui->btnlogout_12, 0}, {ui->cross, 7}, {ui->cross_2, 3},
-        {ui->addprod, 13}, {ui->addworker111, 12}, {ui->pushButton_76, 13}, {ui->cross_3, 2}
+        {ui->addProductBtn, 14}, {ui->addWorkerBtn, 12}, {ui->addDebtorBtn, 13}, {ui->cross_3, 2},
+        {ui->addProductBtn_2, 14},{ui->addProductBtn_4, 3},{ui->addVendorBtn_2, 5},{ui->addVendorBtn, 15}, {ui->addWorkerBtn_2,7}, {ui->addDebtorBtn_2, 2}
     };
+
 
     for (auto it = navMap.begin(); it != navMap.end(); ++it) {
         connectPageButton(it.key(), it.value());
@@ -176,78 +225,6 @@ void MainWindow::on_pushButton_clicked() {
     // Empty implementation as placeholder
 }
 
-void MainWindow::on_pushButton_95_clicked() {
-    QString file_name = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                     QDir::homePath(), tr("Images (*.png *.xpm *.jpg)"));
-    if (file_name.isEmpty()) return;
-
-    // Display image
-    QImage img(file_name);
-    QPixmap pix = QPixmap::fromImage(img);
-    int w = ui->label_pic->width();
-    int h = ui->label_pic->height();
-    ui->label_pic->setPixmap(pix.scaled(w, h, Qt::IgnoreAspectRatio));
-
-    // Process image for black pixels
-    unsigned int cols = img.width();
-    unsigned int rows = img.height();
-    unsigned int numBlackPixels = 0;
-    QVector<QVector<int>> imgArray(rows, QVector<int>(cols, 0));
-
-    // Extract pixel data
-    for (unsigned int i = 0; i < rows; i++) {
-        for (unsigned int j = 0; j < cols; j++) {
-            QColor clrCurrent(img.pixel(j, i));
-            int r = clrCurrent.red();
-            int g = clrCurrent.green();
-            int b = clrCurrent.blue();
-            int a = clrCurrent.alpha();
-            if (r + g + b < 20 && a > 240) {
-                imgArray[i][j] = 1;
-                numBlackPixels += 1;
-            }
-        }
-    }
-
-    // Save results to file
-    QString filename = "C:/Users/EYAD/Download/text.txt";
-    QFile fileout(filename);
-    if (fileout.open(QFile::ReadWrite | QFile::Text)) {
-        QTextStream out(&fileout);
-        for (unsigned int i = 0; i < rows; i++) {
-            for (unsigned int j = 0; j < cols; j++) {
-                out << imgArray[i][j];
-            }
-            out << " " << Qt::endl;
-        }
-    }
-}
-
-void MainWindow::on_loginbtn_clicked() {
-    QString Username = ui->username_login->text();
-    QString Password = ui->password_login->text();
-
-    if (Username == "Eyad" && Password == "jbh") {
-        ui->stackedWidget->setCurrentIndex(1);
-        return;
-    }
-
-    QSqlQuery Query(DBConnection);
-    Query.prepare(
-        "SELECT 'login_master' FROM login_master WHERE name = :username AND password = :password "
-        "UNION "
-        "SELECT 'login_worker' FROM login_worker WHERE name_w = :username AND password_w = :password"
-        );
-    Query.bindValue(":username", Username);
-    Query.bindValue(":password", Password);
-
-    if (Query.exec() && Query.next()) {
-        QString tableName = Query.value(0).toString();
-        ui->stackedWidget->setCurrentIndex(tableName == "login_master" ? 1 : 8);
-    } else {
-        showDarkMessageBox("Login Failed", "Incorrect Username or Password!");
-    }
-}
 
 void MainWindow::showDarkMessageBox(const QString &title, const QString &message) {
     QMessageBox msgBox;
@@ -691,7 +668,7 @@ void MainWindow::restoreDarkModeToAllWidgets() {
 void MainWindow::enableLightMode() {
     if (isDarkMode) {
 
-              // White text for dark mode
+            // White text for dark mode
         // Start transition animation
         QPropertyAnimation* opacityAnim = new QPropertyAnimation(this, "windowOpacity");
         opacityAnim->setDuration(250);
@@ -753,4 +730,697 @@ void MainWindow::enableDarkMode() {
         opacityAnim->start(QAbstractAnimation::DeleteWhenStopped);
     }
 }
+void MainWindow::on_loginbtn_clicked()
+{
+    QString username = ui->username_login->text();
+    QString password = ui->password_login->text();
 
+    if (m_authManager->login(username, password)) {
+        // Login successful - now check if admin or worker
+        if (m_authManager->isAdmin()) {
+            ui->stackedWidget->setCurrentIndex(1); // Admin dashboard
+        } else {
+            ui->stackedWidget->setCurrentIndex(8); // Worker dashboard
+        }
+
+
+    } else {
+        QMessageBox::warning(this, "Login Failed",
+                             "Invalid username or password. Please try again.");
+    }
+}
+
+void MainWindow::logoutUser()
+{
+    m_authManager->logout();
+    ui->stackedWidget->setCurrentIndex(0); // Back to login page
+    ui->username_login->clear();
+    ui->password_login->clear();
+}
+
+void MainWindow::setupDebtManager()
+{
+    m_debtManager = new DebtManager(m_dbHandler, this);
+
+    // Connect signals
+    connect(m_debtManager, &DebtManager::debtorsUpdated, this, &MainWindow::onDebtorsUpdated);
+
+    // Set headers for debtors table
+    QStringList headers = {"ID", "Name", "Contact", "Email", "Address", "Amount", "Date"};
+    ui->debtorsTable->setColumnCount(headers.size());
+    ui->debtorsTable->setHorizontalHeaderLabels(headers);
+
+    // Load data immediately
+    refreshDebtorTable();
+}
+
+// Add this helper function
+void MainWindow::refreshDebtorTable()
+{
+    if (m_dbHandler->isConnected()) {
+        m_debtManager->loadDebtors(ui->debtorsTable);
+    }
+}
+
+void MainWindow::on_addDebtorBtn_clicked()
+{
+    // Navigate to the debtor form page (stackedWidget index 13)
+    ui->stackedWidget->setCurrentIndex(13);
+
+    // Clear the form fields
+    ui->debtorNameEdit->clear();
+    ui->debtorContactEdit->clear();
+    ui->debtorAddressEdit->clear();
+    ui->debtorAmountEdit->clear();
+    ui->dateEdit->setDate(QDate::currentDate());
+}
+
+void MainWindow::on_addDebtorBtn_2_clicked()
+{
+    // Get form data
+    QString name = ui->debtorNameEdit->text().trimmed();
+    QString contact = ui->debtorContactEdit->text().trimmed();
+    QString email = ""; // You may want to add this field to your UI
+    QString address = ui->debtorAddressEdit->text().trimmed();
+    double debtAmount = ui->debtorAmountEdit->text().toDouble();
+    QDate dateIncurred = ui->dateEdit->date();
+
+    // Validate form data
+    if (name.isEmpty() || contact.isEmpty() || address.isEmpty() || debtAmount <= 0) {
+        QMessageBox::warning(this, "Missing Information", "Please fill in all required fields.");
+        return;
+    }
+
+    // Add the debtor to the database
+    if (m_debtManager->addDebtor(name, contact, email, address, debtAmount, dateIncurred)) {
+        QMessageBox::information(this, "Success", "Debtor added successfully.");
+
+        // Return to the debtor management page (index 2)
+        ui->stackedWidget->setCurrentIndex(2);
+
+        // Refresh the table to show the new debtor
+        refreshDebtorTable();
+    } else {
+        QMessageBox::critical(this, "Error", "Failed to add debtor. Please try again.");
+    }
+}
+
+void MainWindow::on_removeDebtorBtn_clicked()
+{
+    // Get the currently selected row
+    int currentRow = ui->debtorsTable->currentRow();
+    if (currentRow < 0) {
+        QMessageBox::warning(this, "No Selection", "Please select a debtor to remove.");
+        return;
+    }
+
+    // Get the debtor ID from the hidden column
+    int debtorId = ui->debtorsTable->item(currentRow, 0)->text().toInt();
+    QString debtorName = ui->debtorsTable->item(currentRow, 1)->text();
+
+    // Confirm deletion
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Confirm Removal",
+                                  "Are you sure you want to remove debtor: " + debtorName + "?",
+                                  QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        if (m_debtManager->removeDebtor(debtorId)) {
+            QMessageBox::information(this, "Success", "Debtor removed successfully.");
+            refreshDebtorTable();
+        } else {
+            QMessageBox::critical(this, "Error", "Failed to remove debtor.");
+        }
+    }
+}
+
+void MainWindow::on_debtorSearchEdit_textChanged(const QString &arg1)
+{
+    // If connected to database and text is not empty, search
+    if (m_dbHandler->isConnected()) {
+        if (arg1.isEmpty()) {
+            refreshDebtorTable();
+        } else {
+            m_debtManager->searchDebtors(ui->debtorsTable, arg1);
+        }
+    }
+}
+
+void MainWindow::onDebtorsUpdated()
+{
+    // Refresh the table when debtors are updated
+    refreshDebtorTable();
+    updateDashboard();
+}
+
+
+
+// You need to add this function to your existing updateDashboard method
+// or modify it to include these updates
+
+void MainWindow::setupProductManager()
+{
+    m_productManager = new ProductManager(m_dbHandler, this);
+
+    // Connect signals and slots
+    connect(m_productManager, &ProductManager::productsUpdated, this, &MainWindow::onProductsUpdated);
+
+    // Set headers for products table
+    QStringList headers = {"ID", "Name", "Price", "Category", "Quantity", "Added At"};
+    ui->productsTable->setColumnCount(headers.size());
+    ui->productsTable->setHorizontalHeaderLabels(headers);
+
+    // Load products data
+    refreshProductTable();
+
+    // Set up category combo box with common categories
+    ui->categoryCombo->clear();
+    ui->categoryCombo->addItem("Electronics");
+    ui->categoryCombo->addItem("Clothing");
+    ui->categoryCombo->addItem("Food");
+    ui->categoryCombo->addItem("Beverages");
+    ui->categoryCombo->addItem("Household");
+    ui->categoryCombo->addItem("Other");
+}
+
+void MainWindow::refreshProductTable()
+{
+    // Load products data into table
+    if (m_dbHandler->isConnected()) {
+        m_productManager->loadProducts(ui->productsTable);
+    }
+}
+void MainWindow::on_addProductBtn_clicked()
+{
+    // Clear the form fields
+    ui->productNameEdit->clear();
+    ui->priceEdit->clear();
+    ui->categoryCombo->setCurrentIndex(0);
+    ui->quantityEdit->clear();
+    ui->dateEdit_2->setDate(QDate::currentDate());
+
+    // Navigate to the add product form page
+    ui->stackedWidget->setCurrentIndex(14);  // Adjust this index if needed
+}
+
+void MainWindow::on_addProductBtn_2_clicked()
+{
+    // Get data from form fields
+    QString name = ui->productNameEdit->text();
+    double price = ui->priceEdit->text().toDouble();
+    QString category = ui->categoryCombo->currentText();
+    int quantity = ui->quantityEdit->text().toInt();
+    QDate date = ui->dateEdit_2->date();
+
+    // Validate inputs
+    if (name.isEmpty() || price <= 0 || quantity < 0) {
+        showDarkMessageBox("Invalid Input", "Please enter valid product details.");
+        return;
+    }
+
+    // Add product
+    if (m_productManager->addProduct(name, price, category, quantity, date)) {
+        // Clear form fields
+        ui->productNameEdit->clear();
+        ui->priceEdit->clear();
+        ui->quantityEdit->clear();
+        ui->dateEdit_2->setDate(QDate::currentDate());
+
+        // Create message box
+        QMessageBox msgBox;
+        msgBox.setText("Information saved successfully");
+        msgBox.setWindowTitle("Success");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+
+        // Show message box and handle response
+        if (msgBox.exec() == QMessageBox::Ok) {
+            // Switch to index 3 when OK is clicked
+            ui->stackedWidget->setCurrentIndex(3);
+        }
+    } else {
+        showDarkMessageBox("Error", "Failed to add product.");
+    }
+}
+
+void MainWindow::on_removeProductBtn_clicked()
+{
+    // Check if a row is selected
+    int selectedRow = ui->productsTable->currentRow();
+    if (selectedRow < 0) {
+        showDarkMessageBox("Error", "Please select a product to remove!");
+        return;
+    }
+
+    // Get the product ID from the first column
+    int productId = ui->productsTable->item(selectedRow, 0)->text().toInt();
+    QString productName = ui->productsTable->item(selectedRow, 1)->text();
+
+     if (m_productManager->removeProduct(productId)) {
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Confirm Removal",
+                                  "Are you sure you want to remove debtor: " + productName + "?",
+                                  QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        if (m_debtManager->removeDebtor(productId)) {
+            QMessageBox::information(this, "Success", "Product removed successfully.");
+            refreshDebtorTable();
+        }
+    }
+    // Remove the product
+}
+     else {
+        showDarkMessageBox("Error", "Failed to remove product!");
+    }
+refreshProductTable();
+}
+
+void MainWindow::onProductsUpdated()
+{
+    // Refresh the product table
+    refreshProductTable();
+
+    // Update dashboard statistics
+    updateDashboard();
+}
+
+// Add search functionality
+void MainWindow::on_productSearchEdit_textChanged(const QString &arg1)
+{
+    // If search text is empty, show all products
+    if (arg1.isEmpty()) {
+        refreshProductTable();
+    } else {
+        // Otherwise, search for products matching the text
+        m_productManager->searchProducts(ui->productsTable, arg1);
+    }
+}
+// Add these improved implementations to your MainWindow class
+
+void MainWindow::setupVendorManager()
+{
+    m_vendorManager = new VendorManager(m_dbHandler, this);
+
+    // Connect signals and slots
+    connect(m_vendorManager, &VendorManager::vendorsUpdated, this, &MainWindow::onVendorsUpdated);
+
+    // Set headers for vendors table
+    QStringList headers = {"ID", "Name", "Contact", "Address", "Payment", "Date of Supply"};
+    ui->vendorsTable->setColumnCount(headers.size());
+    ui->vendorsTable->setHorizontalHeaderLabels(headers);
+
+    // Load vendors data
+    refreshVendorTable();
+}
+
+void MainWindow::setupWorkerManager()
+{
+    m_workManager = new WorkerManager(m_dbHandler, this);
+
+    // Connect signals and slots
+    connect(m_workManager, &WorkerManager::workersUpdated, this, &MainWindow::onWorkersUpdated);
+
+    // Set headers for workers table
+    QStringList headers = {"ID", "Name", "Contact", "Email", "Status", "Salary", "Date of Joining"};
+    ui->workersTable->setColumnCount(headers.size());
+    ui->workersTable->setHorizontalHeaderLabels(headers);
+
+    // Load workers data
+    refreshWorkerTable();
+
+    // Set up status combo box with common statuses
+    ui->statusCombo->clear();
+    ui->statusCombo->addItem("Active");
+    ui->statusCombo->addItem("On Leave");
+    ui->statusCombo->addItem("Terminated");
+    ui->statusCombo->addItem("Suspended");
+    ui->statusCombo->addItem("Part-time");
+}
+
+// Update the refreshVendorTable and refreshWorkerTable methods for consistency
+void MainWindow::refreshVendorTable()
+{
+    // Load vendors data into table
+    if (m_dbHandler->isConnected() && m_vendorManager) {
+        m_vendorManager->loadVendors(ui->vendorsTable);
+    }
+}
+
+void MainWindow::refreshWorkerTable()
+{
+    // Load workers data into table
+    if (m_dbHandler->isConnected() && m_workManager) {
+        m_workManager->loadWorkers(ui->workersTable);
+    }
+}
+
+// Update the onVendorsUpdated and onWorkersUpdated methods to also update the dashboard
+void MainWindow::onVendorsUpdated()
+{
+    // Refresh the vendor table
+    refreshVendorTable();
+
+    // Update dashboard statistics
+    updateDashboard();
+}
+
+void MainWindow::onWorkersUpdated()
+{
+    // Refresh the worker table
+    refreshWorkerTable();
+
+    // Update dashboard statistics
+    updateDashboard();
+}
+
+// Vendor management slots
+void MainWindow::on_addVendorBtn_clicked()
+{
+    ui->vendorNameEdit->clear();
+    ui->vendorContactEdit->clear();
+    ui->vendorAddressEdit->clear();
+    ui->vendorPaymentEdit->clear();
+    // Switch to vendor form (index 15)
+    ui->stackedWidget->setCurrentIndex(15);
+}
+
+void MainWindow::on_addVendorBtn_2_clicked()
+{
+    // Get data from form fields
+    QString name = ui->vendorNameEdit->text().trimmed();
+    QString contact = ui->vendorContactEdit->text().trimmed();
+    QString address = ui->vendorAddressEdit->text().trimmed();
+    QString cashStr = ui->vendorPaymentEdit->text().trimmed();
+    double cash = cashStr.toDouble();
+    QDate dateOfSupply = ui->dateEdit_4->date();
+
+    // Validate inputs
+    if (name.isEmpty() || contact.isEmpty() || address.isEmpty() || cashStr.isEmpty()) {
+        showDarkMessageBox("Error", "All fields are required!");
+        return;
+    }
+
+    // Add vendor to database
+    if (m_vendorManager->addVendor(name, address, contact, cash, dateOfSupply)) {
+        // Clear form fields
+        ui->vendorNameEdit->clear();
+        ui->vendorContactEdit->clear();
+        ui->vendorAddressEdit->clear();
+        ui->vendorPaymentEdit->clear();
+
+        // Return to vendor management page (index 4)
+        ui->stackedWidget->setCurrentIndex(4);
+
+        showDarkMessageBox("Success", "Vendor added successfully!");
+    } else {
+        showDarkMessageBox("Error", "Failed to add vendor!");
+    }
+}
+
+void MainWindow::on_removeVendorBtn_clicked()
+{
+    // Check if a row is selected
+    QTableWidget* table = ui->vendorsTable;
+    if (!table || table->selectedItems().isEmpty()) {
+        showDarkMessageBox("Error", "Please select a vendor to remove!");
+        return;
+    }
+
+    // Get vendor ID from the selected row
+    int row = table->selectedItems().first()->row();
+    bool ok;
+    int vendorId = table->item(row, 0)->text().toInt(&ok);
+
+    if (!ok) {
+        showDarkMessageBox("Error", "Invalid vendor ID!");
+        return;
+    }
+
+    // Remove vendor from database
+    if (m_vendorManager->removeVendor(vendorId)) {
+        showDarkMessageBox("Success", "Vendor removed successfully!");
+    } else {
+        showDarkMessageBox("Error", "Failed to remove vendor!");
+    }
+}
+
+void MainWindow::on_vendorSearchEdit_textChanged(const QString &arg1)
+{
+    // Search vendors based on text input
+    if (m_vendorManager) {
+        m_vendorManager->searchVendors(ui->vendorsTable, arg1);
+    }
+}
+
+// Worker management slots
+void MainWindow::on_addWorkerBtn_clicked()
+{
+    // Clear the worker form fields
+    ui->workerNameEdit->clear();
+    ui->workerContactEdit->clear();
+    ui->workerEmailEdit->clear();
+    ui->workerSalaryEdit->clear();
+    ui->statusCombo->setCurrentIndex(0);
+    ui->dateEdit_3->setDate(QDate::currentDate());
+
+    // Navigate to the add worker form page
+    ui->stackedWidget->setCurrentIndex(12);  // Adjust index if needed
+}
+
+void MainWindow::on_addWorkerBtn_2_clicked()
+{
+    // Get data from form fields
+    QString name = ui->workerNameEdit->text().trimmed();
+    QString contact = ui->workerContactEdit->text().trimmed();
+    QString email = ui->workerEmailEdit->text().trimmed(); // Assuming there's no email field in your form
+    QString status = ui->statusCombo->currentText();
+    QString salaryStr = ui->workerSalaryEdit->text().trimmed();
+    double salary = salaryStr.toDouble();
+    QDate dateOfJoining = ui->dateEdit_3->date();
+
+    // Validate inputs
+    if (name.isEmpty() || contact.isEmpty() || salaryStr.isEmpty()) {
+        showDarkMessageBox("Error", "All fields are required!");
+        return;
+    }
+
+    // Add worker to database
+    if (m_workManager->addWorker(name, contact, email, status, salary, dateOfJoining)) {
+        // Clear form fields
+        ui->workerNameEdit->clear();
+        ui->workerContactEdit->clear();
+        ui->workerSalaryEdit->clear();
+
+        // Return to worker management page (index 7)
+        ui->stackedWidget->setCurrentIndex(7);
+
+        showDarkMessageBox("Success", "Worker added successfully!");
+    } else {
+        showDarkMessageBox("Error", "Failed to add worker!");
+    }
+}
+
+void MainWindow::on_removeWorkerBtn_clicked()
+{
+    // Check if a row is selected
+    QTableWidget* table = ui->workersTable;
+    if (!table || table->selectedItems().isEmpty()) {
+        showDarkMessageBox("Error", "Please select a worker to remove!");
+        return;
+    }
+
+    // Get worker ID from the selected row
+    int row = table->selectedItems().first()->row();
+    bool ok;
+    int workerId = table->item(row, 0)->text().toInt(&ok);
+
+    if (!ok) {
+        showDarkMessageBox("Error", "Invalid worker ID!");
+        return;
+    }
+
+    // Remove worker from database
+    if (m_workManager->removeWorker(workerId)) {
+        showDarkMessageBox("Success", "Worker removed successfully!");
+    } else {
+        showDarkMessageBox("Error", "Failed to remove worker!");
+    }
+}
+
+void MainWindow::on_workerSearchEdit_textChanged(const QString &arg1)
+{
+    // Search workers based on text input
+    if (m_workManager) {
+        m_workManager->searchWorkers(ui->workersTable, arg1);
+    }
+}
+
+void MainWindow::setupSalesManager()
+{
+    // Verify that the sales tab exists in your UI
+    if (!ui->salesTab) {
+        qDebug() << "Error: salesTab widget not found in UI!";
+        return;
+    }
+
+    // Create SalesDashboard instance
+    SalesDashboard* salesDashboard = new SalesDashboard(
+        m_dbHandler,
+        m_productManager,
+        m_salesManager,
+        m_authManager,
+        ui->salesTab);
+
+    // Setup layout for the sales tab
+    QVBoxLayout* salesLayout = new QVBoxLayout(ui->salesTab);
+    salesLayout->setContentsMargins(0, 0, 0, 0);
+    salesLayout->addWidget(salesDashboard);
+    ui->salesTab->setLayout(salesLayout);
+
+    // Connect signals from sales manager to our handler
+    connect(m_salesManager, &SalesManager::salesUpdated, this, &MainWindow::onSalesUpdated);
+
+    // If you want, you can style the sales dashboard to match your theme
+    if (isDarkMode) {
+        // Apply dark mode styles if needed
+        salesDashboard->setStyleSheet(originalMainStylesheet);
+    } else {
+        // Apply light mode styles if needed
+        QString lightModeStyles = processStyleSheetForLightMode(originalMainStylesheet);
+        salesDashboard->setStyleSheet(lightModeStyles);
+    }
+}
+void MainWindow::onSalesUpdated()
+{
+    // Refresh sales-related UI elements
+    refreshSalesTable();
+    refreshProductSalesTable();
+
+    // Update dashboard stats
+    updateDashboard();
+}
+
+void MainWindow::refreshSalesTable()
+{
+    // This would be handled by the SalesDashboard component now
+    // If you have a separate sales table in the main window, use:
+    m_salesManager->loadSales(ui->salesTable);
+}
+
+void MainWindow::refreshProductSalesTable()
+{
+    // This would be handled by the SalesDashboard component
+    // If you have a separate product table for sales in the main window, use:
+    // m_productManager->loadProducts(ui->productSalesTableWidget);
+}
+
+void MainWindow::refreshSelectedProductsTable()
+{
+    // Implementation depends on how you store selected products
+    // This is now handled in SalesDashboard
+}
+
+void MainWindow::updateSalesTotals()
+{
+    // Calculate the total amount from selected items
+    m_totalAmount = 0.0;
+
+    for (const SaleItem &item : m_selectedItems) {
+        m_totalAmount += item.totalPrice;
+    }
+    updateDashboard();
+
+    // Update UI element with total
+    // Example: ui->totalAmountLabel->setText(QString("Total: %1 Rs.").arg(m_totalAmount, 0, 'f', 2));
+}
+void MainWindow::on_productSalesSearchEdit_textChanged(const QString &arg1)
+{
+    // Forward to sales dashboard or handle directly if needed
+    // The SalesDashboard should handle this internally
+}
+
+void MainWindow::on_salesSearchEdit_textChanged(const QString &arg1)
+{
+    // Forward to sales dashboard or handle directly if needed
+    // The SalesDashboard should handle this internally
+}
+
+void MainWindow::on_addQtyBtn_clicked()
+{
+    // Forward to sales dashboard or handle directly if needed
+    // The SalesDashboard should handle this internally
+}
+
+void MainWindow::on_removeQtyBtn_clicked()
+{
+    // Forward to sales dashboard or handle directly if needed
+    // The SalesDashboard should handle this internally
+}
+
+void MainWindow::on_sellProductsBtn_clicked()
+{
+    // Forward to sales dashboard or handle directly if needed
+    // The SalesDashboard should handle this internally
+}
+
+void MainWindow::on_clearSelectionBtn_clicked()
+{
+    // Forward to sales dashboard or handle directly if needed
+    // The SalesDashboard should handle this internally
+}
+
+void MainWindow::on_productsTable_cellClicked(int row, int column)
+{
+    // Forward to sales dashboard or handle directly if needed
+    // The SalesDashboard should handle this internally
+    Q_UNUSED(row);
+    Q_UNUSED(column);
+}
+
+void MainWindow::on_selectedProductsTable_cellClicked(int row, int column)
+{
+    // Forward to sales dashboard or handle directly if needed
+    // The SalesDashboard should handle this internally
+    Q_UNUSED(row);
+    Q_UNUSED(column);
+}
+
+
+void MainWindow::updateDashboard()
+{
+    // Update debtor statistics on the dashboard
+    int totalDebtors = 0;
+    double totalDebt = 0.0;
+    int totalProducts = 0;
+    int totalStock = 0;
+    int totalSales = 0;
+    double totalAmount = 0.0;
+    double profitMargin = 0.0;
+
+    if (m_salesManager && m_salesManager->getSalesStats(totalSales, totalAmount, profitMargin)) {
+        // Update UI elements with sales stats - replace with your actual UI element names
+        ui->salesCountLabel->setText(QString::number(totalSales));
+        ui->profitMarginLabel_3->setText(QString::number(profitMargin, 'f', 1) + "%");
+    }
+
+    if (m_productManager && m_productManager->getProductStats(totalProducts, totalStock)) {
+        // Update product stats on dashboard - replace with your actual UI element names
+        ui->productCountLabel->setText(QString::number(totalProducts));
+    }
+
+    if (m_debtManager->getDebtorStats(totalDebtors, totalDebt)) {
+        // Update dashboard labels with the obtained stats
+        ui->labelTotalDebtors->setText(QString::number(totalDebtors));
+        ui->labelTotalDebt->setText(QString("$%1").arg(totalDebt, 0, 'f', 2));
+    }
+    if (m_productManager->getProductStats(totalProducts, totalStock)) {
+        ui->productCountLabel->setText(QString::number(totalProducts));
+    }
+    // Update other dashboard stats as needed...
+}
+
+
+
+// The slot implementations for sales actions are now handled by SalesDashboard
+// We keep these in MainWindow for compatibility with Qt's signal-slot connections
+// But they can be minimal since most logic is in SalesDashboard

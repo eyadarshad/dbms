@@ -11,11 +11,29 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    debtmanager.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    databasehandler.cpp \
+    authmanager.cpp \
+    productmanager.cpp \
+    salesdashboard.cpp \
+    salesmanager.cpp \
+    stockmanager.cpp \
+    vendormanager.cpp \
+    workermanager.cpp
 
 HEADERS += \
-    mainwindow.h
+    debtmanager.h \
+    mainwindow.h \
+    databasehandler.h \
+    authmanager.h \
+    productmanager.h \
+    salesdashboard.h \
+    salesmanager.h \
+    stockmanager.h \
+    vendormanager.h \
+    workermanager.h
 
 FORMS += \
     mainwindow.ui
