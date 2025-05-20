@@ -24,6 +24,7 @@ SOURCES += \
     workermanager.cpp
 
 HEADERS += \
+    clickableWidget.h \
     debtmanager.h \
     mainwindow.h \
     databasehandler.h \

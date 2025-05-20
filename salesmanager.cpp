@@ -3,6 +3,10 @@
 #include <QSqlError>
 #include <QDebug>
 #include <QDateTime>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include "DatabaseHandler.h"
 
 SalesManager::SalesManager(DatabaseHandler *dbHandler, QObject *parent)
     : QObject(parent)
@@ -46,6 +50,9 @@ bool SalesManager::loadSales(QTableWidget *tableWidget)
         // Format date
         QDateTime dateTime = query.value("sale_date").toDateTime();
         tableWidget->setItem(row, 7, new QTableWidgetItem(dateTime.toString("yyyy-MM-dd hh:mm:ss")));
+
+        // Add total price column
+        tableWidget->setItem(row, 8, new QTableWidgetItem(query.value("total_price").toString()));
 
         row++;
     }
@@ -93,11 +100,150 @@ void SalesManager::searchSales(QTableWidget *tableWidget, const QString &searchT
         QDateTime dateTime = query.value("sale_date").toDateTime();
         tableWidget->setItem(row, 7, new QTableWidgetItem(dateTime.toString("yyyy-MM-dd hh:mm:ss")));
 
+        // Add total price column
+        tableWidget->setItem(row, 8, new QTableWidgetItem(query.value("total_price").toString()));
+
         row++;
     }
 }
 
-bool SalesManager::processSale(const QList<SaleItem> &items, int userId, int debtorId)
+bool SalesManager::searchProducts(QTableWidget *tableWidget, const QString &searchText)
+{
+    if (!m_dbHandler->isConnected()) {
+        qDebug() << "Database not connected";
+        return false;
+    }
+
+    // Clear the table
+    tableWidget->setRowCount(0);
+
+    QSqlQuery query;
+    query.prepare("SELECT product_id, product_name, price, category, quantity "
+                  "FROM Products WHERE product_name LIKE :search OR category LIKE :search "
+                  "ORDER BY product_name");
+    query.bindValue(":search", "%" + searchText + "%");
+
+    if (!query.exec()) {
+        qDebug() << "Failed to search products:" << query.lastError().text();
+        return false;
+    }
+
+    int row = 0;
+    while (query.next()) {
+        tableWidget->insertRow(row);
+
+        // Set data for each column
+        tableWidget->setItem(row, 0, new QTableWidgetItem(query.value("product_id").toString()));
+        tableWidget->setItem(row, 1, new QTableWidgetItem(query.value("product_name").toString()));
+        tableWidget->setItem(row, 2, new QTableWidgetItem(query.value("price").toString()));
+        tableWidget->setItem(row, 3, new QTableWidgetItem(query.value("category").toString()));
+        tableWidget->setItem(row, 4, new QTableWidgetItem(query.value("quantity").toString()));
+
+        row++;
+    }
+
+    return true;
+}
+
+bool SalesManager::getProductInfo(int productId, SaleItem &item)
+{
+    if (!m_dbHandler->isConnected()) {
+        qDebug() << "Database not connected";
+        return false;
+    }
+
+    QSqlQuery query;
+    query.prepare("SELECT product_id, product_name, price, category, quantity "
+                  "FROM Products WHERE product_id = :product_id");
+    query.bindValue(":product_id", productId);
+
+    if (!query.exec()) {
+        qDebug() << "Failed to get product info:" << query.lastError().text();
+        return false;
+    }
+
+    if (query.next()) {
+        item.productId = query.value("product_id").toInt();
+        item.productName = query.value("product_name").toString();
+        item.unitPrice = query.value("price").toDouble();
+        item.category = query.value("category").toString();
+        item.available = query.value("quantity").toInt();
+        item.quantity = 1; // Default quantity is 1
+        item.totalPrice = item.unitPrice * item.quantity;
+        return true;
+    }
+
+    return false;
+}
+
+bool SalesManager::getProductsForRecommendation(QWidget *parentWidget, const QString &searchText)
+{
+    if (!m_dbHandler->isConnected() || !parentWidget) {
+        return false;
+    }
+
+    // Clear existing layout content
+    QLayout *layout = parentWidget->layout();
+    if (layout) {
+        QLayoutItem *item;
+        while ((item = layout->takeAt(0)) != nullptr) {
+            if (item->widget()) {
+                item->widget()->deleteLater();
+            }
+            delete item;
+        }
+    } else {
+        layout = new QVBoxLayout(parentWidget);
+        parentWidget->setLayout(layout);
+    }
+
+    QSqlQuery query;
+    query.prepare("SELECT product_id, product_name, price, category, quantity "
+                  "FROM Products WHERE product_name LIKE :search OR category LIKE :search "
+                  "ORDER BY product_name LIMIT 5");
+    query.bindValue(":search", "%" + searchText + "%");
+
+    if (!query.exec()) {
+        qDebug() << "Failed to get recommendations:" << query.lastError().text();
+        return false;
+    }
+
+    // Add product recommendations to layout
+    while (query.next()) {
+        int productId = query.value("product_id").toInt();
+        QString productName = query.value("product_name").toString();
+        QString price = query.value("price").toString();
+
+        QWidget *productWidget = new QWidget(parentWidget);
+        QHBoxLayout *productLayout = new QHBoxLayout(productWidget);
+
+        QLabel *nameLabel = new QLabel(productName, productWidget);
+        QLabel *priceLabel = new QLabel(price + " Rs.", productWidget);
+        priceLabel->setAlignment(Qt::AlignRight);
+
+        productLayout->addWidget(nameLabel);
+        productLayout->addWidget(priceLabel);
+
+        productWidget->setProperty("productId", productId);
+        productWidget->setProperty("productName", productName);
+        productWidget->setProperty("price", price);
+        productWidget->setProperty("category", query.value("category").toString());
+        productWidget->setProperty("available", query.value("quantity").toInt());
+
+        // Style the product widget
+        productWidget->setStyleSheet("background-color: #2D2D2D; color: white; border-radius: 5px; padding: 8px;");
+        productWidget->setCursor(Qt::PointingHandCursor);
+
+        // Make clickable
+        productWidget->installEventFilter(parentWidget);
+
+        layout->addWidget(productWidget);
+    }
+
+    return true;
+}
+
+bool SalesManager::processSale(const QList<SaleItem> &items, int userId)
 {
     if (!m_dbHandler->isConnected()) {
         qDebug() << "Database not connected";
@@ -112,18 +258,6 @@ bool SalesManager::processSale(const QList<SaleItem> &items, int userId, int deb
     for (const SaleItem &item : items) {
         QSqlQuery query;
 
-        // Get category for the product
-        QString category;
-        QSqlQuery categoryQuery;
-        categoryQuery.prepare("SELECT category FROM Products WHERE product_id = :product_id");
-        categoryQuery.bindValue(":product_id", item.productId);
-
-        if (categoryQuery.exec() && categoryQuery.next()) {
-            category = categoryQuery.value("category").toString();
-        } else {
-            category = "Unknown"; // Default if category not found
-        }
-
         // Insert the sale record
         query.prepare("INSERT INTO Sales (salesman_id, product_id, product_name, price, category, "
                       "quantity_sold, total_price) "
@@ -133,7 +267,7 @@ bool SalesManager::processSale(const QList<SaleItem> &items, int userId, int deb
         query.bindValue(":product_id", item.productId);
         query.bindValue(":product_name", item.productName);
         query.bindValue(":price", item.unitPrice);
-        query.bindValue(":category", category);
+        query.bindValue(":category", item.category);
         query.bindValue(":quantity_sold", item.quantity);
         query.bindValue(":total_price", item.totalPrice);
 
@@ -154,25 +288,6 @@ bool SalesManager::processSale(const QList<SaleItem> &items, int userId, int deb
             qDebug() << "Failed to update product quantity:" << updateQuery.lastError().text();
             success = false;
             break;
-        }
-    }
-
-    // Update debtor record if a debtor is specified
-    if (success && debtorId > 0) {
-        double totalAmount = 0;
-        for (const SaleItem &item : items) {
-            totalAmount += item.totalPrice;
-        }
-
-        QSqlQuery debtorQuery;
-        debtorQuery.prepare("UPDATE Debtors SET debt_amount = debt_amount + :amount "
-                            "WHERE debtor_id = :debtor_id");
-        debtorQuery.bindValue(":amount", totalAmount);
-        debtorQuery.bindValue(":debtor_id", debtorId);
-
-        if (!debtorQuery.exec()) {
-            qDebug() << "Failed to update debtor debt:" << debtorQuery.lastError().text();
-            success = false;
         }
     }
 

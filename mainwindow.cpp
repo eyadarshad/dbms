@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     // m_workManager = new WorkerManager(m_dbHandler, this);
     // m_stockManager = new StockManager(m_dbHandler, this);
     // Initialize SalesManager
-    m_salesManager = new SalesManager(m_dbHandler, this);
+
 
 
     // Setup core functionality
@@ -1257,134 +1257,445 @@ void MainWindow::on_workerSearchEdit_textChanged(const QString &arg1)
 
 void MainWindow::setupSalesManager()
 {
-    // Verify that the sales tab exists in your UI
-    if (!ui->salesTab) {
-        qDebug() << "Error: salesTab widget not found in UI!";
-        return;
-    }
+    // Initialize the sales manager
+    m_salesManager = new SalesManager(m_dbHandler, this);
 
-    // Create SalesDashboard instance
-    SalesDashboard* salesDashboard = new SalesDashboard(
-        m_dbHandler,
-        m_productManager,
-        m_salesManager,
-        m_authManager,
-        ui->salesTab);
-
-    // Setup layout for the sales tab
-    QVBoxLayout* salesLayout = new QVBoxLayout(ui->salesTab);
-    salesLayout->setContentsMargins(0, 0, 0, 0);
-    salesLayout->addWidget(salesDashboard);
-    ui->salesTab->setLayout(salesLayout);
-
-    // Connect signals from sales manager to our handler
+    // Connect signals and slots
     connect(m_salesManager, &SalesManager::salesUpdated, this, &MainWindow::onSalesUpdated);
 
-    // If you want, you can style the sales dashboard to match your theme
-    if (isDarkMode) {
-        // Apply dark mode styles if needed
-        salesDashboard->setStyleSheet(originalMainStylesheet);
-    } else {
-        // Apply light mode styles if needed
-        QString lightModeStyles = processStyleSheetForLightMode(originalMainStylesheet);
-        salesDashboard->setStyleSheet(lightModeStyles);
-    }
-}
-void MainWindow::onSalesUpdated()
-{
-    // Refresh sales-related UI elements
-    refreshSalesTable();
+    // Initialize sales-related data
+    m_selectedItems.clear();
+    m_totalAmount = 0.0;
+
+    // // Set up sales tables
+    ui->searchProductTable->setColumnCount(6);
+    ui->searchProductTable->setHorizontalHeaderLabels({
+        "ID", "Name", "Price", "Category", "Stock", "Updated"
+    });
+    ui->searchProductTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->searchProductTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->searchProductTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->searchProductTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->searchProductTable->verticalHeader()->setVisible(false);
+
+    ui->selectedProductsTable->setColumnCount(5);
+    ui->selectedProductsTable->setHorizontalHeaderLabels({
+        "Product", "Price", "Qty", "Total", "Remove"
+    });
+    ui->selectedProductsTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->selectedProductsTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->selectedProductsTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->selectedProductsTable->verticalHeader()->setVisible(false);
+
+    ui->salesTable->setColumnCount(8);
+    ui->salesTable->setHorizontalHeaderLabels({
+        "Sales ID", "Salesman ID", "Product ID",
+        "Product Name", "Price", "Category",
+        "Quantity Sold", "Date/Time"
+    });
+    ui->salesTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->salesTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->salesTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->salesTable->verticalHeader()->setVisible(false);
+
+
+    // Initial refresh of tables
     refreshProductSalesTable();
+    refreshSalesTable();
 
-    // Update dashboard stats
-    updateDashboard();
+    // Connect UI elements for sales functionality
+    connect(ui->productSalesSearchEdit, &QLineEdit::textChanged, this, &MainWindow::on_productSalesSearchEdit_textChanged);
+    connect(ui->salesSearchEdit, &QLineEdit::textChanged, this, &MainWindow::on_salesSearchEdit_textChanged);
+    connect(ui->addQtyBtn, &QPushButton::clicked, this, &MainWindow::on_addQtyBtn_clicked);
+    connect(ui->removeQtyBtn, &QPushButton::clicked, this, &MainWindow::on_removeQtyBtn_clicked);
+    connect(ui->sellProductsBtn, &QPushButton::clicked, this, &MainWindow::on_sellProductsBtn_clicked);
+    connect(ui->clearSelectionBtn, &QPushButton::clicked, this, &MainWindow::on_clearSelectionBtn_clicked);
+    connect(ui->productsTable, &QTableWidget::cellClicked, this, &MainWindow::on_productsTable_cellClicked);
+    connect(ui->selectedProductsTable, &QTableWidget::cellClicked, this, &MainWindow::on_selectedProductsTable_cellClicked);
+
+    // Connect cross_5 button for removing selected product
+    connect(ui->cross_5, &QPushButton::clicked, this, [this]() {
+        int currentRow = ui->selectedProductsTable->currentRow();
+        if (currentRow >= 0 && currentRow < m_selectedItems.size()) {
+            m_selectedItems.removeAt(currentRow);
+            ui->selectedProductsTable->removeRow(currentRow);
+            updateSalesTotals();
+        }
+    });
 }
 
+// Helper functions for sales management
 void MainWindow::refreshSalesTable()
 {
-    // This would be handled by the SalesDashboard component now
-    // If you have a separate sales table in the main window, use:
     m_salesManager->loadSales(ui->salesTable);
 }
 
 void MainWindow::refreshProductSalesTable()
 {
-    // This would be handled by the SalesDashboard component
-    // If you have a separate product table for sales in the main window, use:
-    // m_productManager->loadProducts(ui->productSalesTableWidget);
+    m_productManager->loadProducts(ui->productsTable);
 }
 
 void MainWindow::refreshSelectedProductsTable()
 {
-    // Implementation depends on how you store selected products
-    // This is now handled in SalesDashboard
+    // Clear the table
+    ui->selectedProductsTable->setRowCount(0);
+
+    // Populate from m_selectedItems
+    for (int i = 0; i < m_selectedItems.size(); i++) {
+        const SaleItem &item = m_selectedItems[i];
+
+        int row = ui->selectedProductsTable->rowCount();
+        ui->selectedProductsTable->insertRow(row);
+
+        ui->selectedProductsTable->setItem(row, 0, new QTableWidgetItem(item.productName));
+        ui->selectedProductsTable->setItem(row, 1, new QTableWidgetItem(QString::number(item.unitPrice, 'f', 2)));
+        ui->selectedProductsTable->setItem(row, 2, new QTableWidgetItem(QString::number(item.quantity)));
+        ui->selectedProductsTable->setItem(row, 3, new QTableWidgetItem(QString::number(item.totalPrice, 'f', 2)));
+
+        // Add remove button
+        QPushButton *removeBtn = new QPushButton("X", this);
+        removeBtn->setCursor(Qt::PointingHandCursor);
+        removeBtn->setStyleSheet("background-color: #e74c3c; color: white; font-weight: bold;");
+        connect(removeBtn, &QPushButton::clicked, [this, i]() {
+            if (i < m_selectedItems.size()) {
+                m_selectedItems.removeAt(i);
+                refreshSelectedProductsTable();
+                updateSalesTotals();
+            }
+        });
+
+        ui->selectedProductsTable->setCellWidget(row, 4, removeBtn);
+    }
+
+    // Update the total
+    updateSalesTotals();
 }
 
 void MainWindow::updateSalesTotals()
 {
-    // Calculate the total amount from selected items
     m_totalAmount = 0.0;
-
     for (const SaleItem &item : m_selectedItems) {
         m_totalAmount += item.totalPrice;
     }
-    updateDashboard();
 
-    // Update UI element with total
-    // Example: ui->totalAmountLabel->setText(QString("Total: %1 Rs.").arg(m_totalAmount, 0, 'f', 2));
+    ui->labelTotalPrice->setText(QString("%1 Rs.").arg(m_totalAmount, 0, 'f', 2));
 }
+
+// Slot implementations for sales functionality
 void MainWindow::on_productSalesSearchEdit_textChanged(const QString &arg1)
 {
-    // Forward to sales dashboard or handle directly if needed
-    // The SalesDashboard should handle this internally
+    // Clear existing product recommendations
+    QLayoutItem *item;
+    QLayout *layout = ui->recommendSearch->layout();
+    while ((item = layout->takeAt(0)) != nullptr) {
+        if (item->widget()) {
+            delete item->widget();
+        }
+        delete item;
+    }
+
+    if (arg1.isEmpty()) {
+        return;
+    }
+
+    // Search for products in the database
+    QSqlQuery query;
+    query.prepare("SELECT product_id, product_name, price, category, quantity "
+                  "FROM Products WHERE product_name LIKE :search "
+                  "ORDER BY product_name LIMIT 10");
+    query.bindValue(":search", "%" + arg1 + "%");
+
+    if (!query.exec()) {
+        qDebug() << "Failed to search products:" << query.lastError().text();
+        return;
+    }
+
+    // Create product recommendation widgets
+    while (query.next()) {
+        int productId = query.value("product_id").toInt();
+        QString name = query.value("product_name").toString();
+        double price = query.value("price").toDouble();
+        QString category = query.value("category").toString();
+        int quantity = query.value("quantity").toInt();
+
+        // Create product widget
+        ClickableWidget *productWidget = new ClickableWidget(ui->recommendSearch);
+
+        productWidget->setObjectName(QString("product_%1").arg(productId));
+        productWidget->setStyleSheet("background-color: #1e1e1e; color: white; border-radius: 5px; margin: 2px;");
+        productWidget->setCursor(Qt::PointingHandCursor);
+
+        QHBoxLayout *productLayout = new QHBoxLayout(productWidget);
+        productLayout->setContentsMargins(10, 5, 10, 5);
+
+        QVBoxLayout *infoLayout = new QVBoxLayout();
+        QLabel *nameLabel = new QLabel(name, productWidget);
+        nameLabel->setStyleSheet("font-size: 14px; font-weight: bold;");
+        QLabel *unitLabel = new QLabel(QString("1.00 Units at %1 Rs. / Unit").arg(price, 0, 'f', 2), productWidget);
+        unitLabel->setStyleSheet("font-size: 12px; color: #aaa;");
+
+        infoLayout->addWidget(nameLabel);
+        infoLayout->addWidget(unitLabel);
+
+        QLabel *priceLabel = new QLabel(QString("%1 Rs.").arg(price, 0, 'f', 2), productWidget);
+        priceLabel->setStyleSheet("font-size: 14px; font-weight: bold;");
+        priceLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+        productLayout->addLayout(infoLayout);
+        productLayout->addStretch();
+        productLayout->addWidget(priceLabel);
+
+        // Store product data as property
+        productWidget->setProperty("productId", productId);
+        productWidget->setProperty("productName", name);
+        productWidget->setProperty("unitPrice", price);
+        productWidget->setProperty("category", category);
+        productWidget->setProperty("available", quantity);
+
+        // Connect click event
+        connect(productWidget, &ClickableWidget::clicked, [this, productWidget]() {
+            SaleItem item;
+            item.productId = productWidget->property("productId").toInt();
+            item.productName = productWidget->property("productName").toString();
+            item.unitPrice = productWidget->property("unitPrice").toDouble();
+            item.category = productWidget->property("category").toString();
+            item.available = productWidget->property("available").toInt();
+            item.quantity = 1;
+            item.totalPrice = item.unitPrice;
+
+            addProductToSelection(item);
+        });
+
+        ui->recommendSearch->layout()->addWidget(productWidget);
+    }
+
+    // Also update the products table if it's visible
+    m_productManager->searchProducts(ui->productsTable, arg1);
 }
 
 void MainWindow::on_salesSearchEdit_textChanged(const QString &arg1)
 {
-    // Forward to sales dashboard or handle directly if needed
-    // The SalesDashboard should handle this internally
-}
-
-void MainWindow::on_addQtyBtn_clicked()
-{
-    // Forward to sales dashboard or handle directly if needed
-    // The SalesDashboard should handle this internally
-}
-
-void MainWindow::on_removeQtyBtn_clicked()
-{
-    // Forward to sales dashboard or handle directly if needed
-    // The SalesDashboard should handle this internally
-}
-
-void MainWindow::on_sellProductsBtn_clicked()
-{
-    // Forward to sales dashboard or handle directly if needed
-    // The SalesDashboard should handle this internally
-}
-
-void MainWindow::on_clearSelectionBtn_clicked()
-{
-    // Forward to sales dashboard or handle directly if needed
-    // The SalesDashboard should handle this internally
+    m_salesManager->searchSales(ui->salesTable, arg1);
 }
 
 void MainWindow::on_productsTable_cellClicked(int row, int column)
 {
-    // Forward to sales dashboard or handle directly if needed
-    // The SalesDashboard should handle this internally
-    Q_UNUSED(row);
-    Q_UNUSED(column);
+    // Get product data from the table
+    SaleItem item;
+    item.productId = ui->productsTable->item(row, 0)->text().toInt();
+    item.productName = ui->productsTable->item(row, 1)->text();
+    item.unitPrice = ui->productsTable->item(row, 2)->text().toDouble();
+    item.category = ui->productsTable->item(row, 3)->text();
+    item.available = ui->productsTable->item(row, 4)->text().toInt();
+    item.quantity = 1;
+    item.totalPrice = item.unitPrice;
+
+    // Add product to selected list
+    addProductToSelection(item);
+}
+
+void MainWindow::addProductToSelection(const SaleItem &item)
+{
+    // Check if product is already in the list
+    for (int i = 0; i < m_selectedItems.size(); i++) {
+        if (m_selectedItems[i].productId == item.productId) {
+            // Increase quantity instead of adding again
+            if (m_selectedItems[i].quantity < m_selectedItems[i].available) {
+                m_selectedItems[i].quantity++;
+                m_selectedItems[i].totalPrice = m_selectedItems[i].quantity * m_selectedItems[i].unitPrice;
+                refreshSelectedProductsTable();
+            } else {
+                QMessageBox::warning(this, "Insufficient Stock",
+                                     "Cannot add more of this product. Stock limit reached.");
+            }
+            return;
+        }
+    }
+
+    // Add to list
+    m_selectedItems.append(item);
+
+    // Update the selected products table
+    refreshSelectedProductsTable();
+
+    // Add to visual selected layout
+    QWidget *productWidget = new QWidget(ui->selectedVerticalLayout->parentWidget());
+    productWidget->setObjectName(QString("selected_%1").arg(item.productId));
+    productWidget->setStyleSheet("background-color: #1e1e1e; color: white; border-radius: 5px; margin: 2px;");
+
+    QHBoxLayout *productLayout = new QHBoxLayout(productWidget);
+    productLayout->setContentsMargins(10, 5, 10, 5);
+
+    QVBoxLayout *infoLayout = new QVBoxLayout();
+    QLabel *nameLabel = new QLabel(item.productName, productWidget);
+    nameLabel->setStyleSheet("font-size: 14px; font-weight: bold;");
+    QLabel *unitLabel = new QLabel(QString("%1 Units at %2 Rs. / Unit").arg(item.quantity).arg(item.unitPrice, 0, 'f', 2), productWidget);
+    unitLabel->setStyleSheet("font-size: 12px; color: #aaa;");
+
+    infoLayout->addWidget(nameLabel);
+    infoLayout->addWidget(unitLabel);
+
+    QLabel *priceLabel = new QLabel(QString("%1 Rs.").arg(item.totalPrice, 0, 'f', 2), productWidget);
+    priceLabel->setStyleSheet("font-size: 14px; font-weight: bold;");
+    priceLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+    QPushButton *removeButton = new QPushButton("×", productWidget);
+    removeButton->setStyleSheet("background-color: transparent; color: white; font-size: 16px; font-weight: bold; border: none;");
+    removeButton->setCursor(Qt::PointingHandCursor);
+
+    // Store index for reference
+    int index = m_selectedItems.size() - 1;
+    connect(removeButton, &QPushButton::clicked, [this, index]() {
+        if (index < m_selectedItems.size()) {
+            m_selectedItems.removeAt(index);
+            refreshSelectedProductsTable();
+            // Also refresh the visual layout
+            QLayoutItem *item;
+            QLayout *layout = ui->selectedVerticalLayout->layout();
+            while ((item = layout->takeAt(0)) != nullptr) {
+                if (item->widget()) {
+                    delete item->widget();
+                }
+                delete item;
+            }
+            for (const SaleItem &remainingItem : m_selectedItems) {
+                // Recreate visual widgets
+                // (This would be more efficiently managed with a custom approach)
+                // For now, simplify by just refreshing everything
+            }
+        }
+    });
+
+    productLayout->addLayout(infoLayout);
+    productLayout->addStretch();
+    productLayout->addWidget(priceLabel);
+    productLayout->addWidget(removeButton);
+
+    ui->selectedVerticalLayout->addWidget(productWidget);
+
+    // Select this product in the table
+    ui->selectedProductsTable->selectRow(m_selectedItems.size() - 1);
 }
 
 void MainWindow::on_selectedProductsTable_cellClicked(int row, int column)
 {
-    // Forward to sales dashboard or handle directly if needed
-    // The SalesDashboard should handle this internally
-    Q_UNUSED(row);
-    Q_UNUSED(column);
+    // Highlight the selected row
+    for (int i = 0; i < ui->selectedProductsTable->rowCount(); i++) {
+        for (int j = 0; j < ui->selectedProductsTable->columnCount(); j++) {
+            if (ui->selectedProductsTable->item(i, j)) {
+                if (i == row) {
+                    ui->selectedProductsTable->item(i, j)->setBackground(QColor("#436cfd"));
+                } else {
+                    ui->selectedProductsTable->item(i, j)->setBackground(Qt::transparent);
+                }
+            }
+        }
+    }
 }
 
+void MainWindow::on_addQtyBtn_clicked()
+{
+    int row = ui->selectedProductsTable->currentRow();
+    if (row >= 0 && row < m_selectedItems.size()) {
+        // Check if we have enough stock
+        if (m_selectedItems[row].quantity < m_selectedItems[row].available) {
+            m_selectedItems[row].quantity++;
+            m_selectedItems[row].totalPrice = m_selectedItems[row].quantity * m_selectedItems[row].unitPrice;
+            refreshSelectedProductsTable();
+        } else {
+            QMessageBox::warning(this, "Insufficient Stock",
+                                 "Cannot add more of this product. Stock limit reached.");
+        }
+    }
+}
+
+void MainWindow::on_removeQtyBtn_clicked()
+{
+    int row = ui->selectedProductsTable->currentRow();
+    if (row >= 0 && row < m_selectedItems.size() && m_selectedItems[row].quantity > 1) {
+        m_selectedItems[row].quantity--;
+        m_selectedItems[row].totalPrice = m_selectedItems[row].quantity * m_selectedItems[row].unitPrice;
+        refreshSelectedProductsTable();
+    }
+}
+
+void MainWindow::on_sellProductsBtn_clicked()
+{
+    if (m_selectedItems.isEmpty()) {
+        QMessageBox::warning(this, "No Products Selected", "Please select at least one product to complete the sale.");
+        return;
+    }
+
+    // Get current user ID
+    int userId = m_authManager->getCurrentUserId();
+    if (userId <= 0) {
+        QMessageBox::critical(this, "Authentication Error", "User information not available. Please log in again.");
+        return;
+    }
+
+    // Process the sale
+    if (m_salesManager->processSale(m_selectedItems, userId)) {
+        QMessageBox::information(this, "Sale Completed",
+                                 QString("Sale of %1 items totaling %2 Rs. has been successfully recorded.")
+                                     .arg(m_selectedItems.size())
+                                     .arg(m_totalAmount, 0, 'f', 2));
+
+        // Reset the sales area
+        m_selectedItems.clear();
+        refreshSelectedProductsTable();
+
+        // Clear the recommendation widgets
+        QLayoutItem *item;
+        QLayout *layout = ui->selectedVerticalLayout->layout();
+        while ((item = layout->takeAt(0)) != nullptr) {
+            if (item->widget()) {
+                delete item->widget();
+            }
+            delete item;
+        }
+
+        // Refresh the sales table
+        refreshSalesTable();
+
+        // Update dashboard
+        updateDashboard();
+    } else {
+        QMessageBox::critical(this, "Sale Failed", "There was an error processing the sale. Please try again.");
+    }
+}
+
+void MainWindow::on_clearSelectionBtn_clicked()
+{
+    // Ask for confirmation
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Clear Selection",
+                                                              "Are you sure you want to clear all selected products?",
+                                                              QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes) {
+        // Clear selected items
+        m_selectedItems.clear();
+        refreshSelectedProductsTable();
+
+        // Clear the recommendation widgets
+        QLayoutItem *item;
+        QLayout *layout = ui->selectedVerticalLayout->layout();
+        while ((item = layout->takeAt(0)) != nullptr) {
+            if (item->widget()) {
+                delete item->widget();
+            }
+            delete item;
+        }
+    }
+}
+
+void MainWindow::onSalesUpdated()
+{
+    // Refresh sales table
+    refreshSalesTable();
+
+    // Update dashboard stats
+    updateDashboard();
+}
 
 void MainWindow::updateDashboard()
 {
@@ -1397,12 +1708,11 @@ void MainWindow::updateDashboard()
     double totalAmount = 0.0;
     double profitMargin = 0.0;
 
-    if (m_salesManager && m_salesManager->getSalesStats(totalSales, totalAmount, profitMargin)) {
-        // Update UI elements with sales stats - replace with your actual UI element names
-        ui->salesCountLabel->setText(QString::number(totalSales));
-        ui->profitMarginLabel_3->setText(QString::number(profitMargin, 'f', 1) + "%");
+    if (m_salesManager->getSalesStats(totalSales, totalAmount, profitMargin)) {
+        // ui->labelTotalSales->setText(QString::number(totalSales));
+        ui->labelTotalAmount->setText(QString("%1 Rs.").arg(totalAmount, 0, 'f', 2));
+        ui->labelProfitMargin->setText(QString("%1%").arg(profitMargin, 0, 'f', 1));
     }
-
     if (m_productManager && m_productManager->getProductStats(totalProducts, totalStock)) {
         // Update product stats on dashboard - replace with your actual UI element names
         ui->productCountLabel->setText(QString::number(totalProducts));
@@ -1420,7 +1730,3 @@ void MainWindow::updateDashboard()
 }
 
 
-
-// The slot implementations for sales actions are now handled by SalesDashboard
-// We keep these in MainWindow for compatibility with Qt's signal-slot connections
-// But they can be minimal since most logic is in SalesDashboard

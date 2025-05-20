@@ -1,11 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+
 #include <QMainWindow>
-#include<QtCharts>
-#include<QChartView>
-#include<QLineSeries>
-#include<QPieSeries>
-#include<QPieSlice>
+#include <QtCharts>
+#include <QChartView>
+#include <QLineSeries>
+#include <QPieSeries>
+#include <QPieSlice>
 #include <QtSql/QtSql>
 #include <QTableWidget>
 #include <QLabel>
@@ -25,13 +26,21 @@
 #include <QLineSeries>
 #include <QJSEngine>
 #include <QJSValue>
+#include <QMouseEvent>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QMessageBox>
+
 #include "databasehandler.h"
 #include "authmanager.h"
 #include "debtmanager.h"
 #include "productmanager.h"
 #include "vendormanager.h"
 #include "workermanager.h"
-#include "salesmanager.h"  // This includes the SaleItem structure
+#include "salesmanager.h"
+#include "clickableWidget.h"
+#include "salesdashboard.h"  // This includes the SaleItem structure
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -105,7 +114,8 @@ private:
     ProductManager *m_productManager;
     VendorManager *m_vendorManager;
     WorkerManager *m_workManager;
-    SalesManager *m_salesManager;  // Added SalesManager instance
+    SalesManager *m_salesManager;
+    SalesDashboard *m_salesdashboard;
 
     // Structure for storing selected products in sales
     QList<SaleItem> m_selectedItems;
@@ -127,6 +137,7 @@ private:
     QString originalMainStylesheet;
     QMap<QTableWidget*, TableSettings> originalTableSettings;
 
+    // Setup methods
     void setupIconManagement();
     void setupChart();
     void setupCalculator();
@@ -136,6 +147,8 @@ private:
     void setupVendorManager();
     void setupWorkerManager();
     void setupSalesManager();  // Added setup function for sales management
+
+    // Helper methods
     void connectPageButton(QPushButton *button, int index);
     void showDarkMessageBox(const QString &title, const QString &message);
     QString getAlternateThemePath(const QString &currentPath);
@@ -149,6 +162,8 @@ private:
     void applyLightModeToAllWidgets();
     void restoreDarkModeToAllWidgets();
     void logoutUser();
+
+    // Table refresh methods
     void refreshDebtorTable();
     void refreshProductTable();
     void refreshVendorTable();
@@ -156,7 +171,10 @@ private:
     void refreshSalesTable();  // Added helper function to refresh sales table
     void refreshProductSalesTable(); // Added helper to refresh products for sales
     void refreshSelectedProductsTable(); // Added helper to refresh selected products
+
+    // Sales specific methods
     void updateSalesTotals(); // Added helper to update sales totals
+    void addProductToSelection(const SaleItem &item); // Added helper function to add product to selection
 };
 
-#endif
+#endif // MAINWINDOW_H
