@@ -92,7 +92,7 @@ private slots:
     void on_removeQtyBtn_clicked(); // Decrease quantity of selected product
     void on_sellProductsBtn_clicked(); // Process the sale
     void on_clearSelectionBtn_clicked(); // Clear selected products
-    void on_productsTable_cellClicked(int row, int column); // Handle product selection
+    void on_searchProductTable_cellClicked(int row, int column); // Handle product selection
     void on_selectedProductsTable_cellClicked(int row, int column); // Handle selected product removal
 
     // Dashboard update
