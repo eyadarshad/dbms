@@ -1310,7 +1310,7 @@ void MainWindow::setupSalesManager()
     connect(ui->removeQtyBtn, &QPushButton::clicked, this, &MainWindow::on_removeQtyBtn_clicked);
     connect(ui->sellProductsBtn, &QPushButton::clicked, this, &MainWindow::on_sellProductsBtn_clicked);
     connect(ui->clearSelectionBtn, &QPushButton::clicked, this, &MainWindow::on_clearSelectionBtn_clicked);
-    connect(ui->productsTable, &QTableWidget::cellClicked, this, &MainWindow::on_productsTable_cellClicked);
+    connect(ui->searchProductTable, &QTableWidget::cellClicked, this, &MainWindow::on_searchProductTable_cellClicked);
     connect(ui->selectedProductsTable, &QTableWidget::cellClicked, this, &MainWindow::on_selectedProductsTable_cellClicked);
 
     // Connect cross_5 button for removing selected product
@@ -1332,7 +1332,7 @@ void MainWindow::refreshSalesTable()
 
 void MainWindow::refreshProductSalesTable()
 {
-    m_productManager->loadProducts(ui->productsTable);
+    m_productManager->loadProducts(ui->searchProductTable);
 }
 
 void MainWindow::refreshSelectedProductsTable()
@@ -1384,18 +1384,8 @@ void MainWindow::updateSalesTotals()
 // Slot implementations for sales functionality
 void MainWindow::on_productSalesSearchEdit_textChanged(const QString &arg1)
 {
-    // Clear existing product recommendations
-    QLayoutItem *item;
-    QLayout *layout = ui->recommendSearch->layout();
-    while ((item = layout->takeAt(0)) != nullptr) {
-        if (item->widget()) {
-            delete item->widget();
-        }
-        delete item;
-    }
-
     if (arg1.isEmpty()) {
-        return;
+        refreshProductSalesTable();
     }
 
     // Search for products in the database
@@ -1410,67 +1400,9 @@ void MainWindow::on_productSalesSearchEdit_textChanged(const QString &arg1)
         return;
     }
 
-    // Create product recommendation widgets
-    while (query.next()) {
-        int productId = query.value("product_id").toInt();
-        QString name = query.value("product_name").toString();
-        double price = query.value("price").toDouble();
-        QString category = query.value("category").toString();
-        int quantity = query.value("quantity").toInt();
-
-        // Create product widget
-        ClickableWidget *productWidget = new ClickableWidget(ui->recommendSearch);
-
-        productWidget->setObjectName(QString("product_%1").arg(productId));
-        productWidget->setStyleSheet("background-color: #1e1e1e; color: white; border-radius: 5px; margin: 2px;");
-        productWidget->setCursor(Qt::PointingHandCursor);
-
-        QHBoxLayout *productLayout = new QHBoxLayout(productWidget);
-        productLayout->setContentsMargins(10, 5, 10, 5);
-
-        QVBoxLayout *infoLayout = new QVBoxLayout();
-        QLabel *nameLabel = new QLabel(name, productWidget);
-        nameLabel->setStyleSheet("font-size: 14px; font-weight: bold;");
-        QLabel *unitLabel = new QLabel(QString("1.00 Units at %1 Rs. / Unit").arg(price, 0, 'f', 2), productWidget);
-        unitLabel->setStyleSheet("font-size: 12px; color: #aaa;");
-
-        infoLayout->addWidget(nameLabel);
-        infoLayout->addWidget(unitLabel);
-
-        QLabel *priceLabel = new QLabel(QString("%1 Rs.").arg(price, 0, 'f', 2), productWidget);
-        priceLabel->setStyleSheet("font-size: 14px; font-weight: bold;");
-        priceLabel->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-
-        productLayout->addLayout(infoLayout);
-        productLayout->addStretch();
-        productLayout->addWidget(priceLabel);
-
-        // Store product data as property
-        productWidget->setProperty("productId", productId);
-        productWidget->setProperty("productName", name);
-        productWidget->setProperty("unitPrice", price);
-        productWidget->setProperty("category", category);
-        productWidget->setProperty("available", quantity);
-
-        // Connect click event
-        connect(productWidget, &ClickableWidget::clicked, [this, productWidget]() {
-            SaleItem item;
-            item.productId = productWidget->property("productId").toInt();
-            item.productName = productWidget->property("productName").toString();
-            item.unitPrice = productWidget->property("unitPrice").toDouble();
-            item.category = productWidget->property("category").toString();
-            item.available = productWidget->property("available").toInt();
-            item.quantity = 1;
-            item.totalPrice = item.unitPrice;
-
-            addProductToSelection(item);
-        });
-
-        ui->recommendSearch->layout()->addWidget(productWidget);
-    }
-
     // Also update the products table if it's visible
-    m_productManager->searchProducts(ui->productsTable, arg1);
+    m_productManager->searchProducts(ui->searchProductTable, arg1);
+
 }
 
 void MainWindow::on_salesSearchEdit_textChanged(const QString &arg1)
@@ -1478,7 +1410,7 @@ void MainWindow::on_salesSearchEdit_textChanged(const QString &arg1)
     m_salesManager->searchSales(ui->salesTable, arg1);
 }
 
-void MainWindow::on_productsTable_cellClicked(int row, int column)
+void MainWindow::on_searchProductTable_cellClicked(int row, int column)
 {
     // Get product data from the table
     SaleItem item;
@@ -1559,9 +1491,7 @@ void MainWindow::addProductToSelection(const SaleItem &item)
                 delete item;
             }
             for (const SaleItem &remainingItem : m_selectedItems) {
-                // Recreate visual widgets
-                // (This would be more efficiently managed with a custom approach)
-                // For now, simplify by just refreshing everything
+
             }
         }
     });
