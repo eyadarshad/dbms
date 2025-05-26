@@ -2,164 +2,107 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
-#include <QDateTime>
 
 DebtManager::DebtManager(DatabaseHandler *dbHandler, QObject *parent)
-    : QObject(parent)
-    , m_dbHandler(dbHandler)
-{
-}
+    : QObject(parent), m_dbHandler(dbHandler) {}
 
 bool DebtManager::loadDebtors(QTableWidget *tableWidget)
 {
-    if (!m_dbHandler->isConnected()) {
-        qDebug() << "Database not connected";
-        return false;
-    }
-
-    // Clear the table
-    tableWidget->setRowCount(0);
-
-    QSqlQuery query;
-    query.prepare("SELECT debtor_id, name, contact_number, email, address, debt_amount, date_incurred "
-                  "FROM Debtors ORDER BY name");
-
-    if (!query.exec()) {
-        qDebug() << "Failed to load debtors:" << query.lastError().text();
-        return false;
-    }
-
-    int row = 0;
-    while (query.next()) {
-        tableWidget->insertRow(row);
-
-        // Set data for each column
-        tableWidget->setItem(row, 0, new QTableWidgetItem(query.value("debtor_id").toString()));
-        tableWidget->setItem(row, 1, new QTableWidgetItem(query.value("name").toString()));
-        tableWidget->setItem(row, 2, new QTableWidgetItem(query.value("contact_number").toString()));
-        tableWidget->setItem(row, 3, new QTableWidgetItem(query.value("email").toString()));
-        tableWidget->setItem(row, 4, new QTableWidgetItem(query.value("address").toString()));
-        tableWidget->setItem(row, 5, new QTableWidgetItem(query.value("debt_amount").toString()));
-
-        // Format date
-        QDate date = query.value("date_incurred").toDate();
-        tableWidget->setItem(row, 6, new QTableWidgetItem(date.toString("yyyy-MM-dd")));
-
-        row++;
-    }
-
-    return true;
+    return populateTable(tableWidget,
+                         "SELECT debtor_id, name, contact_number, email, address, debt_amount, date_incurred "
+                         "FROM Debtors ORDER BY name");
 }
-
 
 void DebtManager::searchDebtors(QTableWidget *tableWidget, const QString &searchText)
 {
-    if (!m_dbHandler->isConnected()) {
-        qDebug() << "Database not connected";
-        return;
-    }
-
-    // Clear the table
-    tableWidget->setRowCount(0);
-
     QSqlQuery query;
     query.prepare("SELECT debtor_id, name, contact_number, email, address, debt_amount, date_incurred "
-                  "FROM Debtors WHERE name LIKE :search OR contact_number LIKE :search "
-                  "OR email LIKE :search OR address LIKE :search "
-                  "ORDER BY name");
-    query.bindValue(":search", "%" + searchText + "%");
+                  "FROM Debtors WHERE CONCAT(name, contact_number, email, address) LIKE ? ORDER BY name");
+    query.addBindValue("%" + searchText + "%");
 
-    if (!query.exec()) {
-        qDebug() << "Failed to search debtors:" << query.lastError().text();
-        return;
-    }
-
-    int row = 0;
-    while (query.next()) {
-        tableWidget->insertRow(row);
-
-        // Set data for each column
-        tableWidget->setItem(row, 0, new QTableWidgetItem(query.value("debtor_id").toString()));
-        tableWidget->setItem(row, 1, new QTableWidgetItem(query.value("name").toString()));
-        tableWidget->setItem(row, 2, new QTableWidgetItem(query.value("contact_number").toString()));
-        tableWidget->setItem(row, 3, new QTableWidgetItem(query.value("email").toString()));
-        tableWidget->setItem(row, 4, new QTableWidgetItem(query.value("address").toString()));
-        tableWidget->setItem(row, 5, new QTableWidgetItem(query.value("debt_amount").toString()));
-
-        // Format date
-        QDate date = query.value("date_incurred").toDate();
-        tableWidget->setItem(row, 6, new QTableWidgetItem(date.toString("yyyy-MM-dd")));
-
-        row++;
-    }
+    populateTableWithQuery(tableWidget, query);
 }
 
 bool DebtManager::addDebtor(const QString &name, const QString &contact, const QString &email,
                             const QString &address, double debtAmount, const QDate &dateIncurred)
 {
-    if (!m_dbHandler->isConnected()) {
-        qDebug() << "Database not connected";
-        return false;
-    }
+    if (!m_dbHandler->isConnected()) return false;
 
     QSqlQuery query;
-    query.prepare("CALL AddDebtor(:name, :contact, :email, :address, :amount, :date)");
-    query.bindValue(":name", name);
-    query.bindValue(":contact", contact);
-    query.bindValue(":email", email);
-    query.bindValue(":address", address);
-    query.bindValue(":amount", debtAmount);
-    query.bindValue(":date", dateIncurred);
+    query.prepare("INSERT INTO Debtors (name, contact_number, email, address, debt_amount, date_incurred) "
+                  "VALUES (?, ?, ?, ?, ?, ?)");
+    query.addBindValue(name);
+    query.addBindValue(contact);
+    query.addBindValue(email);
+    query.addBindValue(address);
+    query.addBindValue(debtAmount);
+    query.addBindValue(dateIncurred);
 
-    if (!query.exec()) {
-        qDebug() << "Failed to add debtor:" << query.lastError().text();
-        return false;
-    }
-
-    emit debtorsUpdated();
-    return true;
+    bool success = query.exec();
+    if (success) emit debtorsUpdated();
+    else qDebug() << "Failed to add debtor:" << query.lastError().text();
+    return success;
 }
 
 bool DebtManager::removeDebtor(int debtorId)
 {
-    if (!m_dbHandler->isConnected()) {
-        qDebug() << "Database not connected";
-        return false;
-    }
-
-    QSqlQuery query;
-    query.prepare("DELETE FROM Debtors WHERE debtor_id = :id");
-    query.bindValue(":id", debtorId);
-
-    if (!query.exec()) {
-        qDebug() << "Failed to remove debtor:" << query.lastError().text();
-        return false;
-    }
-
-    emit debtorsUpdated();
-    return true;
+    return executeQuery("DELETE FROM Debtors WHERE debtor_id = ?", {debtorId});
 }
 
 bool DebtManager::getDebtorStats(int &totalDebtors, double &totalDebt)
 {
-    if (!m_dbHandler->isConnected()) {
-        qDebug() << "Database not connected";
-        return false;
-    }
+    if (!m_dbHandler->isConnected()) return false;
 
-    QSqlQuery query;
-    query.prepare("SELECT COUNT(*) as debtor_count, SUM(debt_amount) as total_debt FROM Debtors");
-
-    if (!query.exec()) {
-        qDebug() << "Failed to get debtor stats:" << query.lastError().text();
-        return false;
-    }
-
-    if (query.next()) {
-        totalDebtors = query.value("debtor_count").toInt();
-        totalDebt = query.value("total_debt").toDouble();
+    QSqlQuery query("SELECT COUNT(*) as count, COALESCE(SUM(debt_amount), 0) as total FROM Debtors");
+    if (query.exec() && query.next()) {
+        totalDebtors = query.value(0).toInt();
+        totalDebt = query.value(1).toDouble();
         return true;
     }
-
     return false;
+}
+
+// Private helper methods
+bool DebtManager::populateTable(QTableWidget *tableWidget, const QString &sql)
+{
+    QSqlQuery query(sql);
+    return populateTableWithQuery(tableWidget, query);
+}
+
+bool DebtManager::populateTableWithQuery(QTableWidget *tableWidget, QSqlQuery &query)
+{
+    if (!m_dbHandler->isConnected() || !query.exec()) {
+        qDebug() << "Query failed:" << query.lastError().text();
+        return false;
+    }
+
+    tableWidget->setRowCount(0);
+    int row = 0;
+    while (query.next()) {
+        tableWidget->insertRow(row);
+        for (int col = 0; col < 6; col++) {
+            tableWidget->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
+        }
+        // Format date for last column
+        tableWidget->setItem(row, 6, new QTableWidgetItem(
+                                         query.value(6).toDate().toString("yyyy-MM-dd")));
+        row++;
+    }
+    return true;
+}
+
+bool DebtManager::executeQuery(const QString &sql, const QVariantList &params)
+{
+    if (!m_dbHandler->isConnected()) return false;
+
+    QSqlQuery query;
+    query.prepare(sql);
+    for (const auto &param : params) {
+        query.addBindValue(param);
+    }
+
+    bool success = query.exec();
+    if (success) emit debtorsUpdated();
+    else qDebug() << "Query failed:" << query.lastError().text();
+    return success;
 }

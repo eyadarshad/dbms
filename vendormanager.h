@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTableWidget>
 #include <QDate>
+#include <QVariantList>
 #include "databasehandler.h"
 
 class VendorManager : public QObject
@@ -12,17 +13,10 @@ class VendorManager : public QObject
 public:
     explicit VendorManager(DatabaseHandler *dbHandler, QObject *parent = nullptr);
 
-    // Load all vendors to the table widget
     bool loadVendors(QTableWidget *tableWidget);
-
-    // Search vendors by name or address
     void searchVendors(QTableWidget *tableWidget, const QString &searchText);
-
-    // Add a new vendor
     bool addVendor(const QString &name, const QString &address, const QString &contact,
                    double cashBalance, const QDate &dateOfSupply);
-
-    // Remove a vendor
     bool removeVendor(int vendorId);
 
 signals:
@@ -30,6 +24,11 @@ signals:
 
 private:
     DatabaseHandler *m_dbHandler;
+
+    // Helper methods to reduce code duplication
+    bool populateTable(QTableWidget *table, const QString &queryStr);
+    bool populateTableWithQuery(QTableWidget *table, QSqlQuery &query);
+    bool executeUpdate(const QString &queryStr, const QVariantList &params = {});
 };
 
 #endif // VENDORMANAGER_H

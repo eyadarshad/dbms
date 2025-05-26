@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTableWidget>
 #include <QDate>
+#include <QSqlQuery>
 #include "databasehandler.h"
 
 class ProductManager : public QObject
@@ -12,20 +13,11 @@ class ProductManager : public QObject
 public:
     explicit ProductManager(DatabaseHandler *dbHandler, QObject *parent = nullptr);
 
-    // Load all products to the table widget
     bool loadProducts(QTableWidget *tableWidget);
-
-    // Search products by name or category
     void searchProducts(QTableWidget *tableWidget, const QString &searchText);
-
-    // Add a new product
     bool addProduct(const QString &name, double price, const QString &category,
                     int quantity, const QDate &dateAdded);
-
-    // Remove a product
     bool removeProduct(int productId);
-
-    // Get dashboard stats
     bool getProductStats(int &totalProducts, int &totalStock);
 
 signals:
@@ -33,6 +25,11 @@ signals:
 
 private:
     DatabaseHandler *m_dbHandler;
+
+    // Helper methods to reduce code duplication
+    bool populateTable(QTableWidget *tableWidget, const QString &sql);
+    bool populateTableWithQuery(QTableWidget *tableWidget, QSqlQuery &query);
+    bool executeQuery(const QString &sql, const QVariantList &params = {});
 };
 
 #endif // PRODUCTMANAGER_H

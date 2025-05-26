@@ -25,6 +25,10 @@ public:
     // Remove a worker
     bool removeWorker(int workerId);
 
+    bool executeUpdate(const QString &queryStr, const QVariantList &params);
+    bool populateTable(QTableWidget *table, const QString &queryStr);
+    bool populateTableWithQuery(QTableWidget *table, QSqlQuery &query);
+
 signals:
     void workersUpdated();
 

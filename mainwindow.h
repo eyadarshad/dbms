@@ -31,16 +31,18 @@
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QMessageBox>
+#include <QDate>
+#include <tuple>
 
 #include "databasehandler.h"
-#include "authmanager.h"
 #include "debtmanager.h"
 #include "productmanager.h"
 #include "vendormanager.h"
 #include "workermanager.h"
 #include "salesmanager.h"
-#include "clickableWidget.h"
-#include "salesdashboard.h"  // This includes the SaleItem structure
+#include "salesdashboard.h"
+#include "stockmanager.h"
+#include "saleitem.h"// This includes the SaleItem structure
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -55,10 +57,12 @@ public:
     ~MainWindow();
 
 private slots:
+
     void enableLightMode();
     void enableDarkMode();
     void on_pushButton_clicked();
     void on_loginbtn_clicked();
+    void loginpage();
     void on_eyeButton_clicked();
 
     // Slots for debtor management
@@ -86,14 +90,14 @@ private slots:
     void on_workerSearchEdit_textChanged(const QString &arg1); // For search functionality
 
     // Sales dashboard slots
-    void on_productSalesSearchEdit_textChanged(const QString &arg1); // For product search in sales
-    void on_salesSearchEdit_textChanged(const QString &arg1); // For sales table search
-    void on_addQtyBtn_clicked(); // Increase quantity of selected product
-    void on_removeQtyBtn_clicked(); // Decrease quantity of selected product
-    void on_sellProductsBtn_clicked(); // Process the sale
-    void on_clearSelectionBtn_clicked(); // Clear selected products
-    void on_searchProductTable_cellClicked(int row, int column); // Handle product selection
-    void on_selectedProductsTable_cellClicked(int row, int column); // Handle selected product removal
+    void on_productSalesSearchEdit_textChanged(const QString &text);
+    void on_salesSearchEdit_textChanged(const QString &text);
+    void on_searchProductTable_cellClicked(int row, int column);
+    void on_selectedProductsTable_cellClicked(int row, int column);
+    void on_addQtyBtn_clicked();
+    void on_removeQtyBtn_clicked();
+    void on_sellProductsBtn_clicked();
+    void on_clearSelectionBtn_clicked(); // Handle selected product removal
 
     // Dashboard update
     void updateDashboard(); // Update the dashboard stats
@@ -105,21 +109,22 @@ private slots:
     void onWorkersUpdated();
     void onSalesUpdated(); // Added sales update handler
 
+    void on_viewStockSearchEdit_textChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
 
     DatabaseHandler *m_dbHandler;
-    AuthManager *m_authManager;
     DebtManager *m_debtManager;
     ProductManager *m_productManager;
     VendorManager *m_vendorManager;
     WorkerManager *m_workManager;
     SalesManager *m_salesManager;
     SalesDashboard *m_salesdashboard;
+    StockManager *m_stockManager;
 
     // Structure for storing selected products in sales
-    QList<SaleItem> m_selectedItems;
-    double m_totalAmount;
+
 
     struct TableSettings {
         QMap<int, QBrush> headerBackgrounds;
@@ -136,7 +141,7 @@ private:
     QMap<QWidget*, QString> originalStylesheets;
     QString originalMainStylesheet;
     QMap<QTableWidget*, TableSettings> originalTableSettings;
-
+    void setupSalesTable(QTableWidget *table, const QStringList &headers, int columnCount);
     // Setup methods
     void setupIconManagement();
     void setupChart();
@@ -145,8 +150,9 @@ private:
     void setupDebtManager();
     void setupProductManager();
     void setupVendorManager();
-    void setupWorkerManager();
-    void setupSalesManager();  // Added setup function for sales management
+    void setupWorkerManager(); // Added setup function for sales management
+    void setupStockManager();
+
 
     // Helper methods
     void connectPageButton(QPushButton *button, int index);
@@ -163,18 +169,62 @@ private:
     void restoreDarkModeToAllWidgets();
     void logoutUser();
 
-    // Table refresh methods
+    // Table setup and refresh methods
+    void setupTableWidget(QTableWidget *table, const QStringList &headers);
     void refreshDebtorTable();
     void refreshProductTable();
     void refreshVendorTable();
-    void refreshWorkerTable();
-    void refreshSalesTable();  // Added helper function to refresh sales table
-    void refreshProductSalesTable(); // Added helper to refresh products for sales
-    void refreshSelectedProductsTable(); // Added helper to refresh selected products
+    void refreshWorkerTable();// Added helper to refresh selected products
+    void refreshStockTable();
+
+    // Form data retrieval methods
+    std::tuple<QString, QString, QString, double, QDate> getDebtorFormData();
+    std::tuple<QString, double, QString, int, QDate> getProductFormData();
+
+    // Input validation methods
+    bool validateDebtorInput(const QString &name, const QString &contact,
+                             const QString &address, double amount);
+    bool validateProductInput(const QString &name, double price, int quantity);
+
+    // Form clearing methods
+    void clearDebtorForm();
+    void clearProductForm();
+
+    // User interaction methods
+    bool confirmRemoval(const QString &type, const QString &name);
+    void showSuccess(const QString &message);
+    void showError(const QString &message);
+    void showWarning(const QString &message);
+    bool showSuccessWithOk(const QString &message);
 
     // Sales specific methods
-    void updateSalesTotals(); // Added helper to update sales totals
-    void addProductToSelection(const SaleItem &item); // Added helper function to add product to selection
+    void clearForm(const QList<QLineEdit*> &fields);
+    std::tuple<QString, QString, QString, QString> getFormData(const QList<QLineEdit*> &fields);
+    bool validateInput(const QStringList &fields);
+    std::optional<int> getSelectedId(QTableWidget *table, const QString &type);
+    void setupTableHeaders(QTableWidget *table, const QStringList &headers);// Added helper function to add product to selection
+
+    // Stock management event handler
+    void onStockUpdated();
+
+    QList<SaleItem> m_selectedItems;
+    double m_totalAmount;
+    int m_currentSelectedRow;
+
+    void refreshSalesTable();
+    void refreshProductSalesTable();
+    void refreshSelectedProductsTable();
+    void updateSalesTotals();
+    void addProductToSelection(const SaleItem &item);
+    void highlightSelectedProduct(int row);
+    void connectSalesSignals();
+
+    void setupSalesManager();
+    void integrateSalesDashboard();
+    bool initializeSalesSystem();
+    void showSalesDashboard();
+
+
 };
 
 #endif // MAINWINDOW_H

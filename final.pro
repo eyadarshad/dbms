@@ -14,8 +14,6 @@ SOURCES += \
     debtmanager.cpp \
     main.cpp \
     mainwindow.cpp \
-    databasehandler.cpp \
-    authmanager.cpp \
     productmanager.cpp \
     salesdashboard.cpp \
     salesmanager.cpp \
@@ -24,17 +22,17 @@ SOURCES += \
     workermanager.cpp
 
 HEADERS += \
-    clickableWidget.h \
     debtmanager.h \
     mainwindow.h \
     databasehandler.h \
-    authmanager.h \
     productmanager.h \
+    saleitem.h \
     salesdashboard.h \
     salesmanager.h \
     stockmanager.h \
     vendormanager.h \
-    workermanager.h
+    workermanager.h \
+    clickableWidget.h
 
 FORMS += \
     mainwindow.ui
