@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     isDarkMode = true;
+    updateDashboard();
     loginpage();
     // m_vendorManager = new VendorManager(m_dbHandler, this);
     // m_workManager = new WorkerManager(m_dbHandler, this);
@@ -1591,21 +1592,18 @@ void MainWindow::updateDashboard()
     double profitMargin = 0.0;
 
     if (m_salesManager->getSalesStats(totalSales, totalAmount, profitMargin)) {
-        // ui->labelTotalSales->setText(QString::number(totalSales));
-        ui->labelProfitMargin->setText(QString("%1%").arg(profitMargin, 0, 'f', 1));
-    }
-    if (m_productManager && m_productManager->getProductStats(totalProducts, totalStock)) {
-        // Update product stats on dashboard - replace with your actual UI element names
-        ui->salesCountLabel_3->setText(QString::number(totalProducts));
+        ui->labelTotalSales->setText(QString::number(totalSales));
+        ui->labelTotalAmount->setText(QString::number(totalAmount));
+
     }
 
     if (m_debtManager->getDebtorStats(totalDebtors, totalDebt)) {
         // Update dashboard labels with the obtained stats
         ui->labelTotalDebtors->setText(QString::number(totalDebtors));
-        ui->labelTotalDebt->setText(QString("$%1").arg(totalDebt, 0, 'f', 2));
+        ui->labelTotalDebt_2->setText(QString("$%1").arg(totalDebt, 0, 'f', 2));
     }
     if (m_productManager->getProductStats(totalProducts, totalStock)) {
-        ui->salesCountLabel_4->setText(QString::number(totalProducts));
+        ui->labelTotalProducts->setText(QString::number(totalProducts));
     }
     // Update other dashboard stats as needed...
 

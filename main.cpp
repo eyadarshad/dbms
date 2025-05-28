@@ -6,10 +6,12 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
+    app.setWindowIcon(QIcon("C:/Users/EYAD/Documents/dbms-har/dbms-har/images/icon.png"));
     MainWindow w;
+    w.setWindowTitle("  UtiliSOFT");
     w.show();
 
-    return a.exec();
+    return app.exec();
 }
 
