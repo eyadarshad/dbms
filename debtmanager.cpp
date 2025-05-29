@@ -9,31 +9,30 @@ DebtManager::DebtManager(DatabaseHandler *dbHandler, QObject *parent)
 bool DebtManager::loadDebtors(QTableWidget *tableWidget)
 {
     return populateTable(tableWidget,
-                         "SELECT debtor_id, name, contact_number, email, address, debt_amount, date_incurred "
+                         "SELECT debtor_id, name, contact_number, address, debt_amount, date_incurred "
                          "FROM Debtors ORDER BY name");
 }
 
 void DebtManager::searchDebtors(QTableWidget *tableWidget, const QString &searchText)
 {
     QSqlQuery query;
-    query.prepare("SELECT debtor_id, name, contact_number, email, address, debt_amount, date_incurred "
-                  "FROM Debtors WHERE CONCAT(name, contact_number, email, address) LIKE ? ORDER BY name");
+    query.prepare("SELECT debtor_id, name, contact_number, address, debt_amount, date_incurred "
+                  "FROM Debtors WHERE CONCAT(name, contact_number, address) LIKE ? ORDER BY name");
     query.addBindValue("%" + searchText + "%");
 
     populateTableWithQuery(tableWidget, query);
 }
 
-bool DebtManager::addDebtor(const QString &name, const QString &contact, const QString &email,
+bool DebtManager::addDebtor(const QString &name, const QString &contact,
                             const QString &address, double debtAmount, const QDate &dateIncurred)
 {
     if (!m_dbHandler->isConnected()) return false;
 
     QSqlQuery query;
-    query.prepare("INSERT INTO Debtors (name, contact_number, email, address, debt_amount, date_incurred) "
-                  "VALUES (?, ?, ?, ?, ?, ?)");
+    query.prepare("INSERT INTO Debtors (name, contact_number, address, debt_amount, date_incurred) "
+                  "VALUES (?, ?, ?, ?, ?)");
     query.addBindValue(name);
     query.addBindValue(contact);
-    query.addBindValue(email);
     query.addBindValue(address);
     query.addBindValue(debtAmount);
     query.addBindValue(dateIncurred);
@@ -80,12 +79,12 @@ bool DebtManager::populateTableWithQuery(QTableWidget *tableWidget, QSqlQuery &q
     int row = 0;
     while (query.next()) {
         tableWidget->insertRow(row);
-        for (int col = 0; col < 6; col++) {
+        for (int col = 0; col < 5; col++) {
             tableWidget->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
         }
         // Format date for last column
-        tableWidget->setItem(row, 6, new QTableWidgetItem(
-                                         query.value(6).toDate().toString("yyyy-MM-dd")));
+        tableWidget->setItem(row, 5, new QTableWidgetItem(
+                                         query.value(5).toDate().toString("yyyy-MM-dd")));
         row++;
     }
     return true;

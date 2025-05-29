@@ -35,7 +35,7 @@ max-height:720px;
 </string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>11</number>
     </property>
     <widget class="QWidget" name="login">
      <widget class="QWidget" name="widget_96" native="true">
@@ -14528,10 +14528,10 @@ background-color:none;
          <height>551</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="recommendVerticalLayout_2">
+       <layout class="QVBoxLayout" name="recommendVerticalLayout">
         <item>
-         <widget class="QWidget" name="recommendSearch_2" native="true">
-          <widget class="QTableWidget" name="searchProductTable_2">
+         <widget class="QWidget" name="recommendSearch" native="true">
+          <widget class="QTableWidget" name="searchProductTable">
            <property name="geometry">
             <rect>
              <x>0</x>
@@ -15224,6 +15224,9 @@ color:white;</string>
          <height>301</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">color:white;</string>
+       </property>
        <widget class="QWidget" name="gridLayoutWidget_2">
         <property name="geometry">
          <rect>
@@ -15250,7 +15253,7 @@ background : #fcfcfc;
         </layout>
        </widget>
       </widget>
-      <widget class="QLabel" name="labelTotalPrice_2">
+      <widget class="QLabel" name="labelTotalPrice">
        <property name="geometry">
         <rect>
          <x>270</x>
@@ -15280,7 +15283,7 @@ color:white;</string>
         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
       </widget>
-      <widget class="QPushButton" name="addQtyBtn_2">
+      <widget class="QPushButton" name="addQtyBtn">
        <property name="geometry">
         <rect>
          <x>90</x>
@@ -15301,7 +15304,7 @@ border:none;
         <string>+</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="removeQtyBtn_2">
+      <widget class="QPushButton" name="removeQtyBtn">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -15352,7 +15355,7 @@ color:white;</string>
         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
        </property>
       </widget>
-      <widget class="QPushButton" name="cross_6">
+      <widget class="QPushButton" name="cross_5">
        <property name="geometry">
         <rect>
          <x>150</x>
@@ -15370,7 +15373,7 @@ background:transparent;
         <string/>
        </property>
       </widget>
-      <widget class="QPushButton" name="clearSelectionBtn_2">
+      <widget class="QPushButton" name="clearSelectionBtn">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -15385,29 +15388,27 @@ font: 500 10pt &quot;Microsoft Sans Serif&quot;;
 color:white;
 border-radius: 8px;
 border : none;
-border-bottom-left-radius: 0px;
-
-border-top-left-radius: 0px;</string>
+</string>
        </property>
        <property name="text">
         <string>Clear Selection</string>
        </property>
       </widget>
-      <widget class="QTableWidget" name="selectedProductsTable_2">
+      <widget class="QTableWidget" name="selectedProductsTable">
        <property name="geometry">
         <rect>
          <x>15</x>
          <y>60</y>
          <width>341</width>
-         <height>192</height>
+         <height>181</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">background : white;
-color: grey;</string>
+color: #121212;</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="sellProductsBtn_2">
+      <widget class="QPushButton" name="sellProductsBtn">
        <property name="geometry">
         <rect>
          <x>240</x>
@@ -15422,9 +15423,7 @@ font: 500 10pt &quot;Microsoft Sans Serif&quot;;
 color:white;
 border-radius: 8px;
 border : none;
-border-bottom-right-radius: 0px;
-
-border-top-right-radius: 0px;</string>
+</string>
        </property>
        <property name="text">
         <string>Sell Products</string>

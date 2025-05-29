@@ -48,14 +48,29 @@ public:
     }
 
     void logout() {
-        db.exec("UPDATE Users SET last_logout = NOW() WHERE user_id = " + QString::number(m_userId));
+        if (db.isOpen() && m_userId != -1) { // Check if DB is open and user is valid
+            QSqlQuery query(db); // Pass the database connection to the query
+            query.prepare("UPDATE Users SET last_logout = NOW() WHERE user_id = :userId");
+            query.bindValue(":userId", m_userId);
+            if (!query.exec()) {
+                qDebug() << "Logout query failed:" << query.lastError().text();
+            }
+        }
         m_loggedIn = m_isAdmin = false;
         m_userId = -1;
         emit loginStatusChanged(false, false);
     }
 
-    bool executeQuery(const QString &q) {
-        return db.isOpen() ? db.exec(q).isActive() : false;
+    bool executeQuery(const QString &queryString) { // Renamed parameter for clarity
+        if (!db.isOpen()) {
+            return false;
+        }
+        QSqlQuery query(db); // Pass the database connection
+        if (!query.exec(queryString)) {
+            qDebug() << "executeQuery failed:" << query.lastError().text();
+            return false;
+        }
+        return true; // QSqlQuery::exec() returns true on success
     }
 
     // Getters

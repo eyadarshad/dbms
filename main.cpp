@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setWindowIcon(QIcon("C:/Users/EYAD/Documents/dbms-har/dbms-har/images/icon.png"));
+    app.setWindowIcon(QIcon("C:/Users/EYAD/Documents/dbms-har/dbms/images/icon.png"));
     MainWindow w;
     w.setWindowTitle("  UtiliSOFT");
     w.show();

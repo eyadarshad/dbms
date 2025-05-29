@@ -15,7 +15,7 @@ public:
 
     bool loadDebtors(QTableWidget *tableWidget);
     void searchDebtors(QTableWidget *tableWidget, const QString &searchText);
-    bool addDebtor(const QString &name, const QString &contact, const QString &email,
+    bool addDebtor(const QString &name, const QString &contact,
                    const QString &address, double debtAmount, const QDate &dateIncurred);
     bool removeDebtor(int debtorId);
     bool getDebtorStats(int &totalDebtors, double &totalDebt);
