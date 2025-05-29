@@ -399,6 +399,24 @@ void MainWindow::setupChart() {
     } else {
         qDebug() << "ui->horizontalFrame is null. Cannot add sales chart.";
     }
+    if (ui->horizontalFrame) {
+        QLayout *oldLayout = ui->horizontalFrame_2->layout();
+        if (oldLayout) {
+            QLayoutItem* item;
+            while ((item = oldLayout->takeAt(0)) != nullptr) {
+                if (item->widget()) {
+                    item->widget()->deleteLater();
+                }
+                delete item;
+            }
+            delete oldLayout;
+        }
+        QVBoxLayout *layout = new QVBoxLayout();
+        layout->addWidget(m_chartView);
+        ui->horizontalFrame_2->setLayout(layout);
+    } else {
+        qDebug() << "ui->horizontalFrame is null. Cannot add sales chart.";
+    }
 }
 
 void MainWindow::updateSalesChart() {
@@ -707,17 +725,21 @@ void MainWindow::updateDashboard() {
     int totalDebtors = 0; double totalDebt = 0.0;
     if (m_debtManager && m_debtManager->getDebtorStats(totalDebtors, totalDebt)) {
         if(ui->labelTotalDebtors) ui->labelTotalDebtors->setText(QString::number(totalDebtors));
-        if(ui->labelTotalDebt_2) ui->labelTotalDebt_2->setText(QString("%1 Rs.").arg(totalDebt, 0, 'f', 2));
+        if(ui->workerTotalDebtorsLabel) ui->workerTotalDebtorsLabel->setText(QString::number(totalDebtors));
+        if(ui->workerLabelTotalDebt) ui->workerLabelTotalDebt->setText(QString("%1 Rs.").arg(totalDebt, 0, 'f', 2));
     }
     int totalProducts = 0; int totalStock = 0;
     if (m_productManager && m_productManager->getProductStats(totalProducts, totalStock)) {
         if(ui->labelTotalProducts) ui->labelTotalProducts->setText(QString::number(totalProducts));
+        if(ui->workerTotalProductsLabel) ui->workerTotalProductsLabel->setText(QString::number(totalProducts));
         // Update labelTotalStock if you have one
     }
     int numSales = 0; double totalSalesAmount = 0.0; double profit = 0.0; // Assuming profit is calculated by SalesManager
     if (m_salesManager && m_salesManager->getSalesStats(numSales, totalSalesAmount, profit)) {
         if(ui->labelTotalSales) ui->labelTotalSales->setText(QString::number(numSales));
         if(ui->labelTotalAmount) ui->labelTotalAmount->setText(QString("%1 Rs.").arg(totalSalesAmount, 0, 'f', 2));
+        if(ui->workerTotalAmountLabel) ui->workerTotalAmountLabel->setText(QString("%1 Rs.").arg(totalSalesAmount, 0, 'f', 2));
+        if(ui->workerTotalSalesLabel) ui->workerTotalSalesLabel->setText(QString::number(numSales));
         // Update profit label if you have one
     }
     updateSalesChart(); // Refresh the chart with new data

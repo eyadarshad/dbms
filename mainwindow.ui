@@ -35,7 +35,7 @@ max-height:720px;
 </string>
     </property>
     <property name="currentIndex">
-     <number>11</number>
+     <number>8</number>
     </property>
     <widget class="QWidget" name="login">
      <widget class="QWidget" name="widget_96" native="true">
@@ -10403,104 +10403,6 @@ color:#adadad;</string>
         </property>
        </widget>
       </widget>
-      <widget class="QLabel" name="label_87">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>230</y>
-         <width>141</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font: 16pt &quot;Sans Serif Collection&quot;;
-border:none;</string>
-       </property>
-       <property name="text">
-        <string>Weekly Report</string>
-       </property>
-      </widget>
-      <widget class="QTableWidget" name="tableWidget_3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>290</y>
-         <width>231</width>
-         <height>221</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QTableWidget, QTableView {
-    border: 1px solid #121212;
-    border-radius: 5px;
-    gridline-color: #ddd;
-    background-color: #adadad;
-    font-size: 10px;
-    font-family: Arial, sans-serif;
-    color: #333;
-    selection-background-color: #0078D7;
-    selection-color: white;
-}
-
-QHeaderView::section {
-    background-color:#0a0a0a;
-    color: white;
-    padding: 4px;
-    border: 1px solid #121212;
-    font-size: 10px;
-    font-weight: bold;
-    text-align: center;
-}
-
-QTableWidget::item, QTableView::item {
-    padding: 2px;
-    border-bottom: 1px solid #ddd;
-    text-align: center;
-}
-
-QTableWidget::item:selected, QTableView::item:selected {
-    background-color: #0078D7;
-    color: white;
-}
-
-QTableCornerButton::section {
-    background-color: #adadad;
-    border: 1px solid #adadad;
-	border-top-left-radius: 8px;
-  
-}
-</string>
-       </property>
-       <row/>
-       <row/>
-       <row/>
-       <row/>
-       <column>
-        <property name="text">
-         <string>Total Sales</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Total Profit</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Remaining Debtors</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Remaining Stock</string>
-        </property>
-       </column>
-       <item row="0" column="0">
-        <property name="text">
-         <string>2123</string>
-        </property>
-       </item>
-      </widget>
       <widget class="QWidget" name="widget_43" native="true">
        <property name="geometry">
         <rect>
@@ -11301,552 +11203,12 @@ border:none;</string>
       <property name="styleSheet">
        <string notr="true">background:#0a0a0a;</string>
       </property>
-      <widget class="QLabel" name="label_531">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>0</y>
-         <width>111</width>
-         <height>71</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font: 570 15pt &quot;Sans Serif Collection&quot;;
-border:none;</string>
-       </property>
-       <property name="text">
-        <string>Hello,</string>
-       </property>
-      </widget>
-      <widget class="QFrame" name="horizontalFrame_2">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>280</y>
-         <width>441</width>
-         <height>241</height>
-        </rect>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QFrame" name="frame_17">
-          <property name="styleSheet">
-           <string notr="true">background : #121212;</string>
-          </property>
-          <widget class="QFrame" name="frame_18">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>-10</y>
-             <width>411</width>
-             <height>239</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background : #121212;</string>
-           </property>
-          </widget>
-          <widget class="QWidget" name="widget_180" native="true">
-           <property name="geometry">
-            <rect>
-             <x>239</x>
-             <y>-221</y>
-             <width>181</width>
-             <height>181</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background : #212121;</string>
-           </property>
-           <widget class="QLabel" name="label_523">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>181</width>
-              <height>51</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 600 20pt &quot;Century Gothic&quot;;
-color:#0a0a0a;</string>
-            </property>
-            <property name="text">
-             <string>Debtors</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_524">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>60</y>
-              <width>151</width>
-              <height>41</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font-weight: 600;
-font-size:12pt;
-color:#0a0a0a;</string>
-            </property>
-            <property name="text">
-             <string>Total Debtors : </string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_525">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>100</y>
-              <width>151</width>
-              <height>41</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font-weight: 600;
-font-size:12pt;
-color:#0a0a0a;</string>
-            </property>
-            <property name="text">
-             <string>Remaining Debtors :</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_526">
-            <property name="geometry">
-             <rect>
-              <x>150</x>
-              <y>70</y>
-              <width>31</width>
-              <height>21</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">border:none;
-font: 800 11pt &quot;Segoe UI&quot;;
-color:black;
-</string>
-            </property>
-            <property name="text">
-             <string>40</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_527">
-            <property name="geometry">
-             <rect>
-              <x>150</x>
-              <y>110</y>
-              <width>31</width>
-              <height>21</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">border:none;
-font: 800 11pt &quot;Segoe UI&quot;;
-color:black;
-</string>
-            </property>
-            <property name="text">
-             <string>23</string>
-            </property>
-           </widget>
-          </widget>
-          <widget class="QWidget" name="widget_183" native="true">
-           <property name="geometry">
-            <rect>
-             <x>459</x>
-             <y>-221</y>
-             <width>201</width>
-             <height>451</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background : rgb(85, 0, 255);</string>
-           </property>
-           <widget class="QLabel" name="label_528">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>201</width>
-              <height>51</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 600 20pt &quot;Century Gothic&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Products</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-           <widget class="QWidget" name="widget_189" native="true">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>260</y>
-              <width>161</width>
-              <height>171</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background: #fff;
-border-radius:4px;</string>
-            </property>
-            <widget class="QLabel" name="label_529">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>30</y>
-               <width>161</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Lays</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_530">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>60</y>
-               <width>161</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Candies</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_553">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>90</y>
-               <width>161</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Asia Ghee</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_554">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>120</y>
-               <width>161</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Dairy Milk</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_555">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>10</y>
-               <width>161</width>
-               <height>31</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">font-weight: 800;
-font-size:12pt;
-color:rgb(85, 0, 255);
-</string>
-             </property>
-             <property name="text">
-              <string>New Items</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-           </widget>
-           <widget class="QWidget" name="widget_190" native="true">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>60</y>
-              <width>161</width>
-              <height>171</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background: #fff;
-border-radius:4px;</string>
-            </property>
-            <widget class="QLabel" name="label_556">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>30</y>
-               <width>161</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Lays</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_557">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>60</y>
-               <width>161</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Candies</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_558">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>90</y>
-               <width>161</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Asia Ghee</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_559">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>120</y>
-               <width>161</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color :#0a0a0a;
-font-size: 12px;
-
-font: 10pt &quot;Microsoft Sans Serif&quot;;</string>
-             </property>
-             <property name="text">
-              <string>Dairy Milk</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_560">
-             <property name="geometry">
-              <rect>
-               <x>0</x>
-               <y>10</y>
-               <width>161</width>
-               <height>31</height>
-              </rect>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">font-weight: 800;
-font-size:12pt;
-color:rgb(85, 0, 255);
-</string>
-             </property>
-             <property name="text">
-              <string>Best Sellers</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
-             </property>
-            </widget>
-           </widget>
-          </widget>
-          <widget class="QWidget" name="widget_191" native="true">
-           <property name="geometry">
-            <rect>
-             <x>9</x>
-             <y>-221</y>
-             <width>191</width>
-             <height>181</height>
-            </rect>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background : #436cfd;</string>
-           </property>
-           <widget class="QLabel" name="label_561">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>191</width>
-              <height>51</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 600 20pt &quot;Century Gothic&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Sales</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_562">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>60</y>
-              <width>121</width>
-              <height>41</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font-weight: 600;
-font-size:12pt;</string>
-            </property>
-            <property name="text">
-             <string>Total Sales :</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_563">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>100</y>
-              <width>111</width>
-              <height>41</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font-weight: 600;
-font-size:12pt;</string>
-            </property>
-            <property name="text">
-             <string>Profit :</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_564">
-            <property name="geometry">
-             <rect>
-              <x>100</x>
-              <y>70</y>
-              <width>81</width>
-              <height>21</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">border:none;
-font: 800 11pt &quot;Segoe UI&quot;;
-color:black;
-</string>
-            </property>
-            <property name="text">
-             <string>2000</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_565">
-            <property name="geometry">
-             <rect>
-              <x>100</x>
-              <y>110</y>
-              <width>81</width>
-              <height>21</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">border:none;
-font: 800 11pt &quot;Segoe UI&quot;;
-color:black;
-</string>
-            </property>
-            <property name="text">
-             <string>23%</string>
-            </property>
-           </widget>
-          </widget>
-         </widget>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="widget_18" native="true">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>10</y>
-         <width>331</width>
+         <x>380</x>
+         <y>330</y>
+         <width>311</width>
          <height>111</height>
         </rect>
        </property>
@@ -11883,9 +11245,9 @@ font-size: 18pt;
        <widget class="QLabel" name="labelTotalDebtors_2">
         <property name="geometry">
          <rect>
-          <x>-10</x>
+          <x>0</x>
           <y>50</y>
-          <width>141</width>
+          <width>161</width>
           <height>61</height>
          </rect>
         </property>
@@ -11919,12 +11281,86 @@ color:white;
         </property>
        </widget>
       </widget>
+      <widget class="QWidget" name="widget_15" native="true">
+       <property name="geometry">
+        <rect>
+         <x>380</x>
+         <y>450</y>
+         <width>311</width>
+         <height>111</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:#2a2a2a;
+border-radius: 12px;
+padding: 15px;
+color: white;
+
+</string>
+       </property>
+       <widget class="QLabel" name="label_95">
+        <property name="geometry">
+         <rect>
+          <x>-60</x>
+          <y>0</y>
+          <width>191</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font:  &quot;Sans-serif&quot;;
+font-size: 18pt;
+    font-weight: 800;
+    color: #dddddd;</string>
+        </property>
+        <property name="text">
+         <string>Debt</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="workerLabelTotalDebt">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>50</y>
+          <width>91</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-size: 15pt;
+    font-weight: bold;
+    color: white;</string>
+        </property>
+        <property name="text">
+         <string>23%</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="workerTotalDebtorsLabel">
+        <property name="geometry">
+         <rect>
+          <x>-10</x>
+          <y>50</y>
+          <width>151</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font:  800 15pt &quot;Sans-serif&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Rs.200,000</string>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="widget_17" native="true">
        <property name="geometry">
         <rect>
-         <x>20</x>
-         <y>10</y>
-         <width>341</width>
+         <x>30</x>
+         <y>330</y>
+         <width>331</width>
          <height>111</height>
         </rect>
        </property>
@@ -11958,7 +11394,7 @@ font-size: 18pt;
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QLabel" name="labelProfitMargin_4">
+       <widget class="QLabel" name="workerTotalSalesLabel">
         <property name="geometry">
          <rect>
           <x>270</x>
@@ -11976,7 +11412,7 @@ font-size: 18pt;
          <string>23%</string>
         </property>
        </widget>
-       <widget class="QLabel" name="salesCountLabel_8">
+       <widget class="QLabel" name="workerTotalAmountLabel">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -11995,11 +11431,259 @@ font-size: 18pt;
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="widget_15" native="true">
+      <widget class="QFrame" name="frame_18">
        <property name="geometry">
         <rect>
-         <x>370</x>
-         <y>140</y>
+         <x>20</x>
+         <y>10</y>
+         <width>549</width>
+         <height>281</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background : #121212;</string>
+       </property>
+       <widget class="QFrame" name="frame_17">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>-40</y>
+          <width>561</width>
+          <height>311</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background : #121212;</string>
+        </property>
+        <widget class="QWidget" name="widget_180" native="true">
+         <property name="geometry">
+          <rect>
+           <x>239</x>
+           <y>-221</y>
+           <width>181</width>
+           <height>181</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background : #212121;</string>
+         </property>
+         <widget class="QLabel" name="label_523">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>181</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 600 20pt &quot;Century Gothic&quot;;
+color:#0a0a0a;</string>
+          </property>
+          <property name="text">
+           <string>Debtors</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_524">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>60</y>
+            <width>151</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-weight: 600;
+font-size:12pt;
+color:#0a0a0a;</string>
+          </property>
+          <property name="text">
+           <string>Total Debtors : </string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_525">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>100</y>
+            <width>151</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-weight: 600;
+font-size:12pt;
+color:#0a0a0a;</string>
+          </property>
+          <property name="text">
+           <string>Remaining Debtors :</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_526">
+          <property name="geometry">
+           <rect>
+            <x>150</x>
+            <y>70</y>
+            <width>31</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border:none;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+          </property>
+          <property name="text">
+           <string>40</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_527">
+          <property name="geometry">
+           <rect>
+            <x>150</x>
+            <y>110</y>
+            <width>31</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border:none;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+          </property>
+          <property name="text">
+           <string>23</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="widget_191" native="true">
+         <property name="geometry">
+          <rect>
+           <x>9</x>
+           <y>-221</y>
+           <width>191</width>
+           <height>181</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background : #436cfd;</string>
+         </property>
+         <widget class="QLabel" name="label_561">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>191</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 600 20pt &quot;Century Gothic&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Sales</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_562">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>60</y>
+            <width>121</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-weight: 600;
+font-size:12pt;</string>
+          </property>
+          <property name="text">
+           <string>Total Sales :</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_563">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>100</y>
+            <width>111</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font-weight: 600;
+font-size:12pt;</string>
+          </property>
+          <property name="text">
+           <string>Profit :</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_564">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>70</y>
+            <width>81</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border:none;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+          </property>
+          <property name="text">
+           <string>2000</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_565">
+          <property name="geometry">
+           <rect>
+            <x>100</x>
+            <y>110</y>
+            <width>81</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border:none;
+font: 800 11pt &quot;Segoe UI&quot;;
+color:black;
+</string>
+          </property>
+          <property name="text">
+           <string>23%</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QFrame" name="horizontalFrame_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>40</y>
+           <width>551</width>
+           <height>281</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="widget_19" native="true">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>450</y>
          <width>331</width>
          <height>111</height>
         </rect>
@@ -12012,12 +11696,12 @@ color: white;
 
 </string>
        </property>
-       <widget class="QLabel" name="label_95">
+       <widget class="QLabel" name="label_99">
         <property name="geometry">
          <rect>
-          <x>-60</x>
+          <x>-20</x>
           <y>0</y>
-          <width>191</width>
+          <width>171</width>
           <height>51</height>
          </rect>
         </property>
@@ -12028,100 +11712,28 @@ font-size: 18pt;
     color: #dddddd;</string>
         </property>
         <property name="text">
-         <string> Sales </string>
+         <string>Products</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
         </property>
        </widget>
-       <widget class="QLabel" name="labelProfitMargin_3">
-        <property name="geometry">
-         <rect>
-          <x>260</x>
-          <y>50</y>
-          <width>91</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font-size: 15pt;
-    font-weight: bold;
-    color: white;</string>
-        </property>
-        <property name="text">
-         <string>23%</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="salesCountLabel_6">
-        <property name="geometry">
-         <rect>
-          <x>-10</x>
-          <y>50</y>
-          <width>151</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font:  800 15pt &quot;Sans-serif&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Rs.200,000</string>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="widget_16" native="true">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>140</y>
-         <width>341</width>
-         <height>111</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color:#2a2a2a;
-border-radius: 12px;
-padding: 15px;
-color: white;
-
-</string>
-       </property>
-       <widget class="QLabel" name="label_96">
-        <property name="geometry">
-         <rect>
-          <x>-40</x>
-          <y>0</y>
-          <width>221</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font:  &quot;Sans-serif&quot;;
-font-size: 18pt;
-    font-weight: 800;
-    color: #dddddd;</string>
-        </property>
-        <property name="text">
-         <string> Products </string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="salesCountLabel_7">
+       <widget class="QLabel" name="workerTotalProductsLabel">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>50</y>
-          <width>151</width>
+          <y>60</y>
+          <width>171</width>
           <height>51</height>
          </rect>
         </property>
         <property name="styleSheet">
-         <string notr="true">font:  800 15pt &quot;Sans-serif&quot;;</string>
+         <string notr="true"> font-size: 18pt;
+    font-weight: 700;
+    color: #ffffff;</string>
         </property>
         <property name="text">
-         <string>10,000</string>
+         <string>Rs.200,000</string>
         </property>
        </widget>
       </widget>
