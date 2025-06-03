@@ -77,7 +77,7 @@ private slots:
     void on_workerStockSearchEdit_textChanged(const QString &searchText);
     void onStockUpdated();
 
-    void on_productSalesSearchEdit_textChanged(const QString &searchText);
+    void on_productSalesSearchEdit_2_textChanged(const QString &searchText);
     void on_salesSearchEdit_textChanged(const QString &searchText);
     void on_searchProductTable_cellClicked(int row, int column);
     void on_selectedProductsTable_cellClicked(int row, int column);

@@ -274,22 +274,49 @@ void MainWindow::restoreDarkModeToAllWidgets() {
     this->setStyleSheet(originalMainStylesheet); // Restore main window stylesheet
 
     // Restore table styles (simplified - ideally revert to original QPalette or detailed settings)
-    for (auto it = originalTableSettings.begin(); it != originalTableSettings.end(); ++it) {
-        QTableWidget* table = it.key();
-        if (!table) continue;
-        // This is a simplified restoration; ideally, you'd restore all QPalette aspects
-        // or revert to the stylesheet stored in originalStylesheets[table]
-        if(originalStylesheets.contains(table)) {
-            table->setStyleSheet(originalStylesheets[table]);
-        } else {
-            // Fallback if stylesheet wasn't stored for some reason
-            table->setStyleSheet(""); // Clear specific light mode styles
+    for (QTableWidget* table : this->findChildren<QTableWidget*>()) {
+        if (table) {
+            // Start with any base style you want to preserve from the original dark theme,
+            // or build a complete dark style here.
+            QString darkTableStyle = QString(
+                "QTableWidget {"
+                "    gridline-color: #505050;"
+                "    background-color: #2E2E2E;"
+                "    color: #FFFFFF;" // Default text color for items
+                "    selection-background-color: #4a4a70;" // A distinct selection color
+                "    selection-color: #FFFFFF;"
+                "    border: 1px solid #444444;"
+                "}"
+                "QTableWidget::item {"
+                "    border-bottom: 1px solid #404040;"
+                "    padding: 5px;" // Added padding for better spacing
+                "    color: #FFFFFF;" // Ensure item text is white
+                "}"
+                "QTableWidget::item:alternate {"
+                "    background-color: #353535;"
+                "}"
+                "QTableWidget::item:selected {" // Explicit style for selected items
+                "    background-color: #4a4a70;"
+                "    color: #FFFFFF;"
+                "}"
+                "QHeaderView::section {"
+                "    background-color: #3a3a3a;" // Your existing dark header
+                "    color: white;"
+                "    padding: 4px;"
+                "    border: 1px solid #505050;" // Match gridline or a bit darker
+                "    font-weight: bold;"
+                "}"
+                "QTableCornerButton::section {" // Style for the top-left corner button
+                "    background-color: #3a3a3a;"
+                "    border: 1px solid #505050;"
+                "}"
+                );
+            table->setStyleSheet(darkTableStyle);
+            // Ensure alternating row colors are on if desired for dark mode
+            table->setAlternatingRowColors(true);
         }
-        // Re-apply dark theme header style if needed
-        table->horizontalHeader()->setStyleSheet(
-            "QHeaderView::section { background-color: #3a3a3a; color: white; /* ... other dark styles ... */ }"
-            );
     }
+
     if(qApp) qApp->setStyleSheet("QLabel { color: #FFFFFF; }"); // Global dark mode label color
 }
 
@@ -344,84 +371,110 @@ void MainWindow::enableDarkMode() {
 }
 
 void MainWindow::setupChart() {
+    // 1. Initialize Sales Series
     m_salesSeries = new QLineSeries(this); // Parent `this` for auto-cleanup
     m_salesSeries->setName("Daily Sales Volume");
 
-    m_salesChart = new QChart(); // No parent, ChartView takes ownership
+    // 2. Initialize Chart Object
+    m_salesChart = new QChart(); // No parent here, QChartView will take ownership
     m_salesChart->addSeries(m_salesSeries);
     m_salesChart->setTitle("Sales Over Time");
     m_salesChart->setAnimationOptions(QChart::SeriesAnimations);
 
+    // 3. Set Pen for the Series (Line Style)
+    // Assuming 'isDarkMode' is a boolean member variable of MainWindow
     QPen seriesPen((isDarkMode ? Qt::cyan : Qt::blue), 2);
     m_salesSeries->setPen(seriesPen);
 
-    QDateTimeAxis *axisX = new QDateTimeAxis(this);
+    // 4. Setup X-Axis (Date Axis)
+    QDateTimeAxis *axisX = new QDateTimeAxis(this); // Parent `this`
     axisX->setTickCount(10);
-    axisX->setFormat("MMM dd");
+    axisX->setFormat("MMM dd"); // Example: "Jun 02"
     axisX->setTitleText("Date");
     m_salesChart->addAxis(axisX, Qt::AlignBottom);
-    m_salesSeries->attachAxis(axisX);
+    m_salesSeries->attachAxis(axisX); // Attach series to this axis
 
-    QValueAxis *axisY = new QValueAxis(this);
-    axisY->setLabelFormat("%.2f Rs");
+    // 5. Setup Y-Axis (Value Axis)
+    QValueAxis *axisY = new QValueAxis(this); // Parent `this`
+    axisY->setLabelFormat("%.2f Rs"); // Example: "1500.50 Rs"
     axisY->setTitleText("Total Sales Amount");
-    axisY->setMin(0);
+    axisY->setMin(0); // Start Y-axis from 0
     m_salesChart->addAxis(axisY, Qt::AlignLeft);
-    m_salesSeries->attachAxis(axisY);
+    m_salesSeries->attachAxis(axisY); // Attach series to this axis
 
+    // 6. Configure Legend
     m_salesChart->legend()->setVisible(true);
     m_salesChart->legend()->setAlignment(Qt::AlignBottom);
 
+    // 7. Set Chart Theme
     if(isDarkMode) {
         m_salesChart->setTheme(QChart::ChartThemeDark);
     } else {
         m_salesChart->setTheme(QChart::ChartThemeLight);
     }
 
-    m_chartView = new QChartView(m_salesChart); // ChartView takes ownership of m_salesChart
-    m_chartView->setRenderHint(QPainter::Antialiasing);
+    // 8. Initialize ChartView
+    // m_chartView should be a member of MainWindow (e.g., QChartView *m_chartView;)
+    m_chartView = new QChartView(m_salesChart); // QChartView takes ownership of m_salesChart
+    m_chartView->setRenderHint(QPainter::Antialiasing); // For smoother rendering
 
+    // 9. Add ChartView to the UI (Corrected Layout Management)
     if (ui->horizontalFrame) {
-        QLayout *oldLayout = ui->horizontalFrame->layout();
-        if (oldLayout) {
-            QLayoutItem* item;
-            while ((item = oldLayout->takeAt(0)) != nullptr) {
-                if (item->widget()) {
-                    item->widget()->deleteLater();
-                }
-                delete item;
-            }
-            delete oldLayout;
-        }
-        QVBoxLayout *layout = new QVBoxLayout();
-        layout->addWidget(m_chartView);
-        ui->horizontalFrame->setLayout(layout);
-    } else {
-        qDebug() << "ui->horizontalFrame is null. Cannot add sales chart.";
-    }
-    if (ui->horizontalFrame_2) {
-        QLayout *oldLayout = ui->horizontalFrame_2->layout();
-        if (oldLayout) {
-            QLayoutItem* item;
-            while ((item = oldLayout->takeAt(0)) != nullptr) {
-                if (item->widget()) {
-                    item->widget()->deleteLater();
-                }
-                delete item;
-            }
-            delete oldLayout;
-        }
-        QVBoxLayout *layout = new QVBoxLayout();
-        layout->addWidget(m_chartView);
-        ui->horizontalFrame_2->setLayout(layout);
-    } else {
-        qDebug() << "ui->horizontalFrame is null. Cannot add sales chart.";
-    }
-}
+        // Get the current layout of horizontalFrame, if any
+        QLayout *currentLayout = ui->horizontalFrame->layout();
 
+        // If there's an existing layout, clear it properly
+        if (currentLayout) {
+            QLayoutItem* item;
+            while ((item = currentLayout->takeAt(0)) != nullptr) {
+                if (item->widget()) {
+                    item->widget()->deleteLater(); // Schedule widget for deletion
+                }
+                delete item; // Delete the layout item itself
+            }
+            delete currentLayout; // Delete the old layout object
+        }
+
+        // Create a new QVBoxLayout for the chart
+        QVBoxLayout *chartHostLayout = new QVBoxLayout();
+        chartHostLayout->addWidget(m_chartView); // Add the chart view to this new layout
+
+        // Set the new layout on the target frame
+        ui->horizontalFrame->setLayout(chartHostLayout);
+
+    } else {
+        qDebug() << "ui->horizontalFrame is null. Cannot add sales chart to it.";
+    }
+    // if (ui->horizontalFrame_2) {
+    //     // Get the current layout of horizontalFrame, if any
+    //     QLayout *currentLayout = ui->horizontalFrame_2->layout();
+
+    //     // If there's an existing layout, clear it properly
+    //     if (currentLayout) {
+    //         QLayoutItem* item;
+    //         while ((item = currentLayout->takeAt(0)) != nullptr) {
+    //             if (item->widget()) {
+    //                 item->widget()->deleteLater(); // Schedule widget for deletion
+    //             }
+    //             delete item; // Delete the layout item itself
+    //         }
+    //         delete currentLayout; // Delete the old layout object
+    //     }
+
+    //     // Create a new QVBoxLayout for the chart
+    //     QVBoxLayout *chartHostLayout = new QVBoxLayout();
+    //     chartHostLayout->addWidget(m_chartView); // Add the chart view to this new layout
+
+    //     // Set the new layout on the target frame
+    //     ui->horizontalFrame_2->setLayout(chartHostLayout);
+
+    // } else {
+    //     qDebug() << "ui->horizontalFrame is null. Cannot add sales chart to it.";
+    // }
+}
 void MainWindow::updateSalesChart() {
-    if (!m_salesSeries || !m_dbHandler || !m_dbHandler->isConnected() || !m_salesChart) {
-        qDebug() << "Sales chart update prerequisites not met.";
+if (!m_salesSeries || !m_dbHandler || !m_dbHandler->isConnected() || !m_salesChart) {
+    qDebug() << "Sales chart update prerequisites not met.";
         return;
     }
 
@@ -876,7 +929,8 @@ void MainWindow::on_addProductBtn_2_clicked() { // Submit product form
     if (m_productManager->addProduct(name, price, category, quantity, date)) {
         showSuccessWithOk("Product added successfully!"); // Returns to previous screen on OK
         clearProductForm();
-        if(ui->stackedWidget) ui->stackedWidget->setCurrentIndex(3); // Product list page
+        if(m_dbHandler->m_isAdmin==true){ ui->stackedWidget->setCurrentIndex(3);}
+        else{ui->stackedWidget->setCurrentIndex(9); }     // Product list page
     } else { showError("Failed to add product. Please try again."); }
 }
 void MainWindow::on_removeProductBtn_clicked() {
@@ -1066,7 +1120,7 @@ void MainWindow::connectSalesSignals()
 {
     // Search functionality
     connect(ui->productSalesSearchEdit_2, &QLineEdit::textChanged,
-            this, &MainWindow::on_productSalesSearchEdit_textChanged);
+            this, &MainWindow::on_productSalesSearchEdit_2_textChanged);
     connect(ui->salesSearchEdit, &QLineEdit::textChanged,
             this, &MainWindow::on_salesSearchEdit_textChanged);
 
@@ -1232,7 +1286,7 @@ void MainWindow::highlightSelectedProduct(int row)
 }
 
 // Slot implementations
-void MainWindow::on_productSalesSearchEdit_textChanged(const QString &text)
+void MainWindow::on_productSalesSearchEdit_2_textChanged(const QString &text)
 {
     if (!m_productManager || !ui->searchProductTable) return;
 

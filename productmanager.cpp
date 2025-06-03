@@ -9,7 +9,7 @@ ProductManager::ProductManager(DatabaseHandler *dbHandler, QObject *parent)
 bool ProductManager::loadProducts(QTableWidget *tableWidget)
 {
     return populateTable(tableWidget,
-                         "SELECT product_id, product_name, price, category, quantity, updated_at "
+                  "SELECT product_id, product_name, price, category, quantity, updated_at "
                          "FROM Products ORDER BY product_name");
 }
 

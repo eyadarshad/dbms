@@ -79,13 +79,13 @@ public:
     int getCurrentUserId() const { return m_userId; }
     bool isConnected() const { return db.isOpen(); }
     QSqlDatabase getDatabase() const { return db; }
-
+    bool m_isAdmin;
 signals:
     void loginStatusChanged(bool loggedIn, bool isAdmin);
 
 private:
     QSqlDatabase db;
-    bool m_loggedIn, m_isAdmin;
+    bool m_loggedIn;
     int m_userId;
 };
 
